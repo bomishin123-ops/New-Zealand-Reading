@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello! New Zealand - 세부 의미단위 구문 학습</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+        }
+        .font-outfit {
+            font-family: 'Outfit', sans-serif;
+        }
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .drag-over {
+            border-color: #059669 !important;
+            background-color: #ecfdf5 !important;
+            transform: scale(1.02);
+        }
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: white; color: black; }
+        }
+        @media screen {
+            .print-only { display: none !important; }
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col bg-slate-50">
+
+    <!-- Header -->
+    <header class="bg-emerald-700 text-white shadow-md sticky top-0 z-40 no-print">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white text-emerald-700 p-2 rounded-xl font-extrabold text-xl shadow-inner flex items-center justify-center w-10 h-10">
+                    <i class="fa-solid fa-compass text-emerald-600"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-emerald-200">Middle School English 2</span>
+                    <h1 class="text-lg font-black leading-tight">Lesson 6: Hello! New Zealand</h1>
+                </div>
+            </div>
+
+            <!-- Student Info & Global Controls -->
+            <div class="flex items-center gap-2 flex-wrap">
+                <!-- Student Badge Button -->
+                <button onclick="openStudentModal()" id="student-badge-btn" class="bg-emerald-900/80 hover:bg-emerald-900 border border-emerald-400/50 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-user-graduate text-emerald-300"></i>
+                    <span id="header-student-info">학번/이름 입력</span>
+                    <i class="fa-solid fa-pen text-[10px] opacity-70 ml-0.5"></i>
+                </button>
+
+                <!-- Global Audio Controls -->
+                <div class="flex items-center gap-2 bg-emerald-800/60 p-1.5 rounded-xl border border-emerald-600/40 text-xs">
+                    <span class="text-emerald-200 font-bold px-1"><i class="fa-solid fa-gauge-high mr-1"></i>속도:</span>
+                    <button onclick="setGlobalSpeed(0.8)" id="spd-08" class="px-2 py-1 rounded-lg font-bold bg-emerald-900/50 hover:bg-emerald-600 transition">0.8x</button>
+                    <button onclick="setGlobalSpeed(1.0)" id="spd-10" class="px-2 py-1 rounded-lg font-bold bg-white text-emerald-800 shadow-sm transition">1.0x</button>
+                    <button onclick="setGlobalSpeed(1.2)" id="spd-12" class="px-2 py-1 rounded-lg font-bold bg-emerald-900/50 hover:bg-emerald-600 transition">1.2x</button>
+                    <button onclick="window.print()" class="ml-2 px-3 py-1 bg-emerald-500 hover:bg-emerald-400 text-white rounded-lg font-bold transition flex items-center gap-1 shadow-sm">
+                        <i class="fa-solid fa-print"></i> 인쇄
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Session Tabs -->
+        <div class="bg-emerald-800/80 border-t border-emerald-600/50 px-4">
+            <div class="max-w-6xl mx-auto flex overflow-x-auto space-x-1 py-1.5 no-scrollbar">
+                <button onclick="switchSession(1)" id="tab-s1" class="px-3.5 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 bg-white text-emerald-800 shadow-sm">
+                    <span class="bg-emerald-100 text-emerald-800 text-[10px] px-1.5 py-0.5 rounded-full">1차시</span> Natural Beauty (p.104)
+                </button>
+                <button onclick="switchSession(2)" id="tab-s2" class="px-3.5 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-emerald-100 hover:bg-emerald-700/50">
+                    <span class="bg-emerald-900/60 text-emerald-200 text-[10px] px-1.5 py-0.5 rounded-full">2차시</span> Meanings of Kiwi (p.105-106)
+                </button>
+                <button onclick="switchSession(3)" id="tab-s3" class="px-3.5 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-emerald-100 hover:bg-emerald-700/50">
+                    <span class="bg-emerald-900/60 text-emerald-200 text-[10px] px-1.5 py-0.5 rounded-full">3차시</span> Maori Culture (p.107)
+                </button>
+                <button onclick="switchSession(4)" id="tab-s4" class="px-3.5 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-emerald-100 hover:bg-emerald-700/50">
+                    <span class="bg-emerald-900/60 text-emerald-200 text-[10px] px-1.5 py-0.5 rounded-full">4차시</span> The Haka (p.108)
+                </button>
+                <button onclick="switchSession('all')" id="tab-sall" class="px-3.5 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-emerald-100 hover:bg-emerald-700/50">
+                    <i class="fa-solid fa-layer-group"></i> 전체 모아보기
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-6xl mx-auto px-4 py-6 flex-grow w-full no-print">
+
+        <!-- View Mode Navigation Bar -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-2 mb-6 flex flex-wrap gap-2 items-center justify-between">
+            <div class="flex flex-wrap gap-1">
+                <button onclick="switchView('touch')" id="vtab-touch" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 bg-emerald-600 text-white shadow-sm">
+                    <i class="fa-solid fa-puzzle-piece"></i> 터치/드래그 조립 (교과서 표)
+                </button>
+                <button onclick="switchView('table')" id="vtab-table" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-table-list"></i> 세부 의미단위 표
+                </button>
+                <button onclick="switchView('tv')" id="vtab-tv" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-tv"></i> 수업용 TV 슬라이드
+                </button>
+                <button onclick="switchView('practice')" id="vtab-practice" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-eye-slash"></i> 가리기 연습 모드
+                </button>
+                <button onclick="switchView('report')" id="vtab-report" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200">
+                    <i class="fa-solid fa-award"></i> 학습 결과 & 캡처
+                </button>
+            </div>
+
+            <div class="text-xs font-semibold text-slate-500 px-2 py-1 bg-slate-100 rounded-lg flex items-center gap-1.5">
+                <i class="fa-solid fa-clock text-emerald-600"></i>
+                <span id="current-session-label">1차시 (p.104~105) 총 8문장</span>
+            </div>
+        </div>
+
+        <!-- VIEW 1: Touch & Drag Table Grid Slot Builder -->
+        <div id="view-touch" class="view-panel space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
+                <!-- Header Controls -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-100">
+                    <div class="flex items-center space-x-3">
+                        <span id="touch-sentence-num" class="bg-emerald-600 text-white font-extrabold text-xs px-2.5 py-1 rounded-lg">문장 1 / 8</span>
+                        <h2 class="text-base sm:text-lg font-bold text-slate-800">교과서 표 채우기 학습</h2>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="prevTouchSentence()" id="btn-touch-prev" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                            <i class="fa-solid fa-chevron-left"></i> 이전
+                        </button>
+                        <button onclick="nextTouchSentence()" id="btn-touch-next" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                            다음 <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Korean Sentence Reference -->
+                <div class="mt-4 p-4 bg-slate-50 border border-slate-200/80 rounded-xl">
+                    <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">전체 우리말 뜻</span>
+                    <p id="touch-full-korean" class="text-sm sm:text-base font-bold text-slate-700 leading-relaxed"></p>
+                </div>
+
+                <!-- Textbook Style Table Grid Slots -->
+                <div class="mt-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold text-emerald-800 flex items-center gap-1">
+                            <i class="fa-solid fa-pen-to-square"></i> &lt;표&gt;의 한글 의미에 맞게 알맞은 영어 조각을 채우세요.
+                        </span>
+                        <button onclick="resetTouchCurrentSentence()" class="text-xs text-slate-500 hover:text-rose-600 font-semibold transition flex items-center gap-1">
+                            <i class="fa-solid fa-rotate-left"></i> 칸 초기화
+                        </button>
+                    </div>
+
+                    <!-- Slots Container -->
+                    <div id="touch-table-slots" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+                    </div>
+                </div>
+
+                <!-- Shuffled Word Bank -->
+                <div class="mt-6 bg-amber-50/60 border border-amber-200 rounded-2xl p-4 sm:p-5">
+                    <div class="text-center mb-3">
+                        <span class="inline-block bg-amber-100 text-amber-900 font-black text-xs px-3 py-1 rounded-full border border-amber-300 shadow-2xs">
+                            &lt; 보 기 &gt;
+                        </span>
+                    </div>
+                    <div id="touch-word-bank" class="flex flex-wrap items-center justify-center gap-2.5 min-h-[60px]">
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+                    <button onclick="prevTouchSentence()" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm rounded-xl transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-chevron-left"></i> 이전 문장
+                    </button>
+                    <button onclick="checkTouchSentenceAnswer()" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition flex items-center gap-2 transform active:scale-95">
+                        <i class="fa-solid fa-circle-check text-lg"></i> 정답 확인하기
+                    </button>
+                </div>
+
+                <!-- Dynamic Feedback & Vocabulary Note Box -->
+                <div id="touch-feedback-box" class="mt-6 hidden transition-all duration-300">
+                </div>
+
+            </div>
+        </div>
+
+        <!-- VIEW 2: Detailed Chunk Table -->
+        <div id="view-table" class="view-panel hidden space-y-6">
+            <div id="table-view-container" class="space-y-6">
+            </div>
+        </div>
+
+        <!-- VIEW 3: Classroom TV Slide Mode -->
+        <div id="view-tv" class="view-panel hidden">
+            <div class="bg-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-2xl border border-slate-800 relative min-h-[480px] flex flex-col justify-between">
+                <!-- Top Status Bar -->
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-emerald-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full" id="tv-sentence-num">문장 1 / 8</span>
+                        <span class="text-xs text-slate-400 font-semibold" id="tv-session-title">1차시 - Natural Beauty</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="speakCurrentTVSentence()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-volume-high"></i> 전체 문장 듣기
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TV Slide Center Content -->
+                <div class="my-8 space-y-6 text-center">
+                    <div class="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/60 max-w-3xl mx-auto">
+                        <p id="tv-full-korean" class="text-base sm:text-lg md:text-xl font-bold text-emerald-300 leading-relaxed"></p>
+                    </div>
+
+                    <div id="tv-chunks-container" class="flex flex-wrap justify-center gap-3 sm:gap-4 max-w-4xl mx-auto min-h-[140px] items-center py-4">
+                    </div>
+
+                    <div id="tv-grammar-note" class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50 max-w-3xl mx-auto text-xs sm:text-sm text-slate-300 text-left">
+                    </div>
+                </div>
+
+                <!-- Bottom Navigation Controls -->
+                <div class="flex items-center justify-between border-t border-slate-800 pt-4">
+                    <button onclick="prevTVSentence()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs sm:text-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-chevron-left"></i> 이전 문장
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="revealAllTVChunks()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-xs font-bold rounded-xl text-slate-200">
+                            청크 모두 보기
+                        </button>
+                    </div>
+                    <button onclick="nextTVSentence()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs sm:text-sm transition flex items-center gap-2">
+                        다음 문장 <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 4: Chunk Hide Practice Mode -->
+        <div id="view-practice" class="view-panel hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-100 pb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-graduation-cap text-emerald-600 mr-2"></i>직독직해 청크 가리기 연습</h3>
+                        <p class="text-xs text-slate-500 mt-1">청크 박스를 클릭하거나 '모두 열기/가리기' 버튼을 눌러 의미단위별 해석을 확인하세요.</p>
+                    </div>
+                    <button onclick="resetPracticeState()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition self-start sm:self-auto">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> 처음부터 다시
+                    </button>
+                </div>
+
+                <div id="practice-list-container" class="space-y-6">
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 5: Student Report & Screen Capture Card -->
+        <div id="view-report" class="view-panel hidden">
+            <div class="max-w-3xl mx-auto space-y-6">
+                <div id="capture-card" class="bg-white rounded-3xl border-2 border-slate-300 shadow-xl overflow-hidden p-6 sm:p-8 relative">
+                    <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 -m-6 sm:-m-8 p-6 mb-6 text-white flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-white/20 backdrop-blur-md p-3 rounded-2xl border border-white/30 text-white text-2xl">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-emerald-200 font-bold uppercase tracking-wider block">Middle School English 2</span>
+                                <h2 class="text-xl sm:text-2xl font-black">Lesson 6. Hello! New Zealand</h2>
+                                <p class="text-xs text-emerald-100">세부 의미단위 구문 학습 완료 보고서</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 text-right">
+                            <span class="text-[10px] text-emerald-200 block font-semibold">학습 완료 일시</span>
+                            <span id="report-date-stamp" class="text-xs font-extrabold font-outfit">2026. 09. 21</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-emerald-600 text-white w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-extrabold shadow-sm">
+                                <i class="fa-solid fa-id-card"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-slate-400 block uppercase">Student Profile</span>
+                                <div class="flex items-center gap-2">
+                                    <span id="report-student-id" class="text-lg font-black text-slate-800 font-outfit">미입력</span>
+                                    <span id="report-student-name" class="text-lg font-black text-emerald-700">학생 이름</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="openStudentModal()" class="no-print text-xs font-bold text-slate-500 hover:text-emerald-600 bg-white border border-slate-200 px-3 py-1.5 rounded-xl transition">
+                            <i class="fa-solid fa-pen-to-square mr-1"></i> 학생 정보 수정
+                        </button>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-extrabold text-slate-800 flex items-center gap-1.5">
+                            <i class="fa-solid fa-stopwatch text-emerald-600"></i> 차시별 학습 소요 시간 및 결과 (1~4차시)
+                        </h3>
+
+                        <div id="report-sessions-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        </div>
+
+                        <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-4 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-clock-rotate-left text-emerald-600 text-xl"></i>
+                                <div>
+                                    <span class="text-xs font-bold text-emerald-800 block">총 전체 학습 시간</span>
+                                    <span class="text-xs text-slate-500">1, 2, 3, 4차시 소요 시간 합계</span>
+                                </div>
+                            </div>
+                            <span id="report-total-time" class="text-xl sm:text-2xl font-black text-emerald-800 font-outfit">00분 00초</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-200 text-center text-xs text-slate-400 flex items-center justify-between">
+                        <span><i class="fa-solid fa-check-double text-emerald-500 mr-1"></i> 교사 확인용 자동 생성 보고서</span>
+                        <span class="font-bold text-slate-500">Hello! New Zealand App</span>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-center space-y-3">
+                    <p class="text-xs font-bold text-amber-900 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-camera text-amber-600"></i>
+                        <span>위 화면 전체를 스크린샷(캡처)하여 선생님께 제출하세요!</span>
+                    </p>
+                    <div class="flex justify-center gap-3">
+                        <button onclick="window.print()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm rounded-xl transition shadow-md flex items-center gap-1.5">
+                            <i class="fa-solid fa-print"></i> 보고서 인쇄 / PDF 저장
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Student Info Modal Overlay -->
+    <div id="student-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-50 flex items-center justify-center p-4 transition-opacity duration-200 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100 transform transition-all space-y-5">
+            <div class="text-center space-y-2">
+                <div class="bg-emerald-100 text-emerald-700 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mx-auto shadow-inner">
+                    <i class="fa-solid fa-user-pen"></i>
+                </div>
+                <h3 class="text-xl font-black text-slate-800">학생 정보 입력</h3>
+                <p class="text-xs font-semibold text-slate-500 leading-relaxed">
+                    학습 시작 전 학번과 이름을 입력해주세요.<br>차시별 학습 시간과 제출용 결과 카드에 기록됩니다.
+                </p>
+            </div>
+
+            <form onsubmit="saveStudentInfo(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-extrabold text-slate-700 mb-1 flex items-center gap-1">
+                        <i class="fa-solid fa-hashtag text-emerald-600"></i> 학번 (예: 20101)
+                    </label>
+                    <input type="text" id="input-student-id" required placeholder="예) 20101 또는 2학년 1반 1번" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none font-bold text-slate-800 text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-extrabold text-slate-700 mb-1 flex items-center gap-1">
+                        <i class="fa-solid fa-user text-emerald-600"></i> 이름
+                    </label>
+                    <input type="text" id="input-student-name" required placeholder="예) 홍길동" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none font-bold text-slate-800 text-sm">
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-circle-check"></i> 학습 시작하기
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Print Worksheet Area (Auto Populated for All 1~4 Sessions) -->
+    <div class="print-only max-w-4xl mx-auto p-6 font-sans">
+        <div class="text-center border-b-2 border-slate-900 pb-4 mb-6">
+            <h1 class="text-2xl font-black">Lesson 6: Hello! New Zealand - 세부 의미단위 구문 학습지 (1~4차시 전체)</h1>
+            <p id="print-student-header" class="text-sm text-slate-600 mt-1">학년 / 반: _________ 번호: _____ 이름: ____________</p>
+        </div>
+        <div id="print-content" class="space-y-6">
+        </div>
+    </div>
+
+    <!-- Floating Navigation Side Arrows -->
+    <div id="floating-nav-controls" class="no-print fixed inset-y-0 left-2 right-2 sm:left-4 sm:right-4 pointer-events-none flex items-center justify-between z-30">
+        <button onclick="handleGlobalPrev()" title="이전 문장" class="pointer-events-auto bg-slate-900/70 hover:bg-emerald-600 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full shadow-lg backdrop-blur-sm flex items-center justify-center transition transform hover:scale-110 active:scale-95 border border-white/20">
+            <i class="fa-solid fa-chevron-left text-sm sm:text-base"></i>
+        </button>
+        <button onclick="handleGlobalNext()" title="다음 문장" class="pointer-events-auto bg-slate-900/70 hover:bg-emerald-600 text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full shadow-lg backdrop-blur-sm flex items-center justify-center transition transform hover:scale-110 active:scale-95 border border-white/20">
+            <i class="fa-solid fa-chevron-right text-sm sm:text-base"></i>
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800 no-print mt-12">
+        <div class="max-w-6xl mx-auto px-4 space-y-2">
+            <p class="font-bold text-slate-300">Middle School English 2 - Lesson 6: Hello! New Zealand</p>
+            <p class="text-slate-500">1차시(자연), 2차시(키위 의미), 3차시(마오리 문화), 4차시(하카) 세부 의미단위 직독직해 학습 앱</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Global App State Variables
+        let studentInfo = { id: '', name: '' };
+        let sessionTimes = { 1: 0, 2: 0, 3: 0, 4: 0 };
+        let completedSentences = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set() };
+        let timerInterval = null;
+
+        let currentSession = 1;
+        let currentView = 'touch';
+        let globalSpeed = 1.0;
+
+        let touchSentenceIdx = 0;
+        let tvSentenceIdx = 0;
+        let touchPlacedSlots = [];
+        let touchWordBank = [];
+        let draggedChunkId = null;
+        let tvRevealedChunks = [];
+        let practiceRevealed = {};
+        let hasListenedAudio = false;
+
+        // Complete Lesson Data for Sessions 1, 2, 3, and 4
+        const lessonData = {
+            1: {
+                title: "1차시: Natural Beauty & Islands (p.104~105)",
+                page: "p.104~105",
+                sentences: [
+                    {
+                        id: "s1-1",
+                        fullEnglish: "New Zealand is a place of natural beauty.",
+                        fullKorean: "뉴질랜드는 자연의 아름다움이 있는 곳입니다.",
+                        chunks: [
+                            { id: "c1", en: "New Zealand", kor: "뉴질랜드는", note: "주어" },
+                            { id: "c2", en: "is", kor: "~입니다", note: "동사" },
+                            { id: "c3", en: "a place", kor: "장소", note: "보어" },
+                            { id: "c4", en: "of natural beauty.", kor: "자연의 아름다움을 지닌.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>a place of natural beauty</b>: 아름다운 자연 경관을 지닌 장소 / <b>natural beauty</b>: 자연의 아름다움(자연미)"
+                    },
+                    {
+                        id: "s1-2",
+                        fullEnglish: "It has many beautiful lakes and waterfalls.",
+                        fullKorean: "그곳은 많은 아름다운 호수들과 폭포들을 가지고 있습니다.",
+                        chunks: [
+                            { id: "c1", en: "It", kor: "그곳은", note: "주어" },
+                            { id: "c2", en: "has", kor: "가지고 있습니다", note: "동사" },
+                            { id: "c3", en: "many beautiful", kor: "많은 아름다운", note: "형용사구" },
+                            { id: "c4", en: "lakes", kor: "호수들과", note: "명사(호수들)" },
+                            { id: "c5", en: "and", kor: "그리고", note: "접속사" },
+                            { id: "c6", en: "waterfalls.", kor: "폭포들을.", note: "명사" }
+                        ],
+                        grammarNote: "<b>lakes</b>: 호수들 / <b>and</b>: 접속사 (~와/그리고) / <b>waterfall</b>: 폭포"
+                    },
+                    {
+                        id: "s1-3",
+                        fullEnglish: "New Zealand has two main islands, the South Island and the North Island.",
+                        fullKorean: "뉴질랜드는 두 개의 주요 섬인 남섬과 북섬을 가지고 있습니다.",
+                        chunks: [
+                            { id: "c1", en: "New Zealand", kor: "뉴질랜드는", note: "주어" },
+                            { id: "c2", en: "has", kor: "가지고 있습니다", note: "동사" },
+                            { id: "c3", en: "two main islands,", kor: "두 개의 주요 섬을,", note: "목적어" },
+                            { id: "c4", en: "the South Island", kor: "남섬", note: "동격1" },
+                            { id: "c5", en: "and", kor: "그리고", note: "접속사" },
+                            { id: "c6", en: "the North Island.", kor: "북섬인.", note: "동격2" }
+                        ],
+                        grammarNote: "<b>two main islands, the South Island...</b>: 쉼표(,)는 동격의 의미로 '두 주요 섬 즉, 남섬과 북섬'을 나타냅니다."
+                    },
+                    {
+                        id: "s1-4",
+                        fullEnglish: "In the South Island, there are mountains that are covered with snow all year round.",
+                        fullKorean: "남섬에는 일 년 내내 눈으로 덮여 있는 산들이 있습니다.",
+                        chunks: [
+                            { id: "c1", en: "In the South Island,", kor: "남섬에는,", note: "부사구" },
+                            { id: "c2", en: "there are", kor: "~들이 있습니다", note: "존재 구문" },
+                            { id: "c3", en: "mountains", kor: "산들이", note: "주어" },
+                            { id: "c4", en: "that are covered with snow", kor: "눈으로 덮여 있는", note: "관계대명사절" },
+                            { id: "c5", en: "all year round.", kor: "일 년 내내.", note: "부사구" }
+                        ],
+                        grammarNote: "<b>be covered with</b>: ~로 덮여 있다 / <b>that</b>: 주격 관계대명사(수식 대상: mountains)"
+                    },
+                    {
+                        id: "s1-5",
+                        fullEnglish: "You will be amazed by the fantastic views.",
+                        fullKorean: "당신은 그 환상적인 풍경에 감탄하게 될 것입니다.",
+                        chunks: [
+                            { id: "c1", en: "You", kor: "당신은", note: "주어" },
+                            { id: "c2", en: "will be amazed", kor: "놀라게 될 것입니다", note: "조동사+수동태" },
+                            { id: "c3", en: "by the fantastic views.", kor: "환상적인 풍경에 의해.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>be amazed by</b>: ~에 의해 감탄하다, 놀라다"
+                    },
+                    {
+                        id: "s1-6",
+                        fullEnglish: "In the North Island, there are many hot springs, lakes, and areas with green grass.",
+                        fullKorean: "북섬에는 많은 온천, 호수들, 그리고 푸른 풀이 있는 지역들이 있습니다.",
+                        chunks: [
+                            { id: "c1", en: "In the North Island,", kor: "북섬에는,", note: "부사구" },
+                            { id: "c2", en: "there are", kor: "~들이 있습니다", note: "존재 구문" },
+                            { id: "c3", en: "many hot springs,", kor: "많은 온천,", note: "주어1" },
+                            { id: "c4", en: "lakes,", kor: "호수들,", note: "명사(호수들)" },
+                            { id: "c5", en: "and", kor: "그리고", note: "접속사" },
+                            { id: "c6", en: "areas", kor: "지역들이", note: "주어2" },
+                            { id: "c7", en: "with green grass.", kor: "푸른 풀이 있는.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>lakes</b>: 호수들 / <b>and</b>: 그리고 (접속사 독립 분리)"
+                    },
+                    {
+                        id: "s1-7",
+                        fullEnglish: "Because of its natural beauty, many famous movies have been made in New Zealand.",
+                        fullKorean: "자연의 아름다움 때문에, 많은 유명한 영화들이 뉴질랜드에서 제작되어 왔습니다.",
+                        chunks: [
+                            { id: "c1", en: "Because of", kor: "~ 때문에", note: "전치사구" },
+                            { id: "c2", en: "its natural beauty,", kor: "그곳의 자연미,", note: "명사구" },
+                            { id: "c3", en: "many famous movies", kor: "많은 유명한 영화들이", note: "주어" },
+                            { id: "c4", en: "have been made", kor: "제작되어 왔습니다", note: "현재완료 수동태" },
+                            { id: "c5", en: "in New Zealand.", kor: "뉴질랜드에서.", note: "장소 부사구" }
+                        ],
+                        grammarNote: "<b>because of + 명사</b>: ~때문에"
+                    },
+                    {
+                        id: "s1-8",
+                        fullEnglish: "If you visit New Zealand, you will surely appreciate its nature.",
+                        fullKorean: "만약 당신이 뉴질랜드를 방문한다면, 당신은 분명 그것의 자연을 진정으로 느끼고 감상할 것입니다.",
+                        chunks: [
+                            { id: "c1", en: "If", kor: "만약", note: "조건 접속사" },
+                            { id: "c2", en: "you visit", kor: "당신이 방문한다면", note: "주어+동사" },
+                            { id: "c3", en: "New Zealand,", kor: "뉴질랜드를,", note: "목적어" },
+                            { id: "c4", en: "you will surely", kor: "당신은 분명히", note: "주어+조동사+부사" },
+                            { id: "c5", en: "appreciate", kor: "감상할 것입니다", note: "동사원형" },
+                            { id: "c6", en: "its nature.", kor: "그것의 자연을.", note: "목적어" }
+                        ],
+                        grammarNote: "<b>If</b>: 만약 ~라면 (조건 접속사 분리)"
+                    }
+                ]
+            },
+            2: {
+                title: "2차시: The Three Meanings of 'Kiwi' (p.105~106)",
+                page: "p.105~106",
+                sentences: [
+                    {
+                        id: "s2-1",
+                        fullEnglish: "When you hear the word kiwi, what comes to your mind?",
+                        fullKorean: "당신이 '키위'라는 단어를 들을 때, 무엇이 가장 먼저 떠오르나요?",
+                        chunks: [
+                            { id: "c1", en: "When", kor: "~할 때", note: "시간 접속사" },
+                            { id: "c2", en: "you hear", kor: "당신이 들을 때", note: "주어+동사" },
+                            { id: "c3", en: "the word kiwi,", kor: "키위라는 단어를,", note: "목적어" },
+                            { id: "c4", en: "what comes", kor: "무엇이 오나요", note: "의문사+동사" },
+                            { id: "c5", en: "to your mind?", kor: "당신의 마음속에?", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>When</b>: ~할 때 (시간 접속사 분리)"
+                    },
+                    {
+                        id: "s2-2",
+                        fullEnglish: "Maybe a fruit, but, in New Zealand the word kiwi has a couple of meanings.",
+                        fullKorean: "아마도 과일이겠지만, 뉴질랜드에서 '키위'라는 단어는 몇 가지 의미를 가지고 있습니다.",
+                        chunks: [
+                            { id: "c1", en: "Maybe a fruit,", kor: "아마도 과일일 것이지만,", note: "구문" },
+                            { id: "c2", en: "but,", kor: "그러나,", note: "등의 접속사" },
+                            { id: "c3", en: "in New Zealand", kor: "뉴질랜드에서", note: "부사구" },
+                            { id: "c4", en: "the word kiwi", kor: "키위라는 단어는", note: "주어" },
+                            { id: "c5", en: "has", kor: "가지고 있습니다", note: "동사" },
+                            { id: "c6", en: "a couple of meanings.", kor: "두세 개의(몇 가지) 의미들을.", note: "목적어" }
+                        ],
+                        grammarNote: "<b>but</b>: 그러나 (접속사 단독 분리)"
+                    },
+                    {
+                        id: "s2-3",
+                        fullEnglish: "First, kiwi is the name of a delicious, green fruit.",
+                        fullKorean: "첫째로, 키위는 맛있는 녹색 과일의 이름입니다.",
+                        chunks: [
+                            { id: "c1", en: "First,", kor: "첫째로,", note: "부사" },
+                            { id: "c2", en: "kiwi is", kor: "키위는 ~입니다", note: "주어+동사" },
+                            { id: "c3", en: "the name", kor: "이름", note: "보어" },
+                            { id: "c4", en: "of a delicious, green fruit.", kor: "맛있고 녹색인 과일의.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>delicious</b>: 맛있는"
+                    },
+                    {
+                        id: "s2-4",
+                        fullEnglish: "A lot of kiwi fruit is grown there, so New Zealand is known as the land of kiwi fruit.",
+                        fullKorean: "그곳에서는 많은 키위 과일이 재배되어서, 뉴질랜드는 키위 과일의 땅으로 알려져 있습니다.",
+                        chunks: [
+                            { id: "c1", en: "A lot of kiwi fruit", kor: "많은 키위 과일이", note: "주어" },
+                            { id: "c2", en: "is grown there,", kor: "그곳에서 재배됩니다,", note: "수동태+부사" },
+                            { id: "c3", en: "so", kor: "그래서", note: "접속사" },
+                            { id: "c4", en: "New Zealand", kor: "뉴질랜드는", note: "주어" },
+                            { id: "c5", en: "is known as", kor: "~로 알려져 있습니다", note: "수동태 구문" },
+                            { id: "c6", en: "the land of kiwi fruit.", kor: "키위 과일의 나라로.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>so</b>: 그래서 (접속사 단독 분리)"
+                    },
+                    {
+                        id: "s2-5",
+                        fullEnglish: "Kiwi is also the name of one of New Zealand's native birds.",
+                        fullKorean: "키위는 또한 뉴질랜드의 토종 새들 중 하나의 이름이기도 합니다.",
+                        chunks: [
+                            { id: "c1", en: "Kiwi is also", kor: "키위는 또한 ~입니다", note: "주어+부사+동사" },
+                            { id: "c2", en: "the name", kor: "이름", note: "보어" },
+                            { id: "c3", en: "of one of", kor: "~ 중 하나의", note: "전치사구" },
+                            { id: "c4", en: "New Zealand's native birds.", kor: "뉴질랜드 토종 새들의.", note: "복수명사구" }
+                        ],
+                        grammarNote: "<b>one of + 복수명사</b>: ~들 중 하나"
+                    },
+                    {
+                        id: "s2-6",
+                        fullEnglish: "The kiwi is special to New Zealanders because it is the symbol of the nation.",
+                        fullKorean: "키위새는 국가의 상징이기 때문에 뉴질랜드 사람들에게 특별합니다.",
+                        chunks: [
+                            { id: "c1", en: "The kiwi is special", kor: "키위새는 특별합니다", note: "주어+동사+보어" },
+                            { id: "c2", en: "to New Zealanders", kor: "뉴질랜드 사람들에게", note: "전치사구" },
+                            { id: "c3", en: "because", kor: "왜냐하면 ~이기 때문에", note: "접속사" },
+                            { id: "c4", en: "it is", kor: "그것은 ~이다", note: "주어+동사" },
+                            { id: "c5", en: "the symbol of the nation.", kor: "그 국가의 상징.", note: "보어" }
+                        ],
+                        grammarNote: "<b>because</b>: 왜냐하면 ~이기 때문에 (접속사 단독 분리)"
+                    },
+                    {
+                        id: "s2-7",
+                        fullEnglish: "Also, kiwi is a nickname for people from New Zealand.",
+                        fullKorean: "또한, 키위는 뉴질랜드 출신 사람들을 부르는 별명이기도 합니다.",
+                        chunks: [
+                            { id: "c1", en: "Also,", kor: "또한,", note: "부사" },
+                            { id: "c2", en: "kiwi is a nickname", kor: "키위는 별명입니다", note: "주어+동사+보어" },
+                            { id: "c3", en: "for people", kor: "사람들을 위한", note: "전치사구" },
+                            { id: "c4", en: "from New Zealand.", kor: "뉴질랜드 출신의.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>nickname</b>: 별명"
+                    },
+                    {
+                        id: "s2-8",
+                        fullEnglish: "Today, New Zealanders are sometimes called Kiwis throughout the world.",
+                        fullKorean: "오늘날, 뉴질랜드 사람들은 전 세계적으로 때때로 'Kiwis'라고 불립니다.",
+                        chunks: [
+                            { id: "c1", en: "Today,", kor: "오늘날,", note: "부사" },
+                            { id: "c2", en: "New Zealanders", kor: "뉴질랜드 사람들은", note: "주어" },
+                            { id: "c3", en: "are sometimes called", kor: "때때로 불립니다", note: "수동태" },
+                            { id: "c4", en: "Kiwis", kor: "키위들이라고", note: "보어" },
+                            { id: "c5", en: "throughout the world.", kor: "전 세계에 걸쳐서.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>are called</b>: ~라 불리다"
+                    },
+                    {
+                        id: "s2-9",
+                        fullEnglish: "Now, you know that kiwi is the name of a fruit, a bird, and also a people.",
+                        fullKorean: "이제, 당신은 키위가 과일, 새, 그리고 민족의 이름이라는 것을 압니다.",
+                        chunks: [
+                            { id: "c1", en: "Now, you know", kor: "이제, 당신은 압니다", note: "주어+동사" },
+                            { id: "c2", en: "that kiwi is", kor: "키위가 ~라는 것을", note: "접속사절" },
+                            { id: "c3", en: "the name of a fruit,", kor: "과일의 이름,", note: "명사1" },
+                            { id: "c4", en: "a bird,", kor: "새의 이름,", note: "명사2" },
+                            { id: "c5", en: "and", kor: "그리고", note: "접속사" },
+                            { id: "c6", en: "also a people.", kor: "또한 국민(사람들)의 이름이라는 것을.", note: "명사3" }
+                        ],
+                        grammarNote: "<b>and</b>: 그리고 (접속사 단독 분리)"
+                    },
+                    {
+                        id: "s2-10",
+                        fullEnglish: "Next time, don't become confused when someone uses the word kiwi, which has several meanings.",
+                        fullKorean: "다음번에 누군가가 여러 의미를 지닌 '키위'라는 단어를 사용할 때 헷갈리지 마세요.",
+                        chunks: [
+                            { id: "c1", en: "Next time,", kor: "다음번에,", note: "부사구" },
+                            { id: "c2", en: "don't become confused", kor: "혼란스러워하지 마세요", note: "부정 명령문" },
+                            { id: "c3", en: "when", kor: "~할 때", note: "시간 접속사" },
+                            { id: "c4", en: "someone uses", kor: "누군가가 사용할 때", note: "주어+동사" },
+                            { id: "c5", en: "the word kiwi,", kor: "키위라는 단어를,", note: "목적어" },
+                            { id: "c6", en: "which has several meanings.", kor: "그것은 여러 의미를 가지고 있습니다.", note: "관계대명사" }
+                        ],
+                        grammarNote: "<b>when</b>: ~할 때 (시간 접속사 단독 분리)"
+                    }
+                ]
+            },
+            3: {
+                title: "3차시: The Maori People & Culture (p.107)",
+                page: "p.107",
+                sentences: [
+                    {
+                        id: "s3-1",
+                        fullEnglish: "Now, let's talk about the Maori.",
+                        fullKorean: "이제 마오리족에 대해 이야기해 봅시다.",
+                        chunks: [
+                            { id: "c1", en: "Now,", kor: "이제,", note: "부사" },
+                            { id: "c2", en: "let's talk about", kor: "~에 대해 이야기합시다", note: "제안 구문" },
+                            { id: "c3", en: "the Maori.", kor: "마오리족에 대해.", note: "전치사의 목적어" }
+                        ],
+                        grammarNote: "<b>let's + 동사원형</b>: ~하자"
+                    },
+                    {
+                        id: "s3-2",
+                        fullEnglish: "They are the native people of New Zealand.",
+                        fullKorean: "그들은 뉴질랜드의 원주민입니다.",
+                        chunks: [
+                            { id: "c1", en: "They are", kor: "그들은 ~입니다", note: "주어+동사" },
+                            { id: "c2", en: "the native people", kor: "원주민(토착 민족)", note: "보어" },
+                            { id: "c3", en: "of New Zealand.", kor: "뉴질랜드의.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>native people</b>: 원주민"
+                    },
+                    {
+                        id: "s3-3",
+                        fullEnglish: "They went to live on the islands long before Europeans arrived.",
+                        fullKorean: "그들은 유럽인들이 도착하기 훨씬 전에 그 섬들에 살러 갔습니다.",
+                        chunks: [
+                            { id: "c1", en: "They went", kor: "그들은 갔습니다", note: "주어+동사" },
+                            { id: "c2", en: "to live on the islands", kor: "그 섬들에 살기 위해", note: "to부정사" },
+                            { id: "c3", en: "long before", kor: "훨씬 전에", note: "접속사구" },
+                            { id: "c4", en: "Europeans arrived.", kor: "유럽인들이 도착하기.", note: "주어+동사" }
+                        ],
+                        grammarNote: "<b>long before</b>: ~하기 훨씬 전에"
+                    },
+                    {
+                        id: "s3-4",
+                        fullEnglish: "The Maori culture is an important part of today's New Zealand society.",
+                        fullKorean: "마오리 문화는 오늘날 뉴질랜드 사회의 중요한 부분입니다.",
+                        chunks: [
+                            { id: "c1", en: "The Maori culture", kor: "마오리 문화는", note: "주어" },
+                            { id: "c2", en: "is an important part", kor: "중요한 부분입니다", note: "동사+보어" },
+                            { id: "c3", en: "of today's New Zealand society.", kor: "오늘날 뉴질랜드 사회의.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>society</b>: 사회"
+                    },
+                    {
+                        id: "s3-5",
+                        fullEnglish: "The Maori language is taught at some schools and there are Maori language radio and TV stations.",
+                        fullKorean: "마오리 어는 일부 학교에서 가르쳐지고 마오리 어 라디오와 TV 방송국도 있습니다.",
+                        chunks: [
+                            { id: "c1", en: "The Maori language", kor: "마오리 언어는", note: "주어" },
+                            { id: "c2", en: "is taught", kor: "가르쳐집니다", note: "수동태" },
+                            { id: "c3", en: "at some schools", kor: "몇몇 학교에서", note: "전치사구" },
+                            { id: "c4", en: "and", kor: "그리고", note: "접속사" },
+                            { id: "c5", en: "there are", kor: "~들이 있습니다", note: "존재 구문" },
+                            { id: "c6", en: "Maori language radio and TV stations.", kor: "마오리어 라디오 및 TV 방송국들이.", note: "주어" }
+                        ],
+                        grammarNote: "<b>and</b>: 그리고 (접속사 단독 분리)"
+                    },
+                    {
+                        id: "s3-6",
+                        fullEnglish: "There are Maori villages in many parts of the country.",
+                        fullKorean: "그 나라의 많은 지역에 마오리 마을들이 있습니다.",
+                        chunks: [
+                            { id: "c1", en: "There are", kor: "~들이 있습니다", note: "존재 구문" },
+                            { id: "c2", en: "Maori villages", kor: "마오리 마을들이", note: "주어" },
+                            { id: "c3", en: "in many parts", kor: "많은 지역들에", note: "전치사구" },
+                            { id: "c4", en: "of the country.", kor: "그 나라의.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>village</b>: 마을"
+                    },
+                    {
+                        id: "s3-7",
+                        fullEnglish: "You can visit Maori villages and experience Maori culture.",
+                        fullKorean: "당신은 마오리 마을을 방문하여 마오리 문화를 체험할 수 있습니다.",
+                        chunks: [
+                            { id: "c1", en: "You can visit", kor: "당신은 방문할 수 있습니다", note: "조동사+동사1" },
+                            { id: "c2", en: "Maori villages", kor: "마오리 마을들을", note: "목적어1" },
+                            { id: "c3", en: "and", kor: "그리고", note: "접속사" },
+                            { id: "c4", en: "experience", kor: "체험할 수 있습니다", note: "동사2" },
+                            { id: "c5", en: "Maori culture.", kor: "마오리 문화를.", note: "목적어2" }
+                        ],
+                        grammarNote: "<b>and</b>: 그리고 (접속사 단독 분리)"
+                    },
+                    {
+                        id: "s3-8",
+                        fullEnglish: "If you say \"kia ora\" to the villagers, they will be glad to hear it.",
+                        fullKorean: "만약 당신이 마을 사람들에게 \"kia ora\"라고 말한다면, 그들은 그것을 듣고 기뻐할 것입니다.",
+                        chunks: [
+                            { id: "c1", en: "If", kor: "만약", note: "조건 접속사" },
+                            { id: "c2", en: "you say \"kia ora\"", kor: "당신이 \"키아 오라\"라고 말한다면", note: "주어+동사+목적어" },
+                            { id: "c3", en: "to the villagers,", kor: "마을 사람들에게,", note: "전치사구" },
+                            { id: "c4", en: "they will be glad", kor: "그들은 기뻐할 것입니다", note: "주어+동사+보어" },
+                            { id: "c5", en: "to hear it.", kor: "그것을 들어서.", note: "to부정사 원인" }
+                        ],
+                        grammarNote: "<b>If</b>: 만약 ~라면 (접속사 단독 분리)"
+                    },
+                    {
+                        id: "s3-9",
+                        fullEnglish: "It means \"hi\" in English.",
+                        fullKorean: "그것은 영어로 \"안녕\"을 의미합니다.",
+                        chunks: [
+                            { id: "c1", en: "It means", kor: "그것은 의미합니다", note: "주어+동사" },
+                            { id: "c2", en: "\"hi\"", kor: "\"안녕\"을", note: "목적어" },
+                            { id: "c3", en: "in English.", kor: "영어로.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>in English</b>: 영어로"
+                    }
+                ]
+            },
+            4: {
+                title: "4차시: The Haka - A National Symbol (p.108)",
+                page: "p.108",
+                sentences: [
+                    {
+                        id: "s4-1",
+                        fullEnglish: "Have you ever watched the haka?",
+                        fullKorean: "당신은 하카를 본 적이 있습니까?",
+                        chunks: [
+                            { id: "c1", en: "Have you ever", kor: "당신은 ~해본 적이 있습니까", note: "현재완료 경험" },
+                            { id: "c2", en: "watched", kor: "본 적이", note: "과거분사" },
+                            { id: "c3", en: "the haka?", kor: "하카 춤을?", note: "목적어" }
+                        ],
+                        grammarNote: "<b>Have you ever + p.p.?</b>: ~해본 적이 있나요?"
+                    },
+                    {
+                        id: "s4-2",
+                        fullEnglish: "The haka may look scary because haka dancers shout and move their bodies wildly.",
+                        fullKorean: "하카 무용수들이 소리를 지르고 몸을 격렬하게 움직이기 때문에 하카가 무섭게 보일지도 모릅니다.",
+                        chunks: [
+                            { id: "c1", en: "The haka may look", kor: "하카는 보일지도 모릅니다", note: "주어+조동사+감각동사" },
+                            { id: "c2", en: "scary", kor: "무섭게", note: "보어" },
+                            { id: "c3", en: "because", kor: "왜냐하면 ~이기 때문에", note: "접속사" },
+                            { id: "c4", en: "haka dancers", kor: "하카 댄서들이", note: "주어" },
+                            { id: "c5", en: "shout", kor: "소리를 지르고", note: "동사1" },
+                            { id: "c6", en: "and", kor: "그리고", note: "접속사" },
+                            { id: "c7", en: "move their bodies", kor: "그들의 몸을 움직이기 때문입니다", note: "동사2+목적어" },
+                            { id: "c8", en: "wildly.", kor: "격렬하게.", note: "부사" }
+                        ],
+                        grammarNote: "<b>because</b> & <b>and</b>: 접속사 각각 독립 분리"
+                    },
+                    {
+                        id: "s4-3",
+                        fullEnglish: "The Maori people, who you've already heard about, started doing the haka as a war dance.",
+                        fullKorean: "당신이 이미 들어본 적이 있는 마오리족 사람들은 하카를 전쟁의 춤으로 추기 시작했습니다.",
+                        chunks: [
+                            { id: "c1", en: "The Maori people,", kor: "마오리 사람들은,", note: "주어" },
+                            { id: "c2", en: "who you've already heard about,", kor: "당신이 이미 들어본 적 있는,", note: "관계대명사절" },
+                            { id: "c3", en: "started doing", kor: "추기 시작했습니다", note: "동사+동명사" },
+                            { id: "c4", en: "the haka", kor: "하카를", note: "목적어" },
+                            { id: "c5", en: "as a war dance.", kor: "전쟁의 춤으로서.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>as</b>: ~로서"
+                    },
+                    {
+                        id: "s4-4",
+                        fullEnglish: "Today, however, New Zealanders do the haka at sport matches, weddings, or other important events.",
+                        fullKorean: "그러나 오늘날, 뉴질랜드 사람들은 스포츠 경기, 결혼식 또는 다른 중요한 행사에서 하카를 춥니다.",
+                        chunks: [
+                            { id: "c1", en: "Today, however,", kor: "그러나 오늘날,", note: "부사" },
+                            { id: "c2", en: "New Zealanders", kor: "뉴질랜드 사람들은", note: "주어" },
+                            { id: "c3", en: "do the haka", kor: "하카를 춥니다", note: "동사+목적어" },
+                            { id: "c4", en: "at sport matches,", kor: "스포츠 경기에서,", note: "전치사구1" },
+                            { id: "c5", en: "weddings,", kor: "결혼식에서,", note: "명사2" },
+                            { id: "c6", en: "or", kor: "또는", note: "접속사" },
+                            { id: "c7", en: "other important events.", kor: "다른 중요한 행사들에서.", note: "명사구" }
+                        ],
+                        grammarNote: "<b>or</b>: 또는 (접속사 단독 분리)"
+                    },
+                    {
+                        id: "s4-5",
+                        fullEnglish: "For example, New Zealand's national rugby team members do the haka before every match.",
+                        fullKorean: "예를 들어, 뉴질랜드 럭비 국가대표 팀 선수들은 모든 경기 전에 하카를 춥니다.",
+                        chunks: [
+                            { id: "c1", en: "For example,", kor: "예를 들어,", note: "연결어" },
+                            { id: "c2", en: "New Zealand's national rugby team members", kor: "뉴질랜드 국가대표 럭비 팀 선수들은", note: "복합 주어" },
+                            { id: "c3", en: "do the haka", kor: "하카를 춥니다", note: "동사+목적어" },
+                            { id: "c4", en: "before every match.", kor: "매 경기 전에.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>for example</b>: 예를 들어"
+                    },
+                    {
+                        id: "s4-6",
+                        fullEnglish: "It is famous all over the world.",
+                        fullKorean: "그것은 전 세계적으로 유명합니다.",
+                        chunks: [
+                            { id: "c1", en: "It is famous", kor: "그것은 유명합니다", note: "주어+동사+보어" },
+                            { id: "c2", en: "all over the world.", kor: "전 세계적으로.", note: "전치사구" }
+                        ],
+                        grammarNote: "<b>famous</b>: 유명한"
+                    },
+                    {
+                        id: "s4-7",
+                        fullEnglish: "If you see the haka, you will probably agree that the rival team must be scared.",
+                        fullKorean: "만약 당신이 하카를 본다면, 당신은 상대 팀이 겁을 먹었음에 틀림없다는 것에 아마 동의할 것입니다.",
+                        chunks: [
+                            { id: "c1", en: "If", kor: "만약", note: "조건 접속사" },
+                            { id: "c2", en: "you see the haka,", kor: "당신이 하카를 본다면,", note: "주어+동사+목적어" },
+                            { id: "c3", en: "you will probably agree", kor: "당신은 아마도 동의할 것입니다", note: "주어+부사+동사" },
+                            { id: "c4", en: "that the rival team", kor: "상대(라이벌) 팀이", note: "접속사절 주어" },
+                            { id: "c5", en: "must be scared.", kor: "겁에 질렸음에 틀림없다고.", note: "조동사+보어" }
+                        ],
+                        grammarNote: "<b>If</b>: 만약 ~라면 (접속사 단독 분리)"
+                    },
+                    {
+                        id: "s4-8",
+                        fullEnglish: "Like the kiwi bird, the haka is a national symbol.",
+                        fullKorean: "키위새처럼, 하카도 국가적인 상징입니다.",
+                        chunks: [
+                            { id: "c1", en: "Like the kiwi bird,", kor: "키위새처럼,", note: "전치사구" },
+                            { id: "c2", en: "the haka is", kor: "하카는 ~입니다", note: "주어+동사" },
+                            { id: "c3", en: "a national symbol.", kor: "국가적 상징.", note: "보어" }
+                        ],
+                        grammarNote: "<b>like</b>: ~처럼"
+                    }
+                ]
+            }
+        };
+
+        window.onload = function() {
+            startTimer();
+            checkStudentInfoOnLoad();
+            initTouchSentenceData();
+            renderCurrentView();
+            updatePrintContent();
+        };
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (typeof currentSession === 'number' && sessionTimes[currentSession] !== undefined) {
+                    sessionTimes[currentSession]++;
+                }
+            }, 1000);
+        }
+
+        function checkStudentInfoOnLoad() {
+            const saved = localStorage.getItem('nz_student_info');
+            if (saved) {
+                try {
+                    studentInfo = JSON.parse(saved);
+                    updateHeaderStudentBadge();
+                } catch(e) {
+                    openStudentModal();
+                }
+            } else {
+                openStudentModal();
+            }
+        }
+
+        function openStudentModal() {
+            document.getElementById('input-student-id').value = studentInfo.id || '';
+            document.getElementById('input-student-name').value = studentInfo.name || '';
+            document.getElementById('student-modal').classList.remove('hidden');
+        }
+
+        function saveStudentInfo(e) {
+            e.preventDefault();
+            const idVal = document.getElementById('input-student-id').value.trim();
+            const nameVal = document.getElementById('input-student-name').value.trim();
+            if (!idVal || !nameVal) return;
+
+            studentInfo = { id: idVal, name: nameVal };
+            localStorage.setItem('nz_student_info', JSON.stringify(studentInfo));
+            updateHeaderStudentBadge();
+            document.getElementById('student-modal').classList.add('hidden');
+
+            updatePrintContent();
+            if (currentView === 'report') {
+                renderReportView();
+            }
+        }
+
+        function updateHeaderStudentBadge() {
+            const badgeEl = document.getElementById('header-student-info');
+            if (studentInfo.id && studentInfo.name) {
+                badgeEl.textContent = `${studentInfo.id} ${studentInfo.name}`;
+            } else {
+                badgeEl.textContent = "학번/이름 입력";
+            }
+        }
+
+        function setGlobalSpeed(spd) {
+            globalSpeed = spd;
+            document.getElementById('spd-08').className = spd === 0.8 ? "px-2 py-1 rounded-lg font-bold bg-white text-emerald-800 shadow-sm transition" : "px-2 py-1 rounded-lg font-bold bg-emerald-900/50 hover:bg-emerald-600 transition";
+            document.getElementById('spd-10').className = spd === 1.0 ? "px-2 py-1 rounded-lg font-bold bg-white text-emerald-800 shadow-sm transition" : "px-2 py-1 rounded-lg font-bold bg-emerald-900/50 hover:bg-emerald-600 transition";
+            document.getElementById('spd-12').className = spd === 1.2 ? "px-2 py-1 rounded-lg font-bold bg-white text-emerald-800 shadow-sm transition" : "px-2 py-1 rounded-lg font-bold bg-emerald-900/50 hover:bg-emerald-600 transition";
+        }
+
+        function switchSession(sess) {
+            currentSession = sess;
+            touchSentenceIdx = 0;
+            tvSentenceIdx = 0;
+            tvRevealedChunks = [];
+            initTouchSentenceData();
+
+            [1, 2, 3, 4, 'all'].forEach(s => {
+                const btn = document.getElementById(`tab-s${s}`);
+                if (!btn) return;
+                if (s === sess) {
+                    btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 bg-white text-emerald-800 shadow-sm";
+                } else {
+                    btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 text-emerald-100 hover:bg-emerald-700/50";
+                }
+            });
+
+            const labelEl = document.getElementById('current-session-label');
+            if (sess === 'all') {
+                labelEl.textContent = "전체 35문장 모아보기";
+            } else {
+                const totalSents = lessonData[sess].sentences.length;
+                labelEl.textContent = `${sess}차시 (${lessonData[sess].page}) 총 ${totalSents}문장`;
+            }
+
+            renderCurrentView();
+        }
+
+        function switchView(v) {
+            currentView = v;
+            ['touch', 'table', 'tv', 'practice', 'report'].forEach(view => {
+                const panel = document.getElementById(`view-${view}`);
+                const tabBtn = document.getElementById(`vtab-${view}`);
+                if (view === v) {
+                    panel.classList.remove('hidden');
+                    tabBtn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 bg-emerald-600 text-white shadow-sm";
+                } else {
+                    panel.classList.add('hidden');
+                    if (view === 'report') {
+                        tabBtn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200";
+                    } else {
+                        tabBtn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-100";
+                    }
+                }
+            });
+
+            renderCurrentView();
+        }
+
+        function renderCurrentView() {
+            if (currentView === 'touch') renderTouchView();
+            else if (currentView === 'table') renderTableView();
+            else if (currentView === 'tv') renderTVView();
+            else if (currentView === 'practice') renderPracticeView();
+            else if (currentView === 'report') renderReportView();
+        }
+
+        // VIEW 1: Touch & Drag Table Grid Logic
+        function getCurrentTouchSentences() {
+            if (currentSession === 'all') {
+                let all = [];
+                [1,2,3,4].forEach(s => {
+                    all = all.concat(lessonData[s].sentences);
+                });
+                return all;
+            }
+            return lessonData[currentSession].sentences;
+        }
+
+        function initTouchSentenceData() {
+            const list = getCurrentTouchSentences();
+            if (!list || list.length === 0) return;
+            if (touchSentenceIdx >= list.length) touchSentenceIdx = list.length - 1;
+            if (touchSentenceIdx < 0) touchSentenceIdx = 0;
+
+            const sentence = list[touchSentenceIdx];
+            touchPlacedSlots = new Array(sentence.chunks.length).fill(null);
+
+            let bank = [...sentence.chunks];
+            for (let i = bank.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [bank[i], bank[j]] = [bank[j], bank[i]];
+            }
+            touchWordBank = bank;
+            hasListenedAudio = false;
+
+            const feedbackBox = document.getElementById('touch-feedback-box');
+            if (feedbackBox) {
+                feedbackBox.classList.add('hidden');
+                feedbackBox.innerHTML = '';
+            }
+        }
+
+        function renderTouchView() {
+            const list = getCurrentTouchSentences();
+            if (!list || list.length === 0) return;
+
+            const sentence = list[touchSentenceIdx];
+            document.getElementById('touch-sentence-num').textContent = `문장 ${touchSentenceIdx + 1} / ${list.length}`;
+            document.getElementById('touch-full-korean').textContent = sentence.fullKorean;
+
+            // Render Table Slots
+            const slotsContainer = document.getElementById('touch-table-slots');
+            slotsContainer.innerHTML = '';
+
+            sentence.chunks.forEach((chunk, idx) => {
+                const placedChunk = touchPlacedSlots[idx];
+                const slotBox = document.createElement('div');
+                slotBox.className = "flex flex-col border-2 border-emerald-300 rounded-xl overflow-hidden bg-white shadow-xs transition";
+
+                // Korean Header
+                const korHeader = document.createElement('div');
+                korHeader.className = "bg-emerald-100 text-emerald-950 font-bold text-xs p-2 text-center border-b border-emerald-200 flex items-center justify-center gap-1 min-h-[36px]";
+                korHeader.innerHTML = `<span class="bg-emerald-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-outfit">${idx + 1}</span> ${chunk.kor}`;
+
+                // English Slot Box
+                const engSlot = document.createElement('div');
+                engSlot.className = "p-3 min-h-[56px] flex items-center justify-center text-center font-bold text-sm bg-slate-50 cursor-pointer transition hover:bg-emerald-50/50";
+                
+                if (placedChunk) {
+                    engSlot.className = "p-3 min-h-[56px] flex items-center justify-center text-center font-bold text-sm bg-emerald-600 text-white shadow-inner cursor-pointer animate-fade-in";
+                    engSlot.textContent = placedChunk.en;
+                    engSlot.onclick = () => removePlacedChunk(idx);
+                } else {
+                    engSlot.innerHTML = `<span class="text-xs text-slate-300 italic font-normal"><i class="fa-solid fa-arrow-down mr-1"></i>빈 칸</span>`;
+                }
+
+                // Drag & Drop event handlers
+                slotBox.ondragover = (e) => { e.preventDefault(); slotBox.classList.add('drag-over'); };
+                slotBox.ondragleave = () => { slotBox.classList.remove('drag-over'); };
+                slotBox.ondrop = (e) => {
+                    e.preventDefault();
+                    slotBox.classList.remove('drag-over');
+                    if (draggedChunkId) {
+                        placeChunkInSlot(draggedChunkId, idx);
+                    }
+                };
+
+                slotBox.appendChild(korHeader);
+                slotBox.appendChild(engSlot);
+                slotsContainer.appendChild(slotBox);
+            });
+
+            // Render Word Bank
+            const bankContainer = document.getElementById('touch-word-bank');
+            bankContainer.innerHTML = '';
+
+            if (touchWordBank.length === 0) {
+                bankContainer.innerHTML = `<span class="text-xs text-emerald-700 font-bold py-2"><i class="fa-solid fa-circle-check mr-1 text-emerald-600"></i>모든 조각이 슬롯에 배치되었습니다! 아래 '정답 확인'을 누르세요.</span>`;
+            } else {
+                touchWordBank.forEach(chunk => {
+                    const btn = document.createElement('button');
+                    btn.className = "px-3.5 py-2 bg-white hover:bg-emerald-50 text-slate-800 font-bold text-xs sm:text-sm rounded-xl border-2 border-amber-300 shadow-xs hover:border-emerald-500 hover:shadow-md transition transform active:scale-95 flex items-center gap-1.5 cursor-grab";
+                    btn.draggable = true;
+                    btn.textContent = chunk.en;
+
+                    btn.onclick = () => placeChunkFromBank(chunk.id);
+                    btn.ondragstart = () => { draggedChunkId = chunk.id; };
+                    btn.ondragend = () => { draggedChunkId = null; };
+
+                    bankContainer.appendChild(btn);
+                });
+            }
+        }
+
+        function placeChunkFromBank(chunkId) {
+            const firstEmptyIdx = touchPlacedSlots.findIndex(slot => slot === null);
+            if (firstEmptyIdx === -1) return;
+            placeChunkInSlot(chunkId, firstEmptyIdx);
+        }
+
+        function placeChunkInSlot(chunkId, slotIdx) {
+            const bankIdx = touchWordBank.findIndex(c => c.id === chunkId);
+            if (bankIdx === -1) return;
+
+            const chunkObj = touchWordBank[bankIdx];
+
+            if (touchPlacedSlots[slotIdx] !== null) {
+                const oldChunk = touchPlacedSlots[slotIdx];
+                touchWordBank.push(oldChunk);
+            }
+
+            touchPlacedSlots[slotIdx] = chunkObj;
+            touchWordBank.splice(bankIdx, 1);
+            renderTouchView();
+        }
+
+        function removePlacedChunk(slotIdx) {
+            const chunkObj = touchPlacedSlots[slotIdx];
+            if (!chunkObj) return;
+
+            touchPlacedSlots[slotIdx] = null;
+            touchWordBank.push(chunkObj);
+            renderTouchView();
+        }
+
+        function resetTouchCurrentSentence() {
+            initTouchSentenceData();
+            renderTouchView();
+        }
+
+        function checkTouchSentenceAnswer() {
+            const list = getCurrentTouchSentences();
+            const sentence = list[touchSentenceIdx];
+
+            const feedbackBox = document.getElementById('touch-feedback-box');
+            feedbackBox.classList.remove('hidden');
+
+            const isFilled = touchPlacedSlots.every(slot => slot !== null);
+            if (!isFilled) {
+                feedbackBox.innerHTML = `
+                    <div class="bg-rose-50 border-2 border-rose-300 rounded-2xl p-4 text-rose-800 text-xs sm:text-sm font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-circle-exclamation text-rose-600 text-lg"></i>
+                        <span>아직 채워지지 않은 칸이 있습니다. 모든 빈 칸을 위 보기에서 선택하여 채워주세요!</span>
+                    </div>
+                `;
+                return;
+            }
+
+            let isCorrect = true;
+            sentence.chunks.forEach((chunk, i) => {
+                if (!touchPlacedSlots[i] || touchPlacedSlots[i].id !== chunk.id) {
+                    isCorrect = false;
+                }
+            });
+
+            if (isCorrect) {
+                if (typeof currentSession === 'number') {
+                    completedSentences[currentSession].add(sentence.id);
+                }
+
+                hasListenedAudio = false;
+
+                feedbackBox.innerHTML = `
+                    <div class="bg-emerald-50 border-2 border-emerald-400 rounded-2xl p-5 space-y-4 shadow-md animate-fade-in">
+                        <div class="flex items-center justify-between flex-wrap gap-3">
+                            <div class="flex items-center gap-2 text-emerald-800 font-black text-sm sm:text-base">
+                                <i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i>
+                                <span>정답입니다!</span>
+                            </div>
+                            
+                            <button id="btn-play-audio" onclick="playMandatoryAudio('${sentence.fullEnglish.replace(/'/g, "\\'")}')" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm rounded-xl transition flex items-center gap-2 shadow-md active:scale-95 cursor-pointer ring-4 ring-emerald-200">
+                                <i class="fa-solid fa-volume-high text-base"></i> 필수: 원어민 음성 듣기
+                            </button>
+                        </div>
+
+                        <!-- Status Badge -->
+                        <div class="flex items-center justify-between bg-amber-50 border border-amber-200 p-3 rounded-xl flex-wrap gap-2">
+                            <span id="audio-status-msg" class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
+                                <i class="fa-solid fa-volume-high text-amber-600 animate-bounce"></i> 원어민 음성을 들어야 '다음 문장' 버튼이 활성화됩니다.
+                            </span>
+                        </div>
+
+                        <!-- Dynamic Grammar Note Section -->
+                        <div class="bg-white p-4 rounded-xl border border-emerald-200 text-xs sm:text-sm text-slate-700 space-y-1">
+                            <span class="font-extrabold text-emerald-800 block text-xs uppercase tracking-wider mb-1">
+                                <i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> 이 문장의 핵심 어휘 및 문법 팁
+                            </span>
+                            <div class="leading-relaxed">${sentence.grammarNote}</div>
+                        </div>
+
+                        <div class="flex items-center justify-end pt-2 gap-2 flex-wrap">
+                            <button id="btn-next-sentence" disabled onclick="nextTouchSentence()" class="px-5 py-2.5 bg-slate-300 text-slate-500 font-extrabold text-xs sm:text-sm rounded-xl transition flex items-center gap-2 cursor-not-allowed opacity-75">
+                                <span>다음 문장으로 이동</span> <i class="fa-solid fa-lock text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+            } else {
+                feedbackBox.innerHTML = `
+                    <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 text-amber-900 text-xs sm:text-sm font-bold flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-600 text-lg"></i>
+                            <span>순서가 일부 올바르지 않습니다. 위 한글 직독직해 뜻을 다시 확인하고 수정해보세요!</span>
+                        </div>
+                        <button onclick="resetTouchCurrentSentence()" class="px-3 py-1.5 bg-amber-200 hover:bg-amber-300 text-amber-900 rounded-lg text-xs font-black transition whitespace-nowrap">
+                            다시 시도
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function playMandatoryAudio(text) {
+            const playBtn = document.getElementById('btn-play-audio');
+            const statusMsg = document.getElementById('audio-status-msg');
+            const nextBtn = document.getElementById('btn-next-sentence');
+
+            if (playBtn) {
+                playBtn.disabled = true;
+                playBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> 음성 재생 중...`;
+            }
+            if (statusMsg) {
+                statusMsg.className = "text-xs font-bold text-emerald-700 flex items-center gap-1.5";
+                statusMsg.innerHTML = `<i class="fa-solid fa-volume-high animate-pulse text-emerald-600"></i> 원어민 음성을 청취하고 있습니다...`;
+            }
+
+            speakText(text, function() {
+                hasListenedAudio = true;
+                if (playBtn) {
+                    playBtn.disabled = false;
+                    playBtn.innerHTML = `<i class="fa-solid fa-rotate-right"></i> 음성 다시 듣기`;
+                    playBtn.className = "px-4 py-2.5 bg-slate-700 hover:bg-slate-800 text-white font-extrabold text-xs sm:text-sm rounded-xl transition flex items-center gap-2 shadow-xs cursor-pointer";
+                }
+                if (statusMsg) {
+                    statusMsg.className = "text-xs font-extrabold text-emerald-800 flex items-center gap-1.5";
+                    statusMsg.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i> 원어민 음성 확인 완료! 다음 문장으로 이동할 수 있습니다.`;
+                }
+                if (nextBtn) {
+                    nextBtn.disabled = false;
+                    nextBtn.className = "px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm rounded-xl transition shadow-md flex items-center gap-2 transform active:scale-95 cursor-pointer animate-bounce";
+                    nextBtn.innerHTML = `<span>다음 문장으로 이동</span> <i class="fa-solid fa-arrow-right"></i>`;
+                }
+            });
+        }
+
+        function prevTouchSentence() {
+            if (touchSentenceIdx > 0) {
+                touchSentenceIdx--;
+                initTouchSentenceData();
+                renderTouchView();
+            }
+        }
+
+        function nextTouchSentence() {
+            const list = getCurrentTouchSentences();
+            const feedbackBox = document.getElementById('touch-feedback-box');
+            if (feedbackBox && !feedbackBox.classList.contains('hidden') && !hasListenedAudio) {
+                return;
+            }
+
+            if (touchSentenceIdx < list.length - 1) {
+                touchSentenceIdx++;
+                initTouchSentenceData();
+                renderTouchView();
+            }
+        }
+
+        // VIEW 2: Detailed Chunk Table Renderer
+        function renderTableView() {
+            const container = document.getElementById('table-view-container');
+            container.innerHTML = '';
+
+            const sessionsToRender = currentSession === 'all' ? [1,2,3,4] : [currentSession];
+
+            sessionsToRender.forEach(sessNum => {
+                const sessData = lessonData[sessNum];
+
+                const sessCard = document.createElement('div');
+                sessCard.className = "bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs space-y-4";
+
+                sessCard.innerHTML = `
+                    <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
+                        <h3 class="font-extrabold text-base sm:text-lg text-emerald-800 flex items-center gap-2">
+                            <i class="fa-solid fa-bookmark text-emerald-600"></i> ${sessData.title}
+                        </h3>
+                        <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-lg">${sessData.sentences.length}문장</span>
+                    </div>
+                `;
+
+                const sentsList = document.createElement('div');
+                sentsList.className = "space-y-4";
+
+                sessData.sentences.forEach((sent, idx) => {
+                    const item = document.createElement('div');
+                    item.className = "border border-slate-200/90 rounded-2xl p-4 bg-slate-50/50 space-y-3";
+
+                    let chunksHTML = sent.chunks.map(c => `
+                        <div class="bg-white border border-emerald-200 rounded-xl p-2.5 flex-1 min-w-[130px] shadow-2xs">
+                            <div class="font-bold text-emerald-900 text-sm mb-0.5">${c.en}</div>
+                            <div class="text-xs text-slate-600 font-medium">${c.kor}</div>
+                            <span class="inline-block mt-1 text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-semibold">${c.note}</span>
+                        </div>
+                    `).join('');
+
+                    item.innerHTML = `
+                        <div class="flex items-center justify-between gap-2 flex-wrap">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-emerald-600 text-white font-extrabold text-xs px-2 py-0.5 rounded-md">${idx + 1}</span>
+                                <span class="text-xs sm:text-sm font-bold text-slate-700">${sent.fullKorean}</span>
+                            </div>
+                            <button onclick="speakText('${sent.fullEnglish.replace(/'/g, "\\'")}')" class="text-xs text-emerald-700 hover:text-emerald-900 font-bold bg-emerald-100 hover:bg-emerald-200 px-2.5 py-1 rounded-lg transition flex items-center gap-1">
+                                <i class="fa-solid fa-volume-high"></i> 전체 듣기
+                            </button>
+                        </div>
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            ${chunksHTML}
+                        </div>
+                        <div class="text-xs text-slate-500 bg-amber-50/80 border border-amber-200/60 p-2.5 rounded-xl">
+                            <i class="fa-solid fa-circle-info text-amber-600 mr-1"></i> ${sent.grammarNote}
+                        </div>
+                    `;
+
+                    sentsList.appendChild(item);
+                });
+
+                sessCard.appendChild(sentsList);
+                container.appendChild(sessCard);
+            });
+        }
+
+        // VIEW 3: Classroom TV Slide Logic
+        function renderTVView() {
+            const list = getCurrentTouchSentences();
+            if (!list || list.length === 0) return;
+
+            if (tvSentenceIdx >= list.length) tvSentenceIdx = list.length - 1;
+            if (tvSentenceIdx < 0) tvSentenceIdx = 0;
+
+            const sentence = list[tvSentenceIdx];
+
+            document.getElementById('tv-sentence-num').textContent = `문장 ${tvSentenceIdx + 1} / ${list.length}`;
+            document.getElementById('tv-session-title').textContent = typeof currentSession === 'number' ? lessonData[currentSession].title : "전체 모아보기";
+            document.getElementById('tv-full-korean').textContent = sentence.fullKorean;
+            document.getElementById('tv-grammar-note').innerHTML = `<i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i> <b>핵심 구문:</b> ${sentence.grammarNote}`;
+
+            const chunksContainer = document.getElementById('tv-chunks-container');
+            chunksContainer.innerHTML = '';
+
+            sentence.chunks.forEach((chunk, idx) => {
+                const isRevealed = tvRevealedChunks.includes(idx);
+
+                const card = document.createElement('div');
+                card.className = isRevealed 
+                    ? "bg-emerald-600 text-white p-4 rounded-2xl border-2 border-emerald-400 shadow-xl cursor-pointer transition transform scale-105 min-w-[140px] text-center"
+                    : "bg-slate-800 text-slate-400 p-4 rounded-2xl border-2 border-slate-700 shadow-md cursor-pointer transition hover:border-slate-500 min-w-[140px] text-center";
+
+                card.onclick = () => revealTVChunk(idx);
+
+                if (isRevealed) {
+                    card.innerHTML = `
+                        <div class="font-extrabold text-base sm:text-lg mb-1">${chunk.en}</div>
+                        <div class="text-xs text-emerald-200 font-semibold">${chunk.kor}</div>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div class="text-xs font-bold text-slate-500 uppercase">Chunk ${idx + 1}</div>
+                        <div class="text-sm font-bold text-slate-400 mt-1"><i class="fa-solid fa-eye mr-1"></i>클릭하여 공개</div>
+                    `;
+                }
+
+                chunksContainer.appendChild(card);
+            });
+        }
+
+        function revealTVChunk(idx) {
+            if (!tvRevealedChunks.includes(idx)) {
+                tvRevealedChunks.push(idx);
+                renderTVView();
+            }
+        }
+
+        function revealAllTVChunks() {
+            const list = getCurrentTouchSentences();
+            const sentence = list[tvSentenceIdx];
+            tvRevealedChunks = sentence.chunks.map((_, i) => i);
+            renderTVView();
+        }
+
+        function speakCurrentTVSentence() {
+            const list = getCurrentTouchSentences();
+            const sentence = list[tvSentenceIdx];
+            speakText(sentence.fullEnglish);
+        }
+
+        function prevTVSentence() {
+            if (tvSentenceIdx > 0) {
+                tvSentenceIdx--;
+                tvRevealedChunks = [];
+                renderTVView();
+            }
+        }
+
+        function nextTVSentence() {
+            const list = getCurrentTouchSentences();
+            if (tvSentenceIdx < list.length - 1) {
+                tvSentenceIdx++;
+                tvRevealedChunks = [];
+                renderTVView();
+            }
+        }
+
+        // VIEW 4: Chunk Practice Hide/Reveal Logic
+        function renderPracticeView() {
+            const container = document.getElementById('practice-list-container');
+            container.innerHTML = '';
+
+            const sessionsToRender = currentSession === 'all' ? [1,2,3,4] : [currentSession];
+
+            sessionsToRender.forEach(sessNum => {
+                const sessData = lessonData[sessNum];
+
+                sessData.sentences.forEach((sent, sIdx) => {
+                    const card = document.createElement('div');
+                    card.className = "bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-3";
+
+                    let chunksHTML = sent.chunks.map((chunk, cIdx) => {
+                        const key = `${sent.id}-${cIdx}`;
+                        const isRevealed = practiceRevealed[key];
+
+                        return `
+                            <div onclick="togglePracticeChunk('${key}')" class="cursor-pointer border-2 ${isRevealed ? 'border-emerald-500 bg-emerald-50 text-emerald-950' : 'border-slate-300 bg-white text-slate-700'} rounded-xl p-3 min-w-[130px] flex-1 transition shadow-2xs hover:shadow-sm text-center">
+                                <div class="font-extrabold text-sm mb-1">${chunk.en}</div>
+                                <div class="text-xs ${isRevealed ? 'text-emerald-700 font-bold' : 'text-slate-400 bg-slate-100 rounded px-1 py-0.5 opacity-60'}">
+                                    ${isRevealed ? chunk.kor : '??? (클릭)'}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    card.innerHTML = `
+                        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-200 pb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-emerald-600 text-white font-extrabold text-xs px-2.5 py-0.5 rounded-lg">${sIdx + 1}</span>
+                                <span class="text-xs sm:text-sm font-bold text-slate-800">${sent.fullKorean}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="togglePracticeAll('${sent.id}', true)" class="text-[11px] font-bold text-emerald-700 bg-emerald-100 hover:bg-emerald-200 px-2 py-1 rounded-md transition">모두 열기</button>
+                                <button onclick="togglePracticeAll('${sent.id}', false)" class="text-[11px] font-bold text-slate-600 bg-slate-200 hover:bg-slate-300 px-2 py-1 rounded-md transition">가리기</button>
+                                <button onclick="speakText('${sent.fullEnglish.replace(/'/g, "\\'")}')" class="text-[11px] font-bold text-slate-700 bg-white border border-slate-300 hover:bg-slate-100 px-2 py-1 rounded-md transition">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2.5 pt-1">
+                            ${chunksHTML}
+                        </div>
+                    `;
+
+                    container.appendChild(card);
+                });
+            });
+        }
+
+        function togglePracticeChunk(key) {
+            practiceRevealed[key] = !practiceRevealed[key];
+            renderPracticeView();
+        }
+
+        function togglePracticeAll(sentId, reveal) {
+            Object.keys(lessonData).forEach(s => {
+                lessonData[s].sentences.forEach(sent => {
+                    if (sent.id === sentId) {
+                        sent.chunks.forEach((_, cIdx) => {
+                            practiceRevealed[`${sent.id}-${cIdx}`] = reveal;
+                        });
+                    }
+                });
+            });
+            renderPracticeView();
+        }
+
+        function resetPracticeState() {
+            practiceRevealed = {};
+            renderPracticeView();
+        }
+
+        // VIEW 5: Student Report & Screen Capture Logic
+        function renderReportView() {
+            document.getElementById('report-student-id').textContent = studentInfo.id || "미입력";
+            document.getElementById('report-student-name').textContent = studentInfo.name || "학생 이름";
+
+            const today = new Date();
+            document.getElementById('report-date-stamp').textContent = `${today.getFullYear()}. ${String(today.getMonth() + 1).padStart(2, '0')}. ${String(today.getDate()).padStart(2, '0')}`;
+
+            const listContainer = document.getElementById('report-sessions-list');
+            listContainer.innerHTML = '';
+
+            let totalSecs = 0;
+
+            [1, 2, 3, 4].forEach(s => {
+                const sec = sessionTimes[s] || 0;
+                totalSecs += sec;
+
+                const mins = Math.floor(sec / 60);
+                const secs = sec % 60;
+                const timeStr = `${mins}분 ${secs}초`;
+
+                const doneCount = completedSentences[s] ? completedSentences[s].size : 0;
+                const totalCount = lessonData[s].sentences.length;
+
+                const card = document.createElement('div');
+                card.className = "bg-slate-50 border border-slate-200 rounded-xl p-3.5 flex items-center justify-between shadow-2xs";
+                card.innerHTML = `
+                    <div>
+                        <span class="text-xs font-bold text-slate-800 block">${lessonData[s].title}</span>
+                        <span class="text-[11px] text-slate-500 font-semibold">학습 완료: ${doneCount} / ${totalCount} 문장</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs font-extrabold text-emerald-700 font-outfit block">${timeStr}</span>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+
+            const totMins = Math.floor(totalSecs / 60);
+            const totSecs = totalSecs % 60;
+            document.getElementById('report-total-time').textContent = `${totMins}분 ${totSecs}초`;
+        }
+
+        // Print Content Generator (Renders 1~4 Sessions into Printable Worksheet)
+        function updatePrintContent() {
+            const header = document.getElementById('print-student-header');
+            if (header) {
+                header.textContent = `학번: ${studentInfo.id || "_______"} | 이름: ${studentInfo.name || "_______"} | 작성일자: ${new Date().toLocaleDateString()}`;
+            }
+
+            const printContainer = document.getElementById('print-content');
+            if (!printContainer) return;
+            printContainer.innerHTML = '';
+
+            [1, 2, 3, 4].forEach(s => {
+                const sData = lessonData[s];
+                const sDiv = document.createElement('div');
+                sDiv.className = "mb-8 page-break-inside-avoid";
+
+                let rowsHTML = sData.sentences.map((sent, i) => {
+                    let chunkCols = sent.chunks.map(c => `
+                        <td class="border border-slate-400 p-2 text-xs">
+                            <div class="font-bold text-slate-900">${c.en}</div>
+                            <div class="text-slate-600 text-[11px]">${c.kor}</div>
+                        </td>
+                    `).join('');
+
+                    return `
+                        <tr class="border-b border-slate-300">
+                            <td class="border border-slate-400 p-2 text-xs font-bold text-center w-8 bg-slate-100">${i + 1}</td>
+                            <td class="border border-slate-400 p-2 text-xs font-medium">${sent.fullKorean}</td>
+                            <td class="p-0 border border-slate-400">
+                                <table class="w-full text-left border-collapse">
+                                    <tr>${chunkCols}</tr>
+                                </table>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+                sDiv.innerHTML = `
+                    <h3 class="text-sm font-black bg-slate-200 p-2 rounded mb-2 border border-slate-400">${sData.title}</h3>
+                    <table class="w-full text-left border-collapse border border-slate-400">
+                        <thead>
+                            <tr class="bg-slate-100 text-xs font-bold border-b border-slate-400">
+                                <th class="p-2 border border-slate-400 w-8 text-center">#</th>
+                                <th class="p-2 border border-slate-400 w-1/3">우리말 뜻</th>
+                                <th class="p-2 border border-slate-400">세부 의미단위 구문 (Micro-Chunk)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHTML}
+                        </tbody>
+                    </table>
+                `;
+                printContainer.appendChild(sDiv);
+            });
+        }
+
+        // Global Audio Synthesis (TTS) - Whole sentence speech with mandatory listening callback
+        function speakText(text, onEndCallback) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = globalSpeed;
+
+                let isHandled = false;
+                const complete = () => {
+                    if (!isHandled) {
+                        isHandled = true;
+                        if (onEndCallback) onEndCallback();
+                    }
+                };
+
+                utterance.onend = complete;
+                utterance.onerror = complete;
+
+                const approxTimeMs = Math.max(2000, (text.length / 10) * 1000 / globalSpeed) + 1000;
+                setTimeout(complete, approxTimeMs);
+
+                window.speechSynthesis.speak(utterance);
+            } else {
+                if (onEndCallback) onEndCallback();
+            }
+        }
+
+        // Global Navigation Arrow Click Handlers
+        function handleGlobalPrev() {
+            if (currentView === 'touch') prevTouchSentence();
+            else if (currentView === 'tv') prevTVSentence();
+        }
+
+        function handleGlobalNext() {
+            if (currentView === 'touch') nextTouchSentence();
+            else if (currentView === 'tv') nextTVSentence();
+        }
+    </script>
+</body>
+</html>
