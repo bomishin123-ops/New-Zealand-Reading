@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>중3 영어 Lesson 6. Hello! New Zealand - 교과서 본문 의미단위 학습</title>
+  <title>중3 영어 Lesson 6. Hello! New Zealand - 의미단위 학습</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
@@ -22,7 +22,7 @@
 
     /* Modal */
     .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-    .modal { background: #fff; padding: 32px; border-radius: 16px; max-width: 400px; width: 90%; text-align: center; border-radius: 12px; }
+    .modal { background: #fff; padding: 32px; border-radius: 16px; max-width: 400px; width: 90%; text-align: center; }
     .modal input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid var(--border); border-radius: 8px; font-size: 16px; }
     .modal button { width: 100%; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 12px; }
 
@@ -68,7 +68,7 @@
 </head>
 <body>
 
-  <!-- Modal for Student Identification -->
+  <!-- Auth Modal -->
   <div class="modal-overlay" id="auth-modal">
     <div class="modal">
       <h2>학습자 정보 입력</h2>
@@ -95,7 +95,7 @@
     <!-- Main Learning Area -->
     <div id="learning-view">
       <div class="sentence-header">
-        <span class="badge" id="sentence-idx">문장 1 / 7</span>
+        <span class="badge" id="sentence-idx">문장 1 / 8</span>
         <button class="btn btn-secondary" onclick="resetCurrentSentence()" style="padding: 6px 12px; font-size: 13px;">🔄 조각 초기화</button>
       </div>
 
@@ -135,7 +135,7 @@
   </div>
 
   <script>
-    // Exact Text Dataset strictly based on user specifications
+    // Lessons Content Dataset
     const sessions = [
       {
         title: "1차시 (p.104~105)",
@@ -537,7 +537,7 @@
 
       let items = sentence.chunks.map((c, originalIdx) => ({ text: c.eng, originalIdx }));
       
-      // Alphabetical Shuffle
+      // Shuffle alphabetically
       items.sort((a, b) => a.text.localeCompare(b.text));
 
       items.forEach((item) => {
