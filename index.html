@@ -3,350 +3,491 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Zealand English Lesson Data</title>
+  <title>New Zealand English Lesson - Meaning Units</title>
   <style>
+    :root {
+      --primary-color: #2563eb;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-sub: #475569;
+      --border-color: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 20px;
-      background-color: #f8f9fa;
-      color: #333;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
     }
+
+    header {
+      background-color: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
     h1 {
-      color: #0d6efd;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      text-align: center;
     }
-    .page-title {
-      margin-top: 30px;
-      border-bottom: 2px solid #0d6efd;
+
+    /* 학번 & 이름 입력 영역 */
+    .user-info {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .user-info input {
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .user-info input:focus {
+      border-color: var(--primary-color);
+    }
+
+    /* 탭 메뉴 스타일 */
+    .tab-container {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+      overflow-x: auto;
+    }
+
+    .tab-button {
+      flex: 1;
+      padding: 12px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .tab-button.active {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    /* 데이터 테이블 스타일 */
+    .content-area {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .panel-title {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--border-color);
       padding-bottom: 8px;
     }
-    .card-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 12px;
-      margin-top: 15px;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
-    .card {
-      background: white;
-      border: 1px solid #dee2e6;
-      border-radius: 8px;
-      padding: 12px 16px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
     }
-    .en {
-      font-weight: bold;
-      font-size: 1.1rem;
-      color: #198754;
-      margin-bottom: 4px;
+
+    th {
+      background-color: #f1f5f9;
+      color: var(--text-sub);
+      font-weight: 600;
     }
-    .ko {
-      color: #6c757d;
-      font-size: 0.95rem;
+
+    tr:hover {
+      background-color: #f8fafc;
+    }
+
+    .en-text {
+      font-weight: 600;
+      color: #0f172a;
+      width: 50%;
+    }
+
+    .ko-text {
+      color: #334155;
+      width: 50%;
     }
   </style>
 </head>
 <body>
 
-  <h1>🇳🇿 New Zealand Lesson Data</h1>
-  <div id="app"></div>
+  <header>
+    <h1>🇳🇿 New Zealand 최소 의미단위 학습</h1>
+    <div class="user-info">
+      <input type="text" id="studentId" placeholder="학번 (예: 20101)">
+      <input type="text" id="studentName" placeholder="이름 (예: 홍길동)">
+    </div>
+  </header>
+
+  <!-- 4개 페이지 탭 -->
+  <div class="tab-container">
+    <button class="tab-button active" onclick="openTab(0)">1페이지</button>
+    <button class="tab-button" onclick="openTab(1)">2페이지</button>
+    <button class="tab-button" onclick="openTab(2)">3페이지</button>
+    <button class="tab-button" onclick="openTab(3)">4페이지</button>
+  </div>
+
+  <!-- 데이터 출력 영역 -->
+  <div class="content-area" id="tabContent"></div>
 
   <script>
     // 1~4페이지 전체 최소 의미단위 데이터
-    const lessonData = [
+    const lessonPages = [
       {
         page: 1,
-        title: "New Zealand's Nature",
+        title: "Page 1: Natural Beauty",
         data: [
-          {"en": "New Zealand", "ko": "뉴질랜드는"},
-          {"en": "is", "ko": "이다"},
-          {"en": "a place", "ko": "장소"},
-          {"en": "of natural beauty", "ko": "자연의 아름다움의"},
-          {"en": "It", "ko": "그곳은"},
-          {"en": "has", "ko": "가지고 있다"},
-          {"en": "many", "ko": "많은"},
-          {"en": "beautiful lakes", "ko": "아름다운 호수들을"},
-          {"en": "and", "ko": "그리고"},
-          {"en": "waterfalls", "ko": "폭포들을"},
-          {"en": "New Zealand", "ko": "뉴질랜드는"},
-          {"en": "has", "ko": "가지고 있다"},
-          {"en": "two main islands", "ko": "두 개의 주요 섬들을"},
-          {"en": "the South Island", "ko": "남섬"},
-          {"en": "and", "ko": "그리고"},
-          {"en": "the North Island", "ko": "북섬을"},
-          {"en": "In the South Island", "ko": "남섬에는"},
-          {"en": "there are", "ko": "있다"},
-          {"en": "mountains", "ko": "산들이"},
-          {"en": "that", "ko": "~하는"},
-          {"en": "are covered", "ko": "덮여 있는"},
-          {"en": "with snow", "ko": "눈으로"},
-          {"en": "all year round", "ko": "일 년 내내"},
-          {"en": "You", "ko": "당신은"},
-          {"en": "will be amazed", "ko": "놀라게 될 것이다"},
-          {"en": "by", "ko": "~에 의해"},
-          {"en": "the fantastic views", "ko": "환상적인 풍경에"},
-          {"en": "In the North Island", "ko": "북섬에는"},
-          {"en": "there are", "ko": "있다"},
-          {"en": "many", "ko": "많은"},
-          {"en": "hot springs", "ko": "온천들"},
-          {"en": "lakes", "ko": "호수들"},
-          {"en": "and", "ko": "그리고"},
-          {"en": "areas", "ko": "지역들"},
-          {"en": "with", "ko": "~를 가진"},
-          {"en": "green grass", "ko": "푸른 잔디를"},
-          {"en": "Because of", "ko": "~ 때문에"},
-          {"en": "its natural beauty", "ko": "그것의 자연의 아름다움"},
-          {"en": "many famous movies", "ko": "많은 유명한 영화들이"},
-          {"en": "have been made", "ko": "만들어져 왔다(촬영되었다)"},
-          {"en": "in New Zealand", "ko": "뉴질랜드에서"},
-          {"en": "If", "ko": "만약"},
-          {"en": "you", "ko": "당신이"},
-          {"en": "visit", "ko": "방문한다면"},
-          {"en": "New Zealand", "ko": "뉴질랜드를"},
-          {"en": "you", "ko": "당신은"},
-          {"en": "will surely appreciate", "ko": "분명 진가를 알게 될 것이다"},
-          {"en": "its nature", "ko": "그것의 자연의"}
+          ["New Zealand", "뉴질랜드는"],
+          ["is", "이다"],
+          ["a place", "장소"],
+          ["of natural beauty", "자연의 아름다움의"],
+          ["It", "그곳은"],
+          ["has", "가지고 있다"],
+          ["many", "많은"],
+          ["beautiful lakes", "아름다운 호수들을"],
+          ["and", "그리고"],
+          ["waterfalls", "폭포들을"],
+          ["New Zealand", "뉴질랜드는"],
+          ["has", "가지고 있다"],
+          ["two main islands", "두 개의 주요 섬들을"],
+          ["the South Island", "남섬"],
+          ["and", "그리고"],
+          ["the North Island", "북섬을"],
+          ["In the South Island", "남섬에는"],
+          ["there are", "있다"],
+          ["mountains", "산들이"],
+          ["that", "~하는"],
+          ["are covered", "덮여 있는"],
+          ["with snow", "눈으로"],
+          ["all year round", "일 년 내내"],
+          ["You", "당신은"],
+          ["will be amazed", "놀라게 될 것이다"],
+          ["by", "~에 의해"],
+          ["the fantastic views", "환상적인 풍경에"],
+          ["In the North Island", "북섬에는"],
+          ["there are", "있다"],
+          ["many", "많은"],
+          ["hot springs", "온천들"],
+          ["lakes", "호수들"],
+          ["and", "그리고"],
+          ["areas", "지역들"],
+          ["with", "~를 가진"],
+          ["green grass", "푸른 잔디를"],
+          ["Because of", "~ 때문에"],
+          ["its natural beauty", "그것의 자연의 아름다움"],
+          ["many famous movies", "많은 유명한 영화들이"],
+          ["have been made", "만들어져 왔다(촬영되었다)"],
+          ["in New Zealand", "뉴질랜드에서"],
+          ["If", "만약"],
+          ["you", "당신이"],
+          ["visit", "방문한다면"],
+          ["New Zealand", "뉴질랜드를"],
+          ["you", "당신은"],
+          ["will surely appreciate", "분명 진가를 알게 될 것이다"],
+          ["its nature", "그것의 자연의"]
         ]
       },
       {
         page: 2,
-        title: "The Word 'Kiwi'",
+        title: "Page 2: The Word 'Kiwi'",
         data: [
-          {"en": "When", "ko": "~할 때"},
-          {"en": "you", "ko": "당신이"},
-          {"en": "hear", "ko": "들을"},
-          {"en": "the word kiwi", "ko": "키위라는 단어를"},
-          {"en": "what", "ko": "무엇이"},
-          {"en": "comes", "ko": "오는가"},
-          {"en": "to your mind", "ko": "당신의 마음속에"},
-          {"en": "Maybe", "ko": "아마도"},
-          {"en": "a fruit", "ko": "과일이겠지만"},
-          {"en": "but", "ko": "하지만"},
-          {"en": "in New Zealand", "ko": "뉴질랜드에서"},
-          {"en": "the word kiwi", "ko": "키위라는 단어는"},
-          {"en": "has", "ko": "가지고 있다"},
-          {"en": "a couple of meanings", "ko": "몇 가지 뜻을"},
-          {"en": "First", "ko": "첫째로"},
-          {"en": "kiwi", "ko": "키위는"},
-          {"en": "is", "ko": "이다"},
-          {"en": "the name", "ko": "이름"},
-          {"en": "of", "ko": "~의"},
-          {"en": "a delicious", "ko": "맛있는"},
-          {"en": "green fruit", "ko": "녹색 과일의"},
-          {"en": "A lot of", "ko": "많은"},
-          {"en": "kiwi fruit", "ko": "키위 과일이"},
-          {"en": "is grown", "ko": "재배된다"},
-          {"en": "there", "ko": "그곳에서"},
-          {"en": "so", "ko": "그래서"},
-          {"en": "New Zealand", "ko": "뉴질랜드는"},
-          {"en": "is known", "ko": "알려져 있다"},
-          {"en": "as", "ko": "~로"},
-          {"en": "the land", "ko": "땅으로"},
-          {"en": "of kiwi fruit", "ko": "키위 과일의"},
-          {"en": "Kiwi", "ko": "키위는"},
-          {"en": "is", "ko": "이다"},
-          {"en": "also", "ko": "또한"},
-          {"en": "the name", "ko": "이름"},
-          {"en": "of", "ko": "~의"},
-          {"en": "one", "ko": "하나"},
-          {"en": "of New Zealand's native birds", "ko": "뉴질랜드의 토종 새들 중"},
-          {"en": "The kiwi", "ko": "키위는"},
-          {"en": "is", "ko": "이다"},
-          {"en": "special", "ko": "특별한"},
-          {"en": "to New Zealanders", "ko": "뉴질랜드인들에게"},
-          {"en": "because", "ko": "~때문에"},
-          {"en": "it", "ko": "그것이"},
-          {"en": "is", "ko": "이기"},
-          {"en": "the symbol", "ko": "상징"},
-          {"en": "of the nation", "ko": "그 국가의"},
-          {"en": "Also", "ko": "또한"},
-          {"en": "kiwi", "ko": "키위는"},
-          {"en": "is", "ko": "이다"},
-          {"en": "a nickname", "ko": "별명"},
-          {"en": "for", "ko": "~를 위한"},
-          {"en": "people", "ko": "사람들"},
-          {"en": "from New Zealand", "ko": "뉴질랜드 출신의"},
-          {"en": "Today", "ko": "오늘날"},
-          {"en": "New Zealanders", "ko": "뉴질랜드인들은"},
-          {"en": "are", "ko": "이다"},
-          {"en": "sometimes", "ko": "때때로"},
-          {"en": "called", "ko": "불리는"},
-          {"en": "Kiwis", "ko": "키위라고"},
-          {"en": "throughout", "ko": "~에 걸쳐"},
-          {"en": "the world", "ko": "전 세계"},
-          {"en": "Now", "ko": "이제"},
-          {"en": "you", "ko": "당신은"},
-          {"en": "know", "ko": "안다"},
-          {"en": "that", "ko": "~라는 것을"},
-          {"en": "kiwi", "ko": "키위가"},
-          {"en": "is", "ko": "이라는"},
-          {"en": "the name", "ko": "이름"},
-          {"en": "of", "ko": "~의"},
-          {"en": "a fruit", "ko": "과일"},
-          {"en": "a bird", "ko": "새"},
-          {"en": "and", "ko": "그리고"},
-          {"en": "also", "ko": "또한"},
-          {"en": "a people", "ko": "한 민족의"},
-          {"en": "Next time", "ko": "다음번에"},
-          {"en": "don't become", "ko": "되지 마라"},
-          {"en": "confused", "ko": "혼란스럽게"},
-          {"en": "when", "ko": "~할 때"},
-          {"en": "someone", "ko": "누군가"},
-          {"en": "uses", "ko": "사용할"},
-          {"en": "the word kiwi", "ko": "키위라는 단어를"},
-          {"en": "which", "ko": "그리고 그것은"},
-          {"en": "has", "ko": "가지고 있다"},
-          {"en": "several meanings", "ko": "여러 가지 뜻을"}
+          ["When", "~할 때"],
+          ["you", "당신이"],
+          ["hear", "들을"],
+          ["the word kiwi", "키위라는 단어를"],
+          ["what", "무엇이"],
+          ["comes", "오는가"],
+          ["to your mind", "당신의 마음속에"],
+          ["Maybe", "아마도"],
+          ["a fruit", "과일이겠지만"],
+          ["but", "하지만"],
+          ["in New Zealand", "뉴질랜드에서"],
+          ["the word kiwi", "키위라는 단어는"],
+          ["has", "가지고 있다"],
+          ["a couple of meanings", "몇 가지 뜻을"],
+          ["First", "첫째로"],
+          ["kiwi", "키위는"],
+          ["is", "이다"],
+          ["the name", "이름"],
+          ["of", "~의"],
+          ["a delicious", "맛있는"],
+          ["green fruit", "녹색 과일의"],
+          ["A lot of", "많은"],
+          ["kiwi fruit", "키위 과일이"],
+          ["is grown", "재배된다"],
+          ["there", "그곳에서"],
+          ["so", "그래서"],
+          ["New Zealand", "뉴질랜드는"],
+          ["is known", "알려져 있다"],
+          ["as", "~로"],
+          ["the land", "땅으로"],
+          ["of kiwi fruit", "키위 과일의"],
+          ["Kiwi", "키위는"],
+          ["is", "이다"],
+          ["also", "또한"],
+          ["the name", "이름"],
+          ["of", "~의"],
+          ["one", "하나"],
+          ["of New Zealand's native birds", "뉴질랜드의 토종 새들 중"],
+          ["The kiwi", "키위는"],
+          ["is", "이다"],
+          ["special", "특별한"],
+          ["to New Zealanders", "뉴질랜드인들에게"],
+          ["because", "~때문에"],
+          ["it", "그것이"],
+          ["is", "이기"],
+          ["the symbol", "상징"],
+          ["of the nation", "그 국가의"],
+          ["Also", "또한"],
+          ["kiwi", "키위는"],
+          ["is", "이다"],
+          ["a nickname", "별명"],
+          ["for", "~를 위한"],
+          ["people", "사람들"],
+          ["from New Zealand", "뉴질랜드 출신의"],
+          ["Today", "오늘날"],
+          ["New Zealanders", "뉴질랜드인들은"],
+          ["are", "이다"],
+          ["sometimes", "때때로"],
+          ["called", "불리는"],
+          ["Kiwis", "키위라고"],
+          ["throughout", "~에 걸쳐"],
+          ["the world", "전 세계"],
+          ["Now", "이제"],
+          ["you", "당신은"],
+          ["know", "안다"],
+          ["that", "~라는 것을"],
+          ["kiwi", "키위가"],
+          ["is", "이라는"],
+          ["the name", "이름"],
+          ["of", "~의"],
+          ["a fruit", "과일"],
+          ["a bird", "새"],
+          ["and", "그리고"],
+          ["also", "또한"],
+          ["a people", "한 민족의"],
+          ["Next time", "다음번에"],
+          ["don't become", "되지 마라"],
+          ["confused", "혼란스럽게"],
+          ["when", "~할 때"],
+          ["someone", "누군가"],
+          ["uses", "사용할"],
+          ["the word kiwi", "키위라는 단어를"],
+          ["which", "그리고 그것은"],
+          ["has", "가지고 있다"],
+          ["several meanings", "여러 가지 뜻을"]
         ]
       },
       {
         page: 3,
-        title: "The Maori & Culture",
+        title: "Page 3: The Maori Culture",
         data: [
-          {"en": "Now", "ko": "이제"},
-          {"en": "let's talk", "ko": "이야기해 보자"},
-          {"en": "about", "ko": "~에 대해"},
-          {"en": "the Maori", "ko": "마오리인들에"},
-          {"en": "They", "ko": "그들은"},
-          {"en": "are", "ko": "이다"},
-          {"en": "the native people", "ko": "원주민"},
-          {"en": "of New Zealand", "ko": "뉴질랜드의"},
-          {"en": "They", "ko": "그들은"},
-          {"en": "went", "ko": "갔다"},
-          {"en": "to live", "ko": "살기 위해"},
-          {"en": "on the islands", "ko": "그 섬들에"},
-          {"en": "long before", "ko": "훨씬 전에"},
-          {"en": "Europeans", "ko": "유럽인들이"},
-          {"en": "arrived", "ko": "도착하기"},
-          {"en": "The Maori culture", "ko": "마오리 문화는"},
-          {"en": "is", "ko": "이다"},
-          {"en": "an important part", "ko": "중요한 부분"},
-          {"en": "of", "ko": "~의"},
-          {"en": "today's New Zealand society", "ko": "오늘날 뉴질랜드 사회의"},
-          {"en": "The Maori language", "ko": "마오리어는"},
-          {"en": "is taught", "ko": "가르쳐진다"},
-          {"en": "at some schools", "ko": "몇몇 학교에서"},
-          {"en": "and", "ko": "그리고"},
-          {"en": "there are", "ko": "있다"},
-          {"en": "Maori language", "ko": "마오리어"},
-          {"en": "radio", "ko": "라디오"},
-          {"en": "and", "ko": "그리고"},
-          {"en": "TV stations", "ko": "TV 방송국들이"},
-          {"en": "There are", "ko": "있다"},
-          {"en": "Maori villages", "ko": "마오리 마을들이"},
-          {"en": "in", "ko": "~에"},
-          {"en": "many parts", "ko": "많은 지역들"},
-          {"en": "of the country", "ko": "그 나라의"},
-          {"en": "You", "ko": "당신은"},
-          {"en": "can visit", "ko": "방문할 수 있다"},
-          {"en": "Maori villages", "ko": "마오리 마을들을"},
-          {"en": "and", "ko": "그리고"},
-          {"en": "experience", "ko": "경험할 수 있다"},
-          {"en": "Maori culture", "ko": "마오리 문화를"},
-          {"en": "If", "ko": "만약"},
-          {"en": "you", "ko": "당신이"},
-          {"en": "say", "ko": "말한다면"},
-          {"en": "\"kia ora\"", "ko": "\"kia ora\"라고"},
-          {"en": "to the villagers", "ko": "마을 사람들에게"},
-          {"en": "they", "ko": "그들은"},
-          {"en": "will be", "ko": "될 것이다"},
-          {"en": "glad", "ko": "기쁘게"},
-          {"en": "to hear it", "ko": "그것을 듣게 되어서"},
-          {"en": "It", "ko": "그것은"},
-          {"en": "means", "ko": "의미한다"},
-          {"en": "\"hi\"", "ko": "\"안녕\"을"},
-          {"en": "in English", "ko": "영어로"}
+          ["Now", "이제"],
+          ["let's talk", "이야기해 보자"],
+          ["about", "~에 대해"],
+          ["the Maori", "마오리인들에"],
+          ["They", "그들은"],
+          ["are", "이다"],
+          ["the native people", "원주민"],
+          ["of New Zealand", "뉴질랜드의"],
+          ["They", "그들은"],
+          ["went", "갔다"],
+          ["to live", "살기 위해"],
+          ["on the islands", "그 섬들에"],
+          ["long before", "훨씬 전에"],
+          ["Europeans", "유럽인들이"],
+          ["arrived", "도착하기"],
+          ["The Maori culture", "마오리 문화는"],
+          ["is", "이다"],
+          ["an important part", "중요한 부분"],
+          ["of", "~의"],
+          ["today's New Zealand society", "오늘날 뉴질랜드 사회의"],
+          ["The Maori language", "마오리어는"],
+          ["is taught", "가르쳐진다"],
+          ["at some schools", "몇몇 학교에서"],
+          ["and", "그리고"],
+          ["there are", "있다"],
+          ["Maori language", "마오리어"],
+          ["radio", "라디오"],
+          ["and", "그리고"],
+          ["TV stations", "TV 방송국들이"],
+          ["There are", "있다"],
+          ["Maori villages", "마오리 마을들이"],
+          ["in", "~에"],
+          ["many parts", "많은 지역들"],
+          ["of the country", "그 나라의"],
+          ["You", "당신은"],
+          ["can visit", "방문할 수 있다"],
+          ["Maori villages", "마오리 마을들을"],
+          ["and", "그리고"],
+          ["experience", "경험할 수 있다"],
+          ["Maori culture", "마오리 문화를"],
+          ["If", "만약"],
+          ["you", "당신이"],
+          ["say", "말한다면"],
+          ["\"kia ora\"", "\"kia ora\"라고"],
+          ["to the villagers", "마을 사람들에게"],
+          ["they", "그들은"],
+          ["will be", "될 것이다"],
+          ["glad", "기쁘게"],
+          ["to hear it", "그것을 듣게 되어서"],
+          ["It", "그것은"],
+          ["means", "의미한다"],
+          ["\"hi\"", "\"안녕\"을"],
+          ["in English", "영어로"]
         ]
       },
       {
         page: 4,
-        title: "The Haka",
+        title: "Page 4: The Haka",
         data: [
-          {"en": "Have", "ko": "~해 본 적 있는가"},
-          {"en": "you", "ko": "당신은"},
-          {"en": "ever watched", "ko": "본 적이"},
-          {"en": "the haka", "ko": "하카를"},
-          {"en": "The haka", "ko": "하카는"},
-          {"en": "may look", "ko": "보일지도 모른다"},
-          {"en": "scary", "ko": "무섭게"},
-          {"en": "because", "ko": "~때문에"},
-          {"en": "haka dancers", "ko": "하카 춤꾼들이"},
-          {"en": "shout", "ko": "소리 지르고"},
-          {"en": "and", "ko": "그리고"},
-          {"en": "move", "ko": "움직이기"},
-          {"en": "their bodies", "ko": "그들의 몸을"},
-          {"en": "wildly", "ko": "격렬하게"},
-          {"en": "The Maori people", "ko": "마오리인들은"},
-          {"en": "who", "ko": "(그들에 대해)"},
-          {"en": "you've already heard", "ko": "당신이 이미 들어본 적 있는"},
-          {"en": "about", "ko": "~에 대해"},
-          {"en": "started", "ko": "시작했다"},
-          {"en": "doing", "ko": "추는 것을"},
-          {"en": "the haka", "ko": "하카를"},
-          {"en": "as", "ko": "~로서"},
-          {"en": "a war dance", "ko": "전쟁 춤"},
-          {"en": "Today", "ko": "오늘날"},
-          {"en": "however", "ko": "그러나"},
-          {"en": "New Zealanders", "ko": "뉴질랜드인들은"},
-          {"en": "do", "ko": "춘다"},
-          {"en": "the haka", "ko": "하카를"},
-          {"en": "at", "ko": "~에서"},
-          {"en": "sport matches", "ko": "스포츠 경기들"},
-          {"en": "weddings", "ko": "결혼식들"},
-          {"en": "or", "ko": "또는"},
-          {"en": "other important events", "ko": "다른 중요한 행사들"},
-          {"en": "For example", "ko": "예를 들어"},
-          {"en": "New Zealand's", "ko": "뉴질랜드의"},
-          {"en": "national rugby team members", "ko": "국가대표 럭비 팀 선수들은"},
-          {"en": "do", "ko": "춘다"},
-          {"en": "the haka", "ko": "하카를"},
-          {"en": "before", "ko": "~ 전에"},
-          {"en": "every match", "ko": "매 경기"},
-          {"en": "It", "ko": "그것은"},
-          {"en": "is", "ko": "이다"},
-          {"en": "famous", "ko": "유명한"},
-          {"en": "all over the world", "ko": "전 세계적으로"},
-          {"en": "If", "ko": "만약"},
-          {"en": "you", "ko": "당신이"},
-          {"en": "see", "ko": "본다면"},
-          {"en": "the haka", "ko": "하카를"},
-          {"en": "you", "ko": "당신은"},
-          {"en": "will probably agree", "ko": "아마 동의할 것이다"},
-          {"en": "that", "ko": "~라는 것에"},
-          {"en": "the rival team", "ko": "상대 팀이"},
-          {"en": "must be", "ko": "틀림없이 ~일 것이라고"},
-          {"en": "scared", "ko": "겁에 질린"},
-          {"en": "Like", "ko": "과 마찬가지로"},
-          {"en": "the kiwi bird", "ko": "키위 새"},
-          {"en": "the haka", "ko": "하카는"},
-          {"en": "is", "ko": "이다"},
-          {"en": "a national symbol", "ko": "국가적 상징"}
+          ["Have", "~해 본 적 있는가"],
+          ["you", "당신은"],
+          ["ever watched", "본 적이"],
+          ["the haka", "하카를"],
+          ["The haka", "하카는"],
+          ["may look", "보일지도 모른다"],
+          ["scary", "무섭게"],
+          ["because", "~때문에"],
+          ["haka dancers", "하카 춤꾼들이"],
+          ["shout", "소리 지르고"],
+          ["and", "그리고"],
+          ["move", "움직이기"],
+          ["their bodies", "그들의 몸을"],
+          ["wildly", "격렬하게"],
+          ["The Maori people", "마오리인들은"],
+          ["who", "(그들에 대해)"],
+          ["you've already heard", "당신이 이미 들어본 적 있는"],
+          ["about", "~에 대해"],
+          ["started", "시작했다"],
+          ["doing", "추는 것을"],
+          ["the haka", "하카를"],
+          ["as", "~로서"],
+          ["a war dance", "전쟁 춤"],
+          ["Today", "오늘날"],
+          ["however", "그러나"],
+          ["New Zealanders", "뉴질랜드인들은"],
+          ["do", "춘다"],
+          ["the haka", "하카를"],
+          ["at", "~에서"],
+          ["sport matches", "스포츠 경기들"],
+          ["weddings", "결혼식들"],
+          ["or", "또는"],
+          ["other important events", "다른 중요한 행사들"],
+          ["For example", "예를 들어"],
+          ["New Zealand's", "뉴질랜드의"],
+          ["national rugby team members", "국가대표 럭비 팀 선수들은"],
+          ["do", "춘다"],
+          ["the haka", "하카를"],
+          ["before", "~ 전에"],
+          ["every match", "매 경기"],
+          ["It", "그것은"],
+          ["is", "이다"],
+          ["famous", "유명한"],
+          ["all over the world", "전 세계적으로"],
+          ["If", "만약"],
+          ["you", "당신이"],
+          ["see", "본다면"],
+          ["the haka", "하카를"],
+          ["you", "당신은"],
+          ["will probably agree", "아마 동의할 것이다"],
+          ["that", "~라는 것에"],
+          ["the rival team", "상대 팀이"],
+          ["must be", "틀림없이 ~일 것이라고"],
+          ["scared", "겁에 질린"],
+          ["Like", "과 마찬가지로"],
+          ["the kiwi bird", "키위 새"],
+          ["the haka", "하카는"],
+          ["is", "이다"],
+          ["a national symbol", "국가적 상징"]
         ]
       }
     ];
 
-    // 화면에 카드 렌더링 함수
-    const app = document.getElementById('app');
+    // 탭 전환 및 화면 렌더링 함수
+    function renderTab(index) {
+      const container = document.getElementById('tabContent');
+      const pageInfo = lessonPages[index];
 
-    lessonData.forEach(pageData => {
-      const pageHeader = document.createElement('h2');
-      pageHeader.className = 'page-title';
-      pageHeader.textContent = `Page ${pageData.page}: ${pageData.title}`;
-      app.appendChild(pageHeader);
+      let rowsHtml = pageInfo.data.map(([en, ko]) => `
+        <tr>
+          <td class="en-text">${en}</td>
+          <td class="ko-text">${ko}</td>
+        </tr>
+      `).join('');
 
-      const container = document.createElement('div');
-      container.className = 'card-container';
+      container.innerHTML = `
+        <h2 class="panel-title">${pageInfo.title}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>영어 (최소 의미단위)</th>
+              <th>한글 뜻</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHtml}
+          </tbody>
+        </table>
+      `;
+    }
 
-      pageData.data.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <div class="en">${item.en}</div>
-          <div class="ko">${item.ko}</div>
-        `;
-        container.appendChild(card);
+    function openTab(index) {
+      const buttons = document.querySelectorAll('.tab-button');
+      buttons.forEach((btn, idx) => {
+        if (idx === index) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
       });
+      renderTab(index);
+    }
 
-      app.appendChild(container);
-    });
+    // 초기 화면(1페이지) 렌더링
+    renderTab(0);
   </script>
 </body>
 </html>
