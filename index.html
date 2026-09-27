@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[웅상여중 중3] 6과 4차시 본문 배열 퀴즈</title>
-  <!-- 캡처 라이브러리 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Hello! New Zealand 배열 퀴즈</title>
+  <!-- 캡처 기능을 위한 라이브러리 (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
@@ -17,166 +17,137 @@
       --border-gray: #e2e8f0;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg-color); color: var(--main-title); padding: 20px; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+    body { background-color: var(--bg-color); color: var(--main-title); padding: 15px; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
 
-    .container { width: 100%; max-width: 820px; }
+    .container { width: 100%; max-width: 600px; margin-top: 10px; }
     .hidden { display: none !important; }
 
-    /* 로그인 화면 */
-    .start-card { background: #fffbeb; border-radius: 24px; padding: 35px; border: 1px solid var(--box-border); }
-    .chasi-tag { background: #ea580c; color: #fff; padding: 4px 12px; border-radius: 12px; font-weight: bold; font-size: 0.85rem; display: inline-block; margin-bottom: 12px; }
-    .lesson-title { font-size: 2rem; color: #c2410c; font-family: serif; font-weight: bold; }
-    .lesson-sub { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; }
+    /* 학번/이름 입력 화면 */
+    .start-card { background: #fffbeb; border-radius: 20px; padding: 25px; border: 1px solid var(--box-border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .lesson-title { font-size: 1.8rem; color: #c2410c; font-family: serif; font-weight: bold; text-align: center; margin-bottom: 5px; }
+    .lesson-sub { font-size: 1.4rem; font-weight: 800; text-align: center; margin-bottom: 20px; color: #1e293b; }
 
-    .start-body { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background: #fff; border-radius: 20px; padding: 25px; margin-top: 20px; }
-    @media (max-width: 600px) { .start-body { grid-template-columns: 1fr; } }
-    .input-group { margin-bottom: 14px; }
-    .input-group label { display: block; font-size: 0.75rem; font-weight: bold; color: #64748b; margin-bottom: 6px; letter-spacing: 1px; }
-    .input-group input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.95rem; outline: none; }
-    .btn-start { width: 100%; background: var(--accent-coral); color: #fff; border: none; padding: 14px; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 6px; }
+    .input-group { margin-bottom: 15px; }
+    .input-group label { display: block; font-size: 0.8rem; font-weight: bold; color: #64748b; margin-bottom: 5px; letter-spacing: 1px; }
+    .input-group input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 1rem; outline: none; -webkit-user-select: text; user-select: text; }
+    .btn-start { width: 100%; background: var(--accent-coral); color: #fff; border: none; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
-    .guide-panel { background: #f0fdf4; border-radius: 16px; padding: 18px; border: 1px solid #dcfce7; }
-    .guide-item { margin-bottom: 10px; }
-    .guide-item span { font-weight: bold; color: #15803d; font-size: 0.8rem; display: block; }
-    .guide-item p { font-size: 0.85rem; color: #334155; }
-
-    /* 퀴즈 화면 */
-    .quiz-card { background: #fff; border-radius: 24px; padding: 28px; border: 1px solid var(--border-gray); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
-    .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .q-num { color: #f97316; font-weight: bold; font-size: 0.85rem; letter-spacing: 1px; }
-    .q-page { background: #fef08a; padding: 2px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; margin-left: 6px; }
+    /* 퀴즈 풀기 화면 */
+    .quiz-card { background: #fff; border-radius: 20px; padding: 20px; border: 1px solid var(--border-gray); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+    .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #f1f5f9; }
+    .q-num { color: #f97316; font-weight: bold; font-size: 0.9rem; }
     .q-progress { background: #f1f5f9; padding: 4px 12px; border-radius: 12px; font-weight: bold; font-size: 0.85rem; }
 
-    .korean-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 16px; padding: 24px; text-align: center; font-size: 1.2rem; font-weight: 700; line-height: 1.6; margin-bottom: 20px; color: #1e293b; }
+    .korean-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 20px; text-align: center; font-size: 1.1rem; font-weight: 700; line-height: 1.5; margin-bottom: 15px; color: #1e293b; }
 
-    .section-title { font-size: 0.95rem; font-weight: bold; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-    .btn-reset { background: none; border: none; color: #64748b; font-size: 0.8rem; cursor: pointer; }
+    .section-title { font-size: 0.9rem; font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .btn-reset { background: none; border: none; color: #64748b; font-size: 0.8rem; cursor: pointer; padding: 5px; }
 
-    .slot-container { border: 2px dashed #cbd5e1; border-radius: 16px; padding: 14px; min-height: 160px; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; align-content: flex-start; background: #fafafa; }
-    .slot-item { border: 1px dashed #cbd5e1; border-radius: 12px; padding: 8px 10px; text-align: center; min-width: 75px; background: #ffffff; flex: 1; }
-    .slot-num { font-size: 0.75rem; color: #94a3b8; display: block; margin-bottom: 2px; }
-    .slot-label { font-size: 0.85rem; font-weight: bold; color: #334155; }
-    .slot-tag { font-size: 0.68rem; background: #e0e7ff; color: #3730a3; padding: 2px 6px; border-radius: 6px; display: inline-block; margin-top: 4px; font-weight: 600; }
-    .selected-word { margin-top: 8px; font-weight: bold; color: #1e3a8a; font-size: 0.9rem; min-height: 20px; border-top: 1px solid #f1f5f9; padding-top: 4px; }
+    /* 정답 들어갈 구문 슬롯 */
+    .slot-container { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 10px; min-height: 140px; display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; align-content: flex-start; background: #fafafa; }
+    .slot-item { border: 1px dashed #cbd5e1; border-radius: 8px; padding: 6px; text-align: center; min-width: 60px; background: #ffffff; flex: 1; }
+    .slot-num { font-size: 0.7rem; color: #94a3b8; display: block; margin-bottom: 2px; }
+    .slot-label { font-size: 0.8rem; font-weight: bold; color: #334155; }
+    .slot-tag { font-size: 0.65rem; background: #e0e7ff; color: #3730a3; padding: 1px 5px; border-radius: 4px; display: inline-block; margin-top: 3px; font-weight: 600; }
+    .selected-word { margin-top: 6px; font-weight: bold; color: #1e3a8a; font-size: 0.9rem; min-height: 18px; border-top: 1px solid #f1f5f9; padding-top: 3px; }
 
-    .word-chip { background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 10px 14px; font-weight: 600; font-size: 0.9rem; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.03); transition: all 0.15s; }
-    .word-chip:hover { border-color: #f97316; color: #f97316; }
-    .word-chip.used { opacity: 0.25; pointer-events: none; background: #e2e8f0; }
+    /* 아래 선택할 단어 조각 */
+    .pool-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; padding: 10px; background: #f8fafc; border-radius: 12px; }
+    .word-chip { background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; font-weight: 600; font-size: 0.9rem; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.03); -webkit-tap-highlight-color: transparent; }
+    .word-chip:active { transform: scale(0.96); }
+    .word-chip.used { opacity: 0.2; pointer-events: none; background: #e2e8f0; }
 
-    .pool-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-
-    .quiz-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 16px; }
-    .hint-text { font-size: 0.8rem; color: #64748b; }
-    .btn-submit { background: #fca5a5; color: #fff; border: none; padding: 12px 24px; border-radius: 12px; font-size: 0.95rem; font-weight: bold; cursor: pointer; }
+    .quiz-footer { border-top: 1px solid #f1f5f9; padding-top: 15px; text-align: center; }
+    .btn-submit { width: 100%; background: #fca5a5; color: #fff; border: none; padding: 14px; border-radius: 10px; font-size: 1rem; font-weight: bold; cursor: pointer; }
     .btn-submit.active { background: var(--accent-coral); }
 
     /* 결과 및 캡처 화면 */
-    .result-card { background: #ffffff; border-radius: 24px; padding: 35px; border: 2px solid #e2e8f0; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-    .result-header { border-bottom: 2px dashed #e2e8f0; padding-bottom: 20px; margin-bottom: 25px; }
-    .badge-top { display: inline-block; background: #1e293b; color: #fff; padding: 6px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; margin-bottom: 12px; }
-    .result-title { font-size: 1.8rem; font-weight: 800; color: #1e293b; margin-top: 8px; }
+    .result-card { background: #ffffff; border-radius: 20px; padding: 30px; border: 2px solid #e2e8f0; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    .result-header { border-bottom: 2px dashed #e2e8f0; padding-bottom: 15px; margin-bottom: 20px; }
+    .badge-top { display: inline-block; background: #1e293b; color: #fff; padding: 6px 16px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; margin-bottom: 10px; }
+    .result-title { font-size: 1.6rem; font-weight: 800; color: #1e293b; }
 
-    .result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
-    .stat-box { background: #f8fafc; border-radius: 16px; padding: 18px; border: 1px solid #f1f5f9; }
-    .stat-label { font-size: 0.8rem; color: #64748b; font-weight: bold; margin-bottom: 6px; }
-    .stat-value { font-size: 1.5rem; font-weight: 800; color: #c2410c; }
+    .student-info-tag { background: #eff6ff; color: #1e40af; padding: 8px 16px; border-radius: 10px; font-weight: bold; display: inline-block; margin-bottom: 20px; font-size: 1rem; }
 
-    .student-info-tag { background: #eff6ff; color: #1e40af; padding: 8px 16px; border-radius: 12px; font-weight: bold; display: inline-block; margin-bottom: 20px; font-size: 1.05rem; }
+    .result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+    .stat-box { background: #f8fafc; border-radius: 12px; padding: 15px; border: 1px solid #f1f5f9; }
+    .stat-label { font-size: 0.75rem; color: #64748b; font-weight: bold; margin-bottom: 5px; }
+    .stat-value { font-size: 1.3rem; font-weight: 800; color: #c2410c; }
 
-    .action-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 25px; }
-    .btn-capture { background: #15803d; color: #fff; border: none; padding: 14px 28px; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-    .btn-retry { background: #64748b; color: #fff; border: none; padding: 14px 24px; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; }
+    .action-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .btn-capture { width: 100%; background: #15803d; color: #fff; border: none; padding: 15px; border-radius: 10px; font-size: 1rem; font-weight: bold; cursor: pointer; }
+    .btn-retry { width: 100%; background: #64748b; color: #fff; border: none; padding: 12px; border-radius: 10px; font-size: 0.95rem; font-weight: bold; cursor: pointer; opacity: 0.8; }
   </style>
 </head>
 <body>
 
 <div class="container">
 
-  <!-- 1. 로그인 화면 -->
+  <!-- 1단계: 학번/이름 입력 화면 (Start) -->
   <div id="screen-login">
     <div class="start-card">
-      <div>
-        <span class="chasi-tag">6과 4차시</span>
-        <div class="lesson-title">Lesson 6. Stories of New Zealand</div>
-        <div class="lesson-sub">뉴질랜드 이야기 (4차시) 배열 연습</div>
-        <p style="margin-top: 10px; color: #64748b; font-size:0.9rem;">한국어 뜻에 맞게 영어 구문 조각을 올바른 순서로 배열하세요.</p>
+      <div class="lesson-title">Hello! New Zealand</div>
+      <div class="lesson-sub">본문 의미단위 배열 연습</div>
+
+      <div class="input-group">
+        <label>STUDENT ID (학번)</label>
+        <input type="number" id="studentId" placeholder="예: 30101" pattern="\getd*">
       </div>
-
-      <div class="start-body">
-        <div>
-          <h3 style="margin-bottom: 12px; font-size: 0.95rem; color:#1e293b;">👤 먼저 이름을 알려 주세요</h3>
-          <div class="input-group">
-            <label>STUDENT ID</label>
-            <input type="text" id="studentId" placeholder="예: 30101">
-          </div>
-          <div class="input-group">
-            <label>NAME</label>
-            <input type="text" id="studentName" placeholder="이름을 입력하세요">
-          </div>
-          <button class="btn-start" onclick="beginQuiz()">Start &rsaquo;</button>
-        </div>
-
-        <div class="guide-panel">
-          <div style="font-size: 0.75rem; font-weight: bold; color: #166534; margin-bottom: 8px;">HOW IT WORKS</div>
-          <div class="guide-item">
-            <span>01 뜻을 읽어요</span>
-            <p>한국어 문장의 구조를 확인해요.</p>
-          </div>
-          <div class="guide-item">
-            <span>02 조각을 눌러요</span>
-            <p>순서대로 클릭해 슬롯을 채워요.</p>
-          </div>
-          <div class="guide-item">
-            <span>03 캡처 제출</span>
-            <p>완료 후 결과 화면을 캡처해요.</p>
-          </div>
-        </div>
+      <div class="input-group">
+        <label>NAME (이름)</label>
+        <input type="text" id="studentName" placeholder="이름을 입력하세요">
+      </div>
+      <button class="btn-start" onclick="beginQuiz()">퀴즈 시작하기 &rsaquo;</button>
+      
+      <div style="font-size: 0.8rem; color: #64748b; text-align: center; margin-top: 15px; line-height: 1.4;">
+        본문 1~4차시 내용이 랜덤으로 출제됩니다.<br>마지막 결과 화면을 캡처하여 제출하세요.
       </div>
     </div>
   </div>
 
-  <!-- 2. 퀴즈 화면 -->
+  <!-- 2단계: 퀴즈 푸는 화면 -->
   <div id="screen-quiz" class="hidden">
     <div class="quiz-card">
       <div class="q-header">
-        <div>
-          <span class="q-num" id="q-number">QUESTION 01</span>
-          <span class="q-page" id="q-page">L6 4차시</span>
-        </div>
-        <div class="q-progress" id="q-progress">1 / 3</div>
+        <span class="q-num" id="q-number">QUESTION 01</span>
+        <div class="q-progress" id="q-progress">1 / 5</div>
       </div>
 
-      <div class="korean-box" id="korean-text"></div>
+      <div class="korean-box" id="korean-text">
+        뉴질랜드는 자연의 아름다움을 가진 곳이다.
+      </div>
 
       <div class="section-title">
-        <span>❶ 단계 · 문장 배열하기</span>
-        <button class="btn-reset" onclick="resetSlots()">🔄 다시 해보기</button>
+        <span>❷ 단계 · 문장 배열하기</span>
+        <button class="btn-reset" onclick="resetSlots()">🔄 다시하기</button>
       </div>
 
+      <!-- 정답 슬롯 container (JS에서 동적 생성) -->
       <div class="slot-container" id="slot-container"></div>
 
+      <!-- 선택할 단어 조각 pool (JS에서 동적 생성) -->
       <div style="font-size: 0.8rem; font-weight: bold; color: #64748b; margin-bottom: 8px;">배열 조각</div>
       <div class="pool-container" id="pool-container"></div>
 
       <div class="quiz-footer">
-        <div class="hint-text" id="hint-text"></div>
-        <button class="btn-submit" id="btn-submit" onclick="nextQuestion()">다음 문제 &check;</button>
+        <button class="btn-submit" id="btn-submit" onclick="submitAnswer()">정답 확인 &check;</button>
       </div>
     </div>
   </div>
 
-  <!-- 3. 결과 및 캡처 화면 -->
+  <!-- 3단계: 최종 결과 및 캡처 화면 -->
   <div id="screen-result" class="hidden">
+    <!-- 이 영역이 캡처됨 -->
     <div class="result-card" id="capture-area">
       <div class="result-header">
         <span class="badge-top">웅상여중 중3 영어</span>
-        <div class="result-title">🎉 6과 4차시(뉴질랜드) 퀴즈 완료 카드</div>
-        <p style="color:#64748b; font-size:0.85rem; margin-top:4px;" id="submit-time"></p>
+        <div class="result-title">Hello! New Zealand<br>퀴즈 완료 카드</div>
+        <p style="color:#64748b; font-size:0.8rem; margin-top:5px;" id="submit-time"></p>
       </div>
 
       <div class="student-info-tag" id="result-student-info">
-        학생 정보
+        30101 홍길동 학생
       </div>
 
       <div class="result-grid">
@@ -190,106 +161,117 @@
         </div>
         <div class="stat-box">
           <div class="stat-label">최종 점수</div>
-          <div class="stat-value" id="stat-score" style="color:#2563eb;">100점</div>
+          <div class="stat-value" id="stat-score" style="color:#2563eb;">0점</div>
         </div>
       </div>
 
-      <p style="color:#64748b; font-size:0.9rem;">위 결과를 캡처하여 과제 제출함에 올려주세요!</p>
+      <p style="color:#64748b; font-size:0.85rem; line-height:1.4;">위 화면을 캡처(저장)하여<br>과제 제출함에 업로드하세요!</p>
     </div>
 
     <div class="action-buttons">
-      <button class="btn-capture" onclick="downloadCapture()">📸 결과 화면 캡처하기</button>
-      <button class="btn-retry" onclick="location.reload()">🔄 다시 풀어보기</button>
+      <button class="btn-capture" onclick="downloadCapture()">📸 결과 화면 캡처(저장)하기</button>
+      <button class="btn-retry" onclick="location.reload()">🔄 다시 도전하기</button>
     </div>
   </div>
 
 </div>
 
 <script>
-  // 6과 뉴질랜드 이야기 4차시 본문 데이터
-  const quizData = [
+  /* --- 본문 데이터 (1~4차시 통합) --- */
+  const masterQuizData = [
+    // 1차시
     {
-      page: "L6 4차시",
-      ko: "뉴질랜드는 아름다운 자연경관으로 세계적으로 유명한 섬나라이다.",
-      hint: "💡 힌트: 주어(New Zealand) + 동사(is an island country) + 형용사구 구성을 확인하세요.",
-      slots: [
-        { num: "1번", label: "뉴질랜드는", tag: "주어" },
-        { num: "2번", label: "섬나라이다", tag: "동사/보어" },
-        { num: "3번", label: "유명한", tag: "형용사" },
-        { num: "4번", label: "아름다운 자연경관으로", tag: "전치사구" }
-      ],
-      words: [
-        "for its beautiful scenery.", "famous worldwide", "New Zealand", "is an island country"
-      ],
-      correctOrder: [
-        "New Zealand", "is an island country", "famous worldwide", "for its beautiful scenery."
-      ]
+      ko: "뉴질랜드는 자연의 아름다움을 가진 곳이다.",
+      slots: [{n:"1번", l:"뉴질랜드는", t:"주어"}, {n:"2번", l:"곳이다", t:"동사"}, {n:"3번", l:"자연의", t:"전치사구"}, {n:"4번", l:"아름다움을 가진", t:"형용사구"}],
+      words: ["New Zealand", "is", "a place", "of", "natural", "beauty."],
+      correct: "New Zealand is a place of natural beauty."
     },
     {
-      page: "L6 4차시",
-      ko: "많은 관광객들이 뉴질랜드의 독특한 문화와 전통을 경험하기 위해 방문한다.",
-      hint: "💡 힌트: Many tourists visit~ 로 시작하며 목적을 나타내는 to부정사 구문입니다.",
-      slots: [
-        { num: "1번", label: "많은 관광객들이", tag: "주어" },
-        { num: "2번", label: "뉴질랜드를 방문한다", tag: "동사/목적어" },
-        { num: "3번", label: "경험하기 위해", tag: "to부정사" },
-        { num: "4번", label: "독특한 전통을", tag: "목적어" }
-      ],
-      words: [
-        "to experience", "New Zealand", "its unique traditions.", "Many tourists visit"
-      ],
-      correctOrder: [
-        "Many tourists visit", "New Zealand", "to experience", "its unique traditions."
-      ]
+      ko: "남섬에는 일 년 내내 눈으로 뒤덮인 산들이 있다.",
+      slots: [{n:"1번", l:"남섬에는", t:"전치사구"}, {n:"2번", l:"산들이 있다", t:"동사/주어"}, {n:"3번", l:"~하는", t:"관계사"}, {n:"4번", l:"눈으로 뒤덮인", t:"수동태"}, {n:"5번", l:"일 년 내내", t:"부사구"}],
+      words: ["In the South Island,", "there are", "mountains", "that", "are covered", "with snow", "all year round."],
+      correct: "In the South Island, there are mountains that are covered with snow all year round."
+    },
+    // 2차시
+    {
+      ko: "뉴질랜드에서 키위라는 단어는 몇 가지 뜻을 가지고 있다.",
+      slots: [{n:"1번", l:"뉴질랜드에서", t:"전치사구"}, {n:"2번", l:"키위라는 단어는", t:"주어"}, {n:"3번", l:"가지고 있다", t:"동사"}, {n:"4번", l:"몇 가지 뜻을", t:"목적어"}],
+      words: ["In New Zealand", "the word kiwi", "has", "a couple of", "meanings."],
+      correct: "In New Zealand the word kiwi has a couple of meanings."
     },
     {
-      page: "L6 4차시",
-      ko: "마오리 문화는 뉴질랜드 역사에서 중요한 역할을 한다.",
-      hint: "💡 힌트: plays an important role in~ (중요한 역할을 하다) 표현을 활용하세요.",
-      slots: [
-        { num: "1번", label: "마오리 문화는", tag: "주어" },
-        { num: "2번", label: "중요한 역할을 한다", tag: "동사구" },
-        { num: "3번", label: "뉴질랜드 역사에서", tag: "전치사구" }
-      ],
-      words: [
-        "plays an important role", "in New Zealand's history.", "Maori culture"
-      ],
-      correctOrder: [
-        "Maori culture", "plays an important role", "in New Zealand's history."
-      ]
+      ko: "오늘날 뉴질랜드인들은 전 세계적으로 키위라고 불리기도 한다.",
+      slots: [{n:"1번", l:"오늘날", t:"부사"}, {n:"2번", l:"뉴질랜드인들은", t:"주어"}, {n:"3번", l:"때때로 불린다", t:"수동태"}, {n:"4번", l:"키위라고", t:"보어"}, {n:"5번", l:"전 세계에", t:"부사구"}],
+      words: ["Today,", "New Zealanders", "are sometimes", "called", "Kiwis", "throughout", "the world."],
+      correct: "Today, New Zealanders are sometimes called Kiwis throughout the world."
+    },
+    // 3차시
+    {
+      ko: "마오리인은 뉴질랜드의 원주민이다.",
+      slots: [{n:"1번", l:"마오리인은", t:"주어"}, {n:"2번", l:"원주민이다", t:"동사/보어"}, {n:"3번", l:"뉴질랜드의", t:"전치사구"}],
+      words: ["The Maori", "are", "the native people", "of", "New Zealand."],
+      correct: "The Maori are the native people of New Zealand."
+    },
+    {
+      ko: "당신이 마을 사람들에게 \"kia ora\"라고 말한다면 그들은 좋아할 것이다.",
+      slots: [{n:"1번", l:"만약 ~한다면", t:"접속사"}, {n:"2번", l:"당신이 말한다면", t:"주어/동사"}, {n:"3번", l:"\"kia ora\"라고", t:"목적어"}, {n:"4번", l:"마을 사람들에게", t:"전치사구"}, {n:"5번", l:"그들은 좋아할 것이다", t:"주절"}],
+      words: ["If", "you", "say", "\"kia ora\"", "to the villagers,", "they will", "be glad", "to hear it."],
+      correct: "If you say \"kia ora\" to the villagers, they will be glad to hear it."
+    },
+    // 4차시
+    {
+      ko: "하카를 추는 사람들이 소리를 지르고 몸을 격렬하게 움직이기 때문에 무섭게 보일지도 모른다.",
+      slots: [{n:"1번", l:"하카는", t:"주어"}, {n:"2번", l:"무섭게 보일지도 모른다", t:"조동사/보어"}, {n:"3번", l:"왜냐하면 ~이기 때문에", t:"접속사"}, {n:"4번", l:"하카 무용수들이", t:"주어2"}, {n:"5번", l:"소리 지르고 움직이기 때문이다", t:"동사2"}, {n:"6번", l:"격렬하게", t:"부사"}],
+      words: ["The haka", "may look", "scary", "because", "haka dancers", "shout", "and move", "their bodies", "wildly."],
+      correct: "The haka may look scary because haka dancers shout and move their bodies wildly."
+    },
+    {
+      ko: "뉴질랜드의 럭비 국가 대표 팀 선수들은 모든 경기 전에 하카를 춘다.",
+      slots: [{n:"1번", l:"뉴질랜드의", t:"전치사구"}, {n:"2번", l:"럭비 국가 대표 팀 선수들은", t:"주어"}, {n:"3번", l:"하카를 춘다", t:"동사/목적어"}, {n:"4번", l:"전 전에", t:"전치사"}, {n:"5번", l:"모든 경기", t:"목적어2"}],
+      words: ["New Zealand's", "national rugby team", "members", "do", "the haka", "before", "every match."],
+      correct: "New Zealand's national rugby team members do the haka before every match."
     }
   ];
 
+  /* --- 앱 로직 --- */
+  let quizList = []; // 랜덤 추출된 문제
+  const totalQuestions = 5; // 출제 문제 수
   let currentQIndex = 0;
   let userSelection = [];
   let correctCount = 0;
   let startTime = null;
 
+  // 1. 로그인 및 시작
   function beginQuiz() {
     const id = document.getElementById('studentId').value.trim();
     const name = document.getElementById('studentName').value.trim();
-    if(!id || !name) {
+
+    if (!id || !name) {
       alert("학번과 이름을 입력해 주세요!");
       return;
     }
 
-    startTime = new Date();
+    // 데이터 랜덤 추출 및 섞기
+    quizList = shuffleArray([...masterQuizData]).slice(0, totalQuestions);
+    
+    startTime = new Date(); // 타이머 시작
     document.getElementById('screen-login').classList.add('hidden');
     document.getElementById('screen-quiz').classList.remove('hidden');
     loadQuestion(0);
   }
 
+  // 2. 문제 로드
   function loadQuestion(index) {
     currentQIndex = index;
-    const q = quizData[index];
+    const q = quizList[index];
     userSelection = [];
 
-    document.getElementById('q-number').innerText = `QUESTION 0${index + 1}`;
-    document.getElementById('q-page').innerText = q.page;
-    document.getElementById('q-progress').innerText = `${index + 1} / ${quizData.length}`;
+    // 헤더 업데이트
+    document.getElementById('q-number').innerText = `QUESTION ${String(index + 1).padStart(2, '0')}`;
+    document.getElementById('q-progress').innerText = `${index + 1} / ${totalQuestions}`;
     document.getElementById('korean-text').innerText = q.ko;
-    document.getElementById('hint-text').innerText = q.hint;
 
+    // 슬롯 생성
     const slotContainer = document.getElementById('slot-container');
     slotContainer.innerHTML = '';
     q.slots.forEach((s, idx) => {
@@ -298,107 +280,146 @@
       slot.id = `slot-${idx}`;
       slot.innerHTML = `
         <span class="slot-num">${s.num}</span>
-        <span class="slot-label">${s.label}</span><br>
-        <span class="slot-tag">${s.tag}</span>
+        <span class="slot-label">${s.l}</span><br>
+        <span class="slot-tag">${s.t}</span>
         <div class="selected-word"></div>
       `;
       slotContainer.appendChild(slot);
     });
 
+    // 단어 조각 생성 (섞어서)
     const poolContainer = document.getElementById('pool-container');
     poolContainer.innerHTML = '';
-    q.words.forEach((w, idx) => {
+    const shuffledWords = shuffleArray([...q.words]);
+    shuffledWords.forEach((w, idx) => {
       const chip = document.createElement('button');
       chip.className = 'word-chip';
       chip.innerText = w;
-      chip.onclick = () => selectWord(idx, w, chip);
+      chip.onclick = () => selectWord(w, chip);
       poolContainer.appendChild(chip);
     });
 
     updateSubmitButton();
   }
 
-  function selectWord(wordIdx, text, chipEl) {
-    if (userSelection.length < quizData[currentQIndex].slots.length) {
+  // 단어 선택
+  function selectWord(word, chipEl) {
+    const q = quizList[currentQIndex];
+    if (userSelection.length < q.slots.length) {
       const currentSlotIdx = userSelection.length;
-      userSelection.push({ wordIdx, text, chipEl });
-      chipEl.classList.add('used');
+      userSelection.push({ word, chipEl });
+      chipEl.classList.add('used'); // 비활성화
 
-      const slotEl = document.getElementById(`slot-${currentSlotIdx}`).querySelector('.selected-word');
-      slotEl.innerText = text;
+      // 슬롯에 단어 넣기
+      const slotWordEl = document.getElementById(`slot-${currentSlotIdx}`).querySelector('.selected-word');
+      slotWordEl.innerText = word;
 
       updateSubmitButton();
     }
   }
 
+  // 다시하기 (슬롯 초기화)
   function resetSlots() {
-    userSelection.forEach(item => {
-      item.chipEl.classList.remove('used');
-    });
+    userSelection.forEach(item => item.chipEl.classList.remove('used'));
     userSelection = [];
-    quizData[currentQIndex].slots.forEach((_, idx) => {
-      document.getElementById(`slot-${idx}`).querySelector('.selected-word').innerText = '';
-    });
+    
+    // 모든 슬롯의 단어 지우기
+    const slotWords = document.querySelectorAll('.selected-word');
+    slotWords.forEach(el => el.innerText = '');
+    
     updateSubmitButton();
   }
 
+  // 제출 버튼 상태 업데이트
   function updateSubmitButton() {
     const btn = document.getElementById('btn-submit');
-    if (userSelection.length === quizData[currentQIndex].slots.length) {
+    const q = quizList[currentQIndex];
+    if (userSelection.length === q.slots.length) {
       btn.classList.add('active');
     } else {
       btn.classList.remove('active');
     }
   }
 
-  function nextQuestion() {
-    if (userSelection.length < quizData[currentQIndex].slots.length) {
-      alert("모든 문장 조각을 채워주세요!");
-      return;
+  // 정답 제출 및 채점
+  function submitAnswer() {
+    const q = quizList[currentQIndex];
+    if (userSelection.length < q.slots.length) return;
+
+    // 사용자가 완성한 문장 (어포스트로피 및 쉼표 처리를 위해 단어 사이 공백 합침)
+    // 데이터 자체에 공백이 포함된 경우가 있으므로 trim 후 합침
+    const userSentence = userSelection.map(item => item.word.trim()).join(' ').replace(/\s+/g, ' ');
+    const correctSentence = q.correct.trim().replace(/\s+/g, ' ');
+
+    if (userSentence === correctSentence) {
+      correctCount++;
+      alert("정답입니다! 👏");
+    } else {
+      alert(`오답입니다.\n\n[정답]\n${q.correct}`);
     }
 
-    const q = quizData[currentQIndex];
-    const userWords = userSelection.map(s => s.text);
-    const isCorrect = JSON.stringify(userWords) === JSON.stringify(q.correctOrder);
-
-    if (isCorrect) correctCount++;
-
-    if (currentQIndex + 1 < quizData.length) {
+    // 다음 문제 또는 결과
+    if (currentQIndex + 1 < totalQuestions) {
       loadQuestion(currentQIndex + 1);
     } else {
       showResult();
     }
   }
 
+  // 3. 결과 화면
   function showResult() {
     const endTime = new Date();
     const durationSec = Math.floor((endTime - startTime) / 1000);
     const mins = String(Math.floor(durationSec / 60)).padStart(2, '0');
     const secs = String(durationSec % 60).padStart(2, '0');
 
-    const studentId = document.getElementById('studentId').value.trim();
-    const studentName = document.getElementById('studentName').value.trim();
-    const score = Math.round((correctCount / quizData.length) * 100);
+    const id = document.getElementById('studentId').value;
+    const name = document.getElementById('studentName').value;
+    const score = Math.round((correctCount / totalQuestions) * 100);
 
     document.getElementById('screen-quiz').classList.add('hidden');
     document.getElementById('screen-result').classList.remove('hidden');
 
-    document.getElementById('result-student-info').innerText = `${studentId} ${studentName} 학생`;
-    document.getElementById('stat-correct').innerText = `${correctCount} / ${quizData.length}`;
+    // 결과 데이터 주입
+    document.getElementById('submit-time').innerText = `제출 일시: ${endTime.toLocaleString()}`;
+    document.getElementById('result-student-info').innerText = `${id} ${name} 학생`;
+    document.getElementById('stat-correct').innerText = `${correctCount} / ${totalQuestions}`;
     document.getElementById('stat-time').innerText = `${mins}:${secs}`;
     document.getElementById('stat-score').innerText = `${score}점`;
-    document.getElementById('submit-time').innerText = `제출 일시: ${new Date().toLocaleString()}`;
   }
 
+  // 유틸리티: 배열 섞기
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[array[i]]];
+    }
+    return array;
+  }
+
+  // 캡처 및 다운로드
   function downloadCapture() {
+    const id = document.getElementById('studentId').value;
+    const name = document.getElementById('studentName').value;
+    const fileName = `HelloNZ_퀴즈_${id}_${name}.png`;
     const target = document.getElementById('capture-area');
-    html2canvas(target).then(canvas => {
+
+    // 모바일 기기 배율 조절을 위한 옵션
+    html2canvas(target, {
+      scale: 2, // 고해상도
+      backgroundColor: "#ffffff",
+      useCORS: true
+    }).then(canvas => {
       const link = document.createElement('a');
-      const studentId = document.getElementById('studentId').value.trim();
-      const studentName = document.getElementById('studentName').value.trim();
-      link.download = `[6과_4차시_뉴질랜드]_${studentId}_${studentName}.png`;
+      link.download = fileName;
       link.href = canvas.toDataURL('image/png');
+      // iOS 등 일부 환경에서 다운로드 링크가 안 동작할 때를 대비
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
+    }).catch(err => {
+      alert("캡처에 실패했습니다. 직접 화면을 캡처해 주세요.");
+      console.error(err);
     });
   }
 </script>
