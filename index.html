@@ -3,660 +3,350 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>중3 영어 Lesson 6. Hello! New Zealand - 의미단위 학습</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <title>New Zealand English Lesson Data</title>
   <style>
-    :root {
-      --primary: #0d9488;
-      --primary-hover: #0f766e;
-      --bg: #f0fdf4;
-      --card-bg: #ffffff;
-      --accent: #f59e0b;
-      --text: #1f2937;
-      --border: #cbd5e1;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 20px;
+      background-color: #f8f9fa;
+      color: #333;
     }
-
-    * { box-sizing: border-box; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; }
-    .container { max-width: 1000px; margin: 0 auto; background: var(--card-bg); padding: 24px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-
-    /* Modal */
-    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-    .modal { background: #fff; padding: 32px; border-radius: 16px; max-width: 400px; width: 90%; text-align: center; }
-    .modal input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid var(--border); border-radius: 8px; font-size: 16px; }
-    .modal button { width: 100%; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 12px; }
-
-    /* Header */
-    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 16px; margin-bottom: 20px; }
-    .user-info { font-weight: bold; color: var(--primary); font-size: 18px; }
-    .timer { font-size: 18px; font-weight: bold; background: #e0f2fe; padding: 6px 16px; border-radius: 20px; color: #0369a1; }
-
-    /* Nav Tabs */
-    .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-    .tab-btn { padding: 10px 18px; background: #e2e8f0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.2s; font-size: 15px; }
-    .tab-btn.active { background: var(--primary); color: #fff; }
-
-    /* Content Area */
-    .sentence-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .badge { background: var(--primary); color: #fff; padding: 6px 14px; border-radius: 12px; font-size: 15px; font-weight: bold; }
-    .kor-full { font-size: 18px; font-weight: bold; margin-bottom: 20px; background: #f8fafc; padding: 16px; border-left: 5px solid var(--primary); border-radius: 4px; line-height: 1.5; }
-
-    /* Grid Slots */
-    .slots-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
-    .slot-card { border: 2px dashed var(--border); border-radius: 10px; padding: 10px; min-height: 100px; display: flex; flex-direction: column; justify-content: space-between; background: #fafafa; cursor: pointer; }
-    .slot-card.filled { border-style: solid; border-color: var(--primary); background: #f0fdf4; }
-    .slot-kor { font-size: 13px; color: #0f766e; font-weight: bold; margin-bottom: 8px; text-align: center; background: #ccfbf1; padding: 4px; border-radius: 4px; }
-    .slot-target { min-height: 48px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; color: #0f766e; text-align: center; word-break: break-word; }
-
-    /* Word Bank */
-    .bank-title { font-size: 14px; color: #64748b; margin-bottom: 8px; font-weight: bold; }
-    .word-bank { display: flex; flex-wrap: wrap; gap: 10px; min-height: 60px; padding: 16px; background: #fffbe2; border: 2px solid #fef08a; border-radius: 10px; margin-bottom: 20px; }
-    .chip { background: #fff; border: 1px solid #cbd5e1; padding: 10px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.05); user-select: none; }
-    .chip:hover { border-color: var(--primary); color: var(--primary); }
-
-    /* Controls */
-    .controls { display: flex; justify-content: space-between; gap: 10px; }
-    .btn { padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; }
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-secondary { background: #64748b; color: #fff; }
-
-    /* Result View */
-    #result-view { display: none; text-align: center; padding: 20px; }
-    .report-card { background: #f8fafc; border: 2px solid var(--primary); padding: 24px; border-radius: 12px; margin: 20px 0; display: inline-block; text-align: left; min-width: 320px; }
-    .report-card h2 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 8px; }
+    h1 {
+      color: #0d6efd;
+    }
+    .page-title {
+      margin-top: 30px;
+      border-bottom: 2px solid #0d6efd;
+      padding-bottom: 8px;
+    }
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+    .card {
+      background: white;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 12px 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .en {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #198754;
+      margin-bottom: 4px;
+    }
+    .ko {
+      color: #6c757d;
+      font-size: 0.95rem;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Auth Modal -->
-  <div class="modal-overlay" id="auth-modal">
-    <div class="modal">
-      <h2>학습자 정보 입력</h2>
-      <p>학번과 이름을 입력하고 학습을 시작하세요.</p>
-      <input type="text" id="student-id" placeholder="학번 (예: 30101)">
-      <input type="text" id="student-name" placeholder="이름 (예: 홍길동)">
-      <button onclick="startApp()">학습 시작하기</button>
-    </div>
-  </div>
-
-  <div class="container">
-    <header>
-      <div class="user-info" id="user-display">학번 / 이름</div>
-      <div class="timer" id="timer-display">⏱️ 00:00</div>
-    </header>
-
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchSession(0)">1차시 (p.104~105)</button>
-      <button class="tab-btn" onclick="switchSession(1)">2차시 (p.106)</button>
-      <button class="tab-btn" onclick="switchSession(2)">3차시 (p.108)</button>
-      <button class="tab-btn" onclick="switchSession(3)">4차시 (p.110)</button>
-    </div>
-
-    <!-- Main Learning Area -->
-    <div id="learning-view">
-      <div class="sentence-header">
-        <span class="badge" id="sentence-idx">문장 1 / 8</span>
-        <button class="btn btn-secondary" onclick="resetCurrentSentence()" style="padding: 6px 12px; font-size: 13px;">🔄 조각 초기화</button>
-      </div>
-
-      <div class="kor-full" id="kor-full-text">전체 우리말 해석이 표시됩니다.</div>
-
-      <!-- Grid Slots -->
-      <div class="slots-grid" id="slots-container"></div>
-
-      <!-- Word Bank -->
-      <div class="bank-title">👇 아래 단어 조각을 클릭하여 알맞은 칸에 채우세요:</div>
-      <div class="word-bank" id="word-bank"></div>
-
-      <!-- Control Buttons -->
-      <div class="controls">
-        <button class="btn btn-secondary" id="prev-btn" onclick="prevSentence()">이전</button>
-        <button class="btn btn-primary" id="check-btn" onclick="checkAnswer()">정답 확인</button>
-        <button class="btn btn-primary" id="next-btn" onclick="nextSentence()">다음 문장 ➔</button>
-      </div>
-    </div>
-
-    <!-- Result Report View -->
-    <div id="result-view">
-      <h2>🎉 학습 완료!</h2>
-      <div class="report-card" id="capture-area">
-        <h2 id="report-session-title">학습 결과 보고서</h2>
-        <p><strong>학번:</strong> <span id="report-id"></span></p>
-        <p><strong>이름:</strong> <span id="report-name"></span></p>
-        <p><strong>소요 시간:</strong> <span id="report-time"></span></p>
-        <p><strong>완료 문장 수:</strong> <span id="report-score"></span></p>
-        <p><strong>학습 일시:</strong> <span id="report-date"></span></p>
-      </div>
-      <div>
-        <button class="btn btn-primary" onclick="downloadCapture()">📸 결과 이미지 다운로드 (캡처)</button>
-        <button class="btn btn-secondary" onclick="restartSession()">🔄 다시 학습하기</button>
-      </div>
-    </div>
-  </div>
+  <h1>🇳🇿 New Zealand Lesson Data</h1>
+  <div id="app"></div>
 
   <script>
-    // Lessons Content Dataset
-    const sessions = [
+    // 1~4페이지 전체 최소 의미단위 데이터
+    const lessonData = [
       {
-        title: "1차시 (p.104~105)",
-        sentences: [
-          {
-            kor: "뉴질랜드는 자연의 아름다움을 가진 곳이다.",
-            chunks: [
-              { kor: "1. 뉴질랜드는", eng: "New Zealand" },
-              { kor: "2. ~입니다", eng: "is" },
-              { kor: "3. 장소", eng: "a place" },
-              { kor: "4. 자연의 아름다움을 가진.", eng: "of natural beauty." }
-            ]
-          },
-          {
-            kor: "그곳에는 많은 아름다운 호수와 폭포가 있다.",
-            chunks: [
-              { kor: "1. 그곳에는 있다", eng: "It has" },
-              { kor: "2. 많은 아름다운 호수들과", eng: "many beautiful lakes" },
-              { kor: "3. 폭포들이.", eng: "and waterfalls." }
-            ]
-          },
-          {
-            kor: "뉴질랜드에는 남섬과 북섬, 두 개의 본섬이 있다.",
-            chunks: [
-              { kor: "1. 뉴질랜드는 가지고 있다", eng: "New Zealand has" },
-              { kor: "2. 두 개의 주요 섬들을,", eng: "two main islands," },
-              { kor: "3. 남섬과", eng: "the South Island" },
-              { kor: "4. 북섬인.", eng: "and the North Island." }
-            ]
-          },
-          {
-            kor: "남섬에는 일 년 내내 눈으로 뒤덮인 산들이 있다.",
-            chunks: [
-              { kor: "1. 남섬에는,", eng: "In the South Island," },
-              { kor: "2. 산들이 있다", eng: "there are mountains" },
-              { kor: "3. 눈으로 뒤덮인", eng: "that are covered with snow" },
-              { kor: "4. 일 년 내내.", eng: "all year round." }
-            ]
-          },
-          {
-            kor: "당신은 그 아름다운 풍경에 놀랄 것이다.",
-            chunks: [
-              { kor: "1. 당신은 감탄하게 될 것이다", eng: "You will be amazed" },
-              { kor: "2. ~에 의해", eng: "by" },
-              { kor: "3. 환상적인 풍경에.", eng: "the fantastic views." }
-            ]
-          },
-          {
-            kor: "북섬에는 많은 온천과 호수, 초원 지역이 있다.",
-            chunks: [
-              { kor: "1. 북섬에는,", eng: "In the North Island," },
-              { kor: "2. 많은 온천들과 호수들,", eng: "there are many hot springs, lakes," },
-              { kor: "3. 그리고 초원 지역들이 있다.", eng: "and areas with green grass." }
-            ]
-          },
-          {
-            kor: "뉴질랜드 자연의 아름다움 때문에 많은 유명한 영화들이 뉴질랜드에서 촬영되었다.",
-            chunks: [
-              { kor: "1. 그것의 자연의 아름다움 때문에,", eng: "Because of its natural beauty," },
-              { kor: "2. 많은 유명한 영화들이", eng: "many famous movies" },
-              { kor: "3. 제작되어 왔다", eng: "have been made" },
-              { kor: "4. 뉴질랜드에서.", eng: "in New Zealand." }
-            ]
-          },
-          {
-            kor: "만약 뉴질랜드에 방문한다면, 당신은 분명 뉴질랜드 자연의 진가를 알게 될 것이다.",
-            chunks: [
-              { kor: "1. 만약 당신이 방문한다면", eng: "If you visit" },
-              { kor: "2. 뉴질랜드를,", eng: "New Zealand," },
-              { kor: "3. 당신은 분명히 진가를 알게 될 것이다", eng: "you will surely appreciate" },
-              { kor: "4. 그것의 자연을.", eng: "its nature." }
-            ]
-          }
+        page: 1,
+        title: "New Zealand's Nature",
+        data: [
+          {"en": "New Zealand", "ko": "뉴질랜드는"},
+          {"en": "is", "ko": "이다"},
+          {"en": "a place", "ko": "장소"},
+          {"en": "of natural beauty", "ko": "자연의 아름다움의"},
+          {"en": "It", "ko": "그곳은"},
+          {"en": "has", "ko": "가지고 있다"},
+          {"en": "many", "ko": "많은"},
+          {"en": "beautiful lakes", "ko": "아름다운 호수들을"},
+          {"en": "and", "ko": "그리고"},
+          {"en": "waterfalls", "ko": "폭포들을"},
+          {"en": "New Zealand", "ko": "뉴질랜드는"},
+          {"en": "has", "ko": "가지고 있다"},
+          {"en": "two main islands", "ko": "두 개의 주요 섬들을"},
+          {"en": "the South Island", "ko": "남섬"},
+          {"en": "and", "ko": "그리고"},
+          {"en": "the North Island", "ko": "북섬을"},
+          {"en": "In the South Island", "ko": "남섬에는"},
+          {"en": "there are", "ko": "있다"},
+          {"en": "mountains", "ko": "산들이"},
+          {"en": "that", "ko": "~하는"},
+          {"en": "are covered", "ko": "덮여 있는"},
+          {"en": "with snow", "ko": "눈으로"},
+          {"en": "all year round", "ko": "일 년 내내"},
+          {"en": "You", "ko": "당신은"},
+          {"en": "will be amazed", "ko": "놀라게 될 것이다"},
+          {"en": "by", "ko": "~에 의해"},
+          {"en": "the fantastic views", "ko": "환상적인 풍경에"},
+          {"en": "In the North Island", "ko": "북섬에는"},
+          {"en": "there are", "ko": "있다"},
+          {"en": "many", "ko": "많은"},
+          {"en": "hot springs", "ko": "온천들"},
+          {"en": "lakes", "ko": "호수들"},
+          {"en": "and", "ko": "그리고"},
+          {"en": "areas", "ko": "지역들"},
+          {"en": "with", "ko": "~를 가진"},
+          {"en": "green grass", "ko": "푸른 잔디를"},
+          {"en": "Because of", "ko": "~ 때문에"},
+          {"en": "its natural beauty", "ko": "그것의 자연의 아름다움"},
+          {"en": "many famous movies", "ko": "많은 유명한 영화들이"},
+          {"en": "have been made", "ko": "만들어져 왔다(촬영되었다)"},
+          {"en": "in New Zealand", "ko": "뉴질랜드에서"},
+          {"en": "If", "ko": "만약"},
+          {"en": "you", "ko": "당신이"},
+          {"en": "visit", "ko": "방문한다면"},
+          {"en": "New Zealand", "ko": "뉴질랜드를"},
+          {"en": "you", "ko": "당신은"},
+          {"en": "will surely appreciate", "ko": "분명 진가를 알게 될 것이다"},
+          {"en": "its nature", "ko": "그것의 자연의"}
         ]
       },
       {
-        title: "2차시 (p.106)",
-        sentences: [
-          {
-            kor: "당신은 키위라는 단어를 들었을 때 무엇이 떠오르는가?",
-            chunks: [
-              { kor: "1. 당신이 들었을 때", eng: "When you hear" },
-              { kor: "2. '키위'라는 단어를,", eng: "the word kiwi," },
-              { kor: "3. 무엇이 떠오르는가?", eng: "what comes to your mind?" }
-            ]
-          },
-          {
-            kor: "아마도 과일이겠지만 뉴질랜드에서 키위라는 단어는 몇 가지 뜻을 가지고 있다.",
-            chunks: [
-              { kor: "1. 아마도 과일이겠지만,", eng: "Maybe a fruit, but," },
-              { kor: "2. 뉴질랜드에서", eng: "in New Zealand" },
-              { kor: "3. '키위'라는 단어는", eng: "the word kiwi" },
-              { kor: "4. 몇 가지 뜻을 가지고 있다.", eng: "has a couple of meanings." }
-            ]
-          },
-          {
-            kor: "먼저 키위는 맛있는 녹색 과일의 이름이다.",
-            chunks: [
-              { kor: "1. 먼저,", eng: "First," },
-              { kor: "2. 키위는 이름이다", eng: "kiwi is the name of" },
-              { kor: "3. 맛있는 녹색 과일의.", eng: "a delicious, green fruit." }
-            ]
-          },
-          {
-            kor: "많은 키위가 그곳에서 자라기 때문에 뉴질랜드는 키위의 나라로 알려져 있다.",
-            chunks: [
-              { kor: "1. 많은 키위 과일이 재배된다", eng: "A lot of kiwi fruit is grown" },
-              { kor: "2. 그곳에서,", eng: "there," },
-              { kor: "3. 그래서 뉴질랜드는 알려져 있다", eng: "so New Zealand is known as" },
-              { kor: "4. 키위 과일의 나라로.", eng: "the land of kiwi fruit." }
-            ]
-          },
-          {
-            kor: "키위는 뉴질랜드 토종 새의 이름이기도 하다.",
-            chunks: [
-              { kor: "1. 키위는 또한 이름이다", eng: "Kiwi is also the name of" },
-              { kor: "2. 뉴질랜드의 토종 새들 중 하나의.", eng: "one of New Zealand’s native birds." }
-            ]
-          },
-          {
-            kor: "키위는 뉴질랜드의 상징이기 때문에 뉴질랜드인들에게 특별하다.",
-            chunks: [
-              { kor: "1. 키위는 특별하다", eng: "The kiwi is special" },
-              { kor: "2. 뉴질랜드인들에게", eng: "to New Zealanders" },
-              { kor: "3. 그것이 국가의 상징이기 때문에.", eng: "because it is the symbol of the nation." }
-            ]
-          },
-          {
-            kor: "또한, 키위는 뉴질랜드 출신 사람에 대한 별칭이기도 하다.",
-            chunks: [
-              { kor: "1. 또한,", eng: "Also," },
-              { kor: "2. 키위는 별명이다", eng: "kiwi is a nickname for" },
-              { kor: "3. 뉴질랜드 출신의 사람들에 대한.", eng: "people from New Zealand." }
-            ]
-          },
-          {
-            kor: "오늘날 뉴질랜드인들은 전 세계적으로 키위라고 불리기도 한다.",
-            chunks: [
-              { kor: "1. 오늘날,", eng: "Today," },
-              { kor: "2. 뉴질랜드인들은 때때로 불린다", eng: "New Zealanders are sometimes called" },
-              { kor: "3. 키위라고", eng: "Kiwis" },
-              { kor: "4. 전 세계에서.", eng: "throughout the world." }
-            ]
-          },
-          {
-            kor: "이제, 당신은 키위가 과일과 새, 그리고 국민의 명칭이라는 것을 알았다.",
-            chunks: [
-              { kor: "1. 이제,", eng: "Now," },
-              { kor: "2. 당신은 안다", eng: "you know that" },
-              { kor: "3. 키위가 이름이라는 것을", eng: "kiwi is the name of" },
-              { kor: "4. 과일과, 새, 그리고 국민의.", eng: "a fruit, a bird, and also a people." }
-            ]
-          },
-          {
-            kor: "다음에는 누군가 키위라는 단어를 사용할 때 혼동하지 마라. 그 단어는 여러 뜻을 가지고 있기 때문이다.",
-            chunks: [
-              { kor: "1. 다음번에는,", eng: "Next time," },
-              { kor: "2. 혼란스러워하지 마라", eng: "don’t become confused" },
-              { kor: "3. 누군가 '키위'라는 단어를 사용할 때,", eng: "when someone uses the word kiwi," },
-              { kor: "4. 여러 뜻을 가지고 있는.", eng: "which has several meanings." }
-            ]
-          }
+        page: 2,
+        title: "The Word 'Kiwi'",
+        data: [
+          {"en": "When", "ko": "~할 때"},
+          {"en": "you", "ko": "당신이"},
+          {"en": "hear", "ko": "들을"},
+          {"en": "the word kiwi", "ko": "키위라는 단어를"},
+          {"en": "what", "ko": "무엇이"},
+          {"en": "comes", "ko": "오는가"},
+          {"en": "to your mind", "ko": "당신의 마음속에"},
+          {"en": "Maybe", "ko": "아마도"},
+          {"en": "a fruit", "ko": "과일이겠지만"},
+          {"en": "but", "ko": "하지만"},
+          {"en": "in New Zealand", "ko": "뉴질랜드에서"},
+          {"en": "the word kiwi", "ko": "키위라는 단어는"},
+          {"en": "has", "ko": "가지고 있다"},
+          {"en": "a couple of meanings", "ko": "몇 가지 뜻을"},
+          {"en": "First", "ko": "첫째로"},
+          {"en": "kiwi", "ko": "키위는"},
+          {"en": "is", "ko": "이다"},
+          {"en": "the name", "ko": "이름"},
+          {"en": "of", "ko": "~의"},
+          {"en": "a delicious", "ko": "맛있는"},
+          {"en": "green fruit", "ko": "녹색 과일의"},
+          {"en": "A lot of", "ko": "많은"},
+          {"en": "kiwi fruit", "ko": "키위 과일이"},
+          {"en": "is grown", "ko": "재배된다"},
+          {"en": "there", "ko": "그곳에서"},
+          {"en": "so", "ko": "그래서"},
+          {"en": "New Zealand", "ko": "뉴질랜드는"},
+          {"en": "is known", "ko": "알려져 있다"},
+          {"en": "as", "ko": "~로"},
+          {"en": "the land", "ko": "땅으로"},
+          {"en": "of kiwi fruit", "ko": "키위 과일의"},
+          {"en": "Kiwi", "ko": "키위는"},
+          {"en": "is", "ko": "이다"},
+          {"en": "also", "ko": "또한"},
+          {"en": "the name", "ko": "이름"},
+          {"en": "of", "ko": "~의"},
+          {"en": "one", "ko": "하나"},
+          {"en": "of New Zealand's native birds", "ko": "뉴질랜드의 토종 새들 중"},
+          {"en": "The kiwi", "ko": "키위는"},
+          {"en": "is", "ko": "이다"},
+          {"en": "special", "ko": "특별한"},
+          {"en": "to New Zealanders", "ko": "뉴질랜드인들에게"},
+          {"en": "because", "ko": "~때문에"},
+          {"en": "it", "ko": "그것이"},
+          {"en": "is", "ko": "이기"},
+          {"en": "the symbol", "ko": "상징"},
+          {"en": "of the nation", "ko": "그 국가의"},
+          {"en": "Also", "ko": "또한"},
+          {"en": "kiwi", "ko": "키위는"},
+          {"en": "is", "ko": "이다"},
+          {"en": "a nickname", "ko": "별명"},
+          {"en": "for", "ko": "~를 위한"},
+          {"en": "people", "ko": "사람들"},
+          {"en": "from New Zealand", "ko": "뉴질랜드 출신의"},
+          {"en": "Today", "ko": "오늘날"},
+          {"en": "New Zealanders", "ko": "뉴질랜드인들은"},
+          {"en": "are", "ko": "이다"},
+          {"en": "sometimes", "ko": "때때로"},
+          {"en": "called", "ko": "불리는"},
+          {"en": "Kiwis", "ko": "키위라고"},
+          {"en": "throughout", "ko": "~에 걸쳐"},
+          {"en": "the world", "ko": "전 세계"},
+          {"en": "Now", "ko": "이제"},
+          {"en": "you", "ko": "당신은"},
+          {"en": "know", "ko": "안다"},
+          {"en": "that", "ko": "~라는 것을"},
+          {"en": "kiwi", "ko": "키위가"},
+          {"en": "is", "ko": "이라는"},
+          {"en": "the name", "ko": "이름"},
+          {"en": "of", "ko": "~의"},
+          {"en": "a fruit", "ko": "과일"},
+          {"en": "a bird", "ko": "새"},
+          {"en": "and", "ko": "그리고"},
+          {"en": "also", "ko": "또한"},
+          {"en": "a people", "ko": "한 민족의"},
+          {"en": "Next time", "ko": "다음번에"},
+          {"en": "don't become", "ko": "되지 마라"},
+          {"en": "confused", "ko": "혼란스럽게"},
+          {"en": "when", "ko": "~할 때"},
+          {"en": "someone", "ko": "누군가"},
+          {"en": "uses", "ko": "사용할"},
+          {"en": "the word kiwi", "ko": "키위라는 단어를"},
+          {"en": "which", "ko": "그리고 그것은"},
+          {"en": "has", "ko": "가지고 있다"},
+          {"en": "several meanings", "ko": "여러 가지 뜻을"}
         ]
       },
       {
-        title: "3차시 (p.108)",
-        sentences: [
-          {
-            kor: "이제 마오리인에 대해 이야기해 보자.",
-            chunks: [
-              { kor: "1. 이제,", eng: "Now," },
-              { kor: "2. 이야기해 보자", eng: "let’s talk about" },
-              { kor: "3. 마오리인에 대해.", eng: "the Maori." }
-            ]
-          },
-          {
-            kor: "마오리인은 뉴질랜드의 원주민이다.",
-            chunks: [
-              { kor: "1. 그들은 원주민이다", eng: "They are the native people" },
-              { kor: "2. 뉴질랜드의.", eng: "of New Zealand." }
-            ]
-          },
-          {
-            kor: "그들은 유럽인들이 도착하기 오래전에 섬에 와서 살았다.",
-            chunks: [
-              { kor: "1. 그들은 살러 갔다", eng: "They went to live" },
-              { kor: "2. 그 섬들에", eng: "on the islands" },
-              { kor: "3. 유럽인들이 도착하기 훨씬 전에.", eng: "long before Europeans arrived." }
-            ]
-          },
-          {
-            kor: "마오리 문화는 오늘날 뉴질랜드 사회의 중요한 부분이다.",
-            chunks: [
-              { kor: "1. 마오리 문화는", eng: "The Maori culture" },
-              { kor: "2. 중요한 부분이다", eng: "is an important part of" },
-              { kor: "3. 오늘날의 뉴질랜드 사회의.", eng: "today’s New Zealand society." }
-            ]
-          },
-          {
-            kor: "몇몇 학교에서 마오리어를 가르치고 있으며, 마오리어의 라디오와 TV 방송국이 있다.",
-            chunks: [
-              { kor: "1. 마오리어는 가르쳐진다", eng: "The Maori language is taught" },
-              { kor: "2. 일부 학교들에서", eng: "at some schools" },
-              { kor: "3. 그리고 있다", eng: "and there are" },
-              { kor: "4. 마오리어 라디오 및 TV 방송국들이.", eng: "Maori language radio and TV stations." }
-            ]
-          },
-          {
-            kor: "나라의 여러 곳에 마오리 마을이 있다.",
-            chunks: [
-              { kor: "1. 마오리 마을들이 있다", eng: "There are Maori villages" },
-              { kor: "2. 나라의 많은 지역들에.", eng: "in many parts of the country." }
-            ]
-          },
-          {
-            kor: "당신은 마오리 마을에 방문해 마오리 문화를 경험할 수 있다.",
-            chunks: [
-              { kor: "1. 당신은 방문할 수 있다", eng: "You can visit" },
-              { kor: "2. 마오리 마을들을", eng: "Maori villages" },
-              { kor: "3. 그리고 경험할 수 있다", eng: "and experience" },
-              { kor: "4. 마오리 문화를.", eng: "Maori culture." }
-            ]
-          },
-          {
-            kor: "당신이 마을 사람들에게 “kia ora”라고 말한다면 그들은 그것을 듣고 좋아할 것이다. 그것은 영어로 “안녕하세요”를 의미한다.",
-            chunks: [
-              { kor: "1. 만약 당신이 \"kia ora\"라고 말한다면", eng: "If you say “kia ora”" },
-              { kor: "2. 마을 사람들에게,", eng: "to the villagers," },
-              { kor: "3. 그들은 그것을 듣고 기뻐할 것이다.", eng: "they will be glad to hear it." },
-              { kor: "4. 그것은 의미한다", eng: "It means" },
-              { kor: "5. 영어로 \"hi\"를.", eng: "“hi” in English." }
-            ]
-          }
+        page: 3,
+        title: "The Maori & Culture",
+        data: [
+          {"en": "Now", "ko": "이제"},
+          {"en": "let's talk", "ko": "이야기해 보자"},
+          {"en": "about", "ko": "~에 대해"},
+          {"en": "the Maori", "ko": "마오리인들에"},
+          {"en": "They", "ko": "그들은"},
+          {"en": "are", "ko": "이다"},
+          {"en": "the native people", "ko": "원주민"},
+          {"en": "of New Zealand", "ko": "뉴질랜드의"},
+          {"en": "They", "ko": "그들은"},
+          {"en": "went", "ko": "갔다"},
+          {"en": "to live", "ko": "살기 위해"},
+          {"en": "on the islands", "ko": "그 섬들에"},
+          {"en": "long before", "ko": "훨씬 전에"},
+          {"en": "Europeans", "ko": "유럽인들이"},
+          {"en": "arrived", "ko": "도착하기"},
+          {"en": "The Maori culture", "ko": "마오리 문화는"},
+          {"en": "is", "ko": "이다"},
+          {"en": "an important part", "ko": "중요한 부분"},
+          {"en": "of", "ko": "~의"},
+          {"en": "today's New Zealand society", "ko": "오늘날 뉴질랜드 사회의"},
+          {"en": "The Maori language", "ko": "마오리어는"},
+          {"en": "is taught", "ko": "가르쳐진다"},
+          {"en": "at some schools", "ko": "몇몇 학교에서"},
+          {"en": "and", "ko": "그리고"},
+          {"en": "there are", "ko": "있다"},
+          {"en": "Maori language", "ko": "마오리어"},
+          {"en": "radio", "ko": "라디오"},
+          {"en": "and", "ko": "그리고"},
+          {"en": "TV stations", "ko": "TV 방송국들이"},
+          {"en": "There are", "ko": "있다"},
+          {"en": "Maori villages", "ko": "마오리 마을들이"},
+          {"en": "in", "ko": "~에"},
+          {"en": "many parts", "ko": "많은 지역들"},
+          {"en": "of the country", "ko": "그 나라의"},
+          {"en": "You", "ko": "당신은"},
+          {"en": "can visit", "ko": "방문할 수 있다"},
+          {"en": "Maori villages", "ko": "마오리 마을들을"},
+          {"en": "and", "ko": "그리고"},
+          {"en": "experience", "ko": "경험할 수 있다"},
+          {"en": "Maori culture", "ko": "마오리 문화를"},
+          {"en": "If", "ko": "만약"},
+          {"en": "you", "ko": "당신이"},
+          {"en": "say", "ko": "말한다면"},
+          {"en": "\"kia ora\"", "ko": "\"kia ora\"라고"},
+          {"en": "to the villagers", "ko": "마을 사람들에게"},
+          {"en": "they", "ko": "그들은"},
+          {"en": "will be", "ko": "될 것이다"},
+          {"en": "glad", "ko": "기쁘게"},
+          {"en": "to hear it", "ko": "그것을 듣게 되어서"},
+          {"en": "It", "ko": "그것은"},
+          {"en": "means", "ko": "의미한다"},
+          {"en": "\"hi\"", "ko": "\"안녕\"을"},
+          {"en": "in English", "ko": "영어로"}
         ]
       },
       {
-        title: "4차시 (p.110)",
-        sentences: [
-          {
-            kor: "당신은 하카를 본 적이 있는가?",
-            chunks: [
-              { kor: "1. 당신은 본 적이 있는가", eng: "Have you ever watched" },
-              { kor: "2. 하카를?", eng: "the haka?" }
-            ]
-          },
-          {
-            kor: "하카를 추는 사람들이 소리를 지르고 몸을 격렬하게 움직이기 때문에 하카가 무섭게 보일지도 모른다.",
-            chunks: [
-              { kor: "1. 하카는 무서워 보일지도 모른다", eng: "The haka may look scary" },
-              { kor: "2. 하카 무용수들이 외치기 때문에", eng: "because haka dancers shout" },
-              { kor: "3. 그리고 움직이기 때문에", eng: "and move" },
-              { kor: "4. 그들의 몸을 격렬하게.", eng: "their bodies wildly." }
-            ]
-          },
-          {
-            kor: "당신이 이미 들은 적 있겠지만, 마오리인들은 전쟁 춤으로 하카를 추기 시작했다.",
-            chunks: [
-              { kor: "1. 마오리 사람들은,", eng: "The Maori people," },
-              { kor: "2. 당신이 이미 들어본 적 있는,", eng: "who you’ve already heard about," },
-              { kor: "3. 하카를 추기 시작했다", eng: "started doing the haka" },
-              { kor: "4. 전쟁 춤으로서.", eng: "as a war dance." }
-            ]
-          },
-          {
-            kor: "그러나 오늘날 사람들은 운동 경기나 결혼식, 다른 중요한 행사에서 하카를 춘다.",
-            chunks: [
-              { kor: "1. 오늘날, 그러나,", eng: "Today, however," },
-              { kor: "2. 뉴질랜드인들은 하카를 춘다", eng: "New Zealanders do the haka" },
-              { kor: "3. 스포츠 경기나, 결혼식,", eng: "at sport matches, weddings," },
-              { kor: "4. 또는 다른 중요한 행사들에서.", eng: "or other important events." }
-            ]
-          },
-          {
-            kor: "예를 들어, 뉴질랜드의 럭비 국가 대표 팀 선수들은 모든 경기 전에 하카를 춘다.",
-            chunks: [
-              { kor: "1. 예를 들어,", eng: "For example," },
-              { kor: "2. 뉴질랜드 국가대표 럭비팀 선수들은", eng: "New Zealand’s national rugby team members" },
-              { kor: "3. 하카를 춘다", eng: "do the haka" },
-              { kor: "4. 모든 경기 전에.", eng: "before every match." }
-            ]
-          },
-          {
-            kor: "그것은 전 세계적으로 유명하다.",
-            chunks: [
-              { kor: "1. 그것은 유명하다", eng: "It is famous" },
-              { kor: "2. 전 세계적으로.", eng: "all over the world." }
-            ]
-          },
-          {
-            kor: "당신이 하카를 본다면, 상대 팀이 겁을 먹을 것이라는 것에 아마 동의할 것이다.",
-            chunks: [
-              { kor: "1. 만약 당신이 하카를 본다면,", eng: "If you see the haka," },
-              { kor: "2. 당신은 아마 동의할 것이다", eng: "you will probably agree" },
-              { kor: "3. 라이벌 팀이 겁을 먹었음에 틀림없다는 것을.", eng: "that the rival team must be scared." }
-            ]
-          },
-          {
-            kor: "키위와 마찬가지로 하카는 나라의 상징이다.",
-            chunks: [
-              { kor: "1. 키위 새처럼,", eng: "Like the kiwi bird," },
-              { kor: "2. 하카는 국가적 상징이다.", eng: "the haka is a national symbol." }
-            ]
-          }
+        page: 4,
+        title: "The Haka",
+        data: [
+          {"en": "Have", "ko": "~해 본 적 있는가"},
+          {"en": "you", "ko": "당신은"},
+          {"en": "ever watched", "ko": "본 적이"},
+          {"en": "the haka", "ko": "하카를"},
+          {"en": "The haka", "ko": "하카는"},
+          {"en": "may look", "ko": "보일지도 모른다"},
+          {"en": "scary", "ko": "무섭게"},
+          {"en": "because", "ko": "~때문에"},
+          {"en": "haka dancers", "ko": "하카 춤꾼들이"},
+          {"en": "shout", "ko": "소리 지르고"},
+          {"en": "and", "ko": "그리고"},
+          {"en": "move", "ko": "움직이기"},
+          {"en": "their bodies", "ko": "그들의 몸을"},
+          {"en": "wildly", "ko": "격렬하게"},
+          {"en": "The Maori people", "ko": "마오리인들은"},
+          {"en": "who", "ko": "(그들에 대해)"},
+          {"en": "you've already heard", "ko": "당신이 이미 들어본 적 있는"},
+          {"en": "about", "ko": "~에 대해"},
+          {"en": "started", "ko": "시작했다"},
+          {"en": "doing", "ko": "추는 것을"},
+          {"en": "the haka", "ko": "하카를"},
+          {"en": "as", "ko": "~로서"},
+          {"en": "a war dance", "ko": "전쟁 춤"},
+          {"en": "Today", "ko": "오늘날"},
+          {"en": "however", "ko": "그러나"},
+          {"en": "New Zealanders", "ko": "뉴질랜드인들은"},
+          {"en": "do", "ko": "춘다"},
+          {"en": "the haka", "ko": "하카를"},
+          {"en": "at", "ko": "~에서"},
+          {"en": "sport matches", "ko": "스포츠 경기들"},
+          {"en": "weddings", "ko": "결혼식들"},
+          {"en": "or", "ko": "또는"},
+          {"en": "other important events", "ko": "다른 중요한 행사들"},
+          {"en": "For example", "ko": "예를 들어"},
+          {"en": "New Zealand's", "ko": "뉴질랜드의"},
+          {"en": "national rugby team members", "ko": "국가대표 럭비 팀 선수들은"},
+          {"en": "do", "ko": "춘다"},
+          {"en": "the haka", "ko": "하카를"},
+          {"en": "before", "ko": "~ 전에"},
+          {"en": "every match", "ko": "매 경기"},
+          {"en": "It", "ko": "그것은"},
+          {"en": "is", "ko": "이다"},
+          {"en": "famous", "ko": "유명한"},
+          {"en": "all over the world", "ko": "전 세계적으로"},
+          {"en": "If", "ko": "만약"},
+          {"en": "you", "ko": "당신이"},
+          {"en": "see", "ko": "본다면"},
+          {"en": "the haka", "ko": "하카를"},
+          {"en": "you", "ko": "당신은"},
+          {"en": "will probably agree", "ko": "아마 동의할 것이다"},
+          {"en": "that", "ko": "~라는 것에"},
+          {"en": "the rival team", "ko": "상대 팀이"},
+          {"en": "must be", "ko": "틀림없이 ~일 것이라고"},
+          {"en": "scared", "ko": "겁에 질린"},
+          {"en": "Like", "ko": "과 마찬가지로"},
+          {"en": "the kiwi bird", "ko": "키위 새"},
+          {"en": "the haka", "ko": "하카는"},
+          {"en": "is", "ko": "이다"},
+          {"en": "a national symbol", "ko": "국가적 상징"}
         ]
       }
     ];
 
-    // Global State
-    let currentSessionIdx = 0;
-    let currentSentenceIdx = 0;
-    let userPlacements = [];
-    let studentId = "";
-    let studentName = "";
-    let timerInterval = null;
-    let secondsElapsed = 0;
+    // 화면에 카드 렌더링 함수
+    const app = document.getElementById('app');
 
-    function startApp() {
-      const idInput = document.getElementById('student-id').value.trim();
-      const nameInput = document.getElementById('student-name').value.trim();
+    lessonData.forEach(pageData => {
+      const pageHeader = document.createElement('h2');
+      pageHeader.className = 'page-title';
+      pageHeader.textContent = `Page ${pageData.page}: ${pageData.title}`;
+      app.appendChild(pageHeader);
 
-      if (!idInput || !nameInput) {
-        alert("학번과 이름을 입력해 주세요.");
-        return;
-      }
+      const container = document.createElement('div');
+      container.className = 'card-container';
 
-      studentId = idInput;
-      studentName = nameInput;
-      document.getElementById('user-display').innerText = `${studentId} ${studentName}`;
-      document.getElementById('auth-modal').style.display = 'none';
-
-      startTimer();
-      loadSentence();
-    }
-
-    function startTimer() {
-      clearInterval(timerInterval);
-      secondsElapsed = 0;
-      timerInterval = setInterval(() => {
-        secondsElapsed++;
-        const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
-        const secs = String(secondsElapsed % 60).padStart(2, '0');
-        document.getElementById('timer-display').innerText = `⏱️ ${mins}:${secs}`;
-      }, 1000);
-    }
-
-    function switchSession(idx) {
-      currentSessionIdx = idx;
-      currentSentenceIdx = 0;
-
-      const tabs = document.querySelectorAll('.tab-btn');
-      tabs.forEach((tab, i) => {
-        if (i === idx) tab.classList.add('active');
-        else tab.classList.remove('active');
-      });
-
-      document.getElementById('learning-view').style.display = 'block';
-      document.getElementById('result-view').style.display = 'none';
-
-      startTimer();
-      loadSentence();
-    }
-
-    function loadSentence() {
-      const session = sessions[currentSessionIdx];
-      const sentence = session.sentences[currentSentenceIdx];
-
-      document.getElementById('sentence-idx').innerText = `문장 ${currentSentenceIdx + 1} / ${session.sentences.length}`;
-      document.getElementById('kor-full-text').innerText = sentence.kor;
-
-      // Reset Placements
-      userPlacements = new Array(sentence.chunks.length).fill(null);
-
-      // Render Empty Slots
-      const slotsContainer = document.getElementById('slots-container');
-      slotsContainer.innerHTML = '';
-      sentence.chunks.forEach((chunk, idx) => {
-        const slot = document.createElement('div');
-        slot.className = 'slot-card';
-        slot.id = `slot-${idx}`;
-        slot.innerHTML = `
-          <div class="slot-kor">${chunk.kor}</div>
-          <div class="slot-target" id="slot-target-${idx}"></div>
+      pageData.data.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="en">${item.en}</div>
+          <div class="ko">${item.ko}</div>
         `;
-        slot.onclick = () => removeChunkFromSlot(idx);
-        slotsContainer.appendChild(slot);
+        container.appendChild(card);
       });
 
-      // Render Word Bank Chips
-      renderWordBank();
-
-      // Reset Button Controls
-      document.getElementById('prev-btn').disabled = (currentSentenceIdx === 0);
-    }
-
-    function renderWordBank() {
-      const sentence = sessions[currentSessionIdx].sentences[currentSentenceIdx];
-      const bankContainer = document.getElementById('word-bank');
-      bankContainer.innerHTML = '';
-
-      let items = sentence.chunks.map((c, originalIdx) => ({ text: c.eng, originalIdx }));
-      
-      // Shuffle alphabetically
-      items.sort((a, b) => a.text.localeCompare(b.text));
-
-      items.forEach((item) => {
-        if (userPlacements.includes(item.originalIdx)) return;
-
-        const chip = document.createElement('div');
-        chip.className = 'chip';
-        chip.innerText = item.text;
-        chip.onclick = () => placeChunkInFirstEmptySlot(item.originalIdx);
-        bankContainer.appendChild(chip);
-      });
-    }
-
-    function placeChunkInFirstEmptySlot(chunkOriginalIdx) {
-      const emptySlotIdx = userPlacements.findIndex(p => p === null);
-      if (emptySlotIdx === -1) return;
-
-      userPlacements[emptySlotIdx] = chunkOriginalIdx;
-      updateSlotsUI();
-      renderWordBank();
-    }
-
-    function removeChunkFromSlot(slotIdx) {
-      if (userPlacements[slotIdx] === null) return;
-      userPlacements[slotIdx] = null;
-      updateSlotsUI();
-      renderWordBank();
-    }
-
-    function updateSlotsUI() {
-      const sentence = sessions[currentSessionIdx].sentences[currentSentenceIdx];
-      userPlacements.forEach((placedChunkIdx, slotIdx) => {
-        const slotCard = document.getElementById(`slot-${slotIdx}`);
-        const slotTarget = document.getElementById(`slot-target-${slotIdx}`);
-
-        if (placedChunkIdx !== null) {
-          slotCard.classList.add('filled');
-          slotTarget.innerText = sentence.chunks[placedChunkIdx].eng;
-        } else {
-          slotCard.classList.remove('filled');
-          slotTarget.innerText = '';
-        }
-      });
-    }
-
-    function resetCurrentSentence() {
-      const sentence = sessions[currentSessionIdx].sentences[currentSentenceIdx];
-      userPlacements = new Array(sentence.chunks.length).fill(null);
-      updateSlotsUI();
-      renderWordBank();
-    }
-
-    function checkAnswer() {
-      if (userPlacements.includes(null)) {
-        alert("모든 단어 조각을 상단 칸에 배치해 주세요!");
-        return;
-      }
-
-      let isCorrect = true;
-      userPlacements.forEach((placedIdx, slotIdx) => {
-        if (placedIdx !== slotIdx) isCorrect = false;
-      });
-
-      if (isCorrect) {
-        alert("🎉 정답입니다!");
-      } else {
-        alert("❌ 순서가 올바르지 않습니다. 다시 배열해 보세요.");
-      }
-    }
-
-    function prevSentence() {
-      if (currentSentenceIdx > 0) {
-        currentSentenceIdx--;
-        loadSentence();
-      }
-    }
-
-    function nextSentence() {
-      const session = sessions[currentSessionIdx];
-      if (currentSentenceIdx < session.sentences.length - 1) {
-        currentSentenceIdx++;
-        loadSentence();
-      } else {
-        showResults();
-      }
-    }
-
-    function showResults() {
-      clearInterval(timerInterval);
-      document.getElementById('learning-view').style.display = 'none';
-      document.getElementById('result-view').style.display = 'block';
-
-      const session = sessions[currentSessionIdx];
-      document.getElementById('report-session-title').innerText = `${session.title} 완료 보고서`;
-      document.getElementById('report-id').innerText = studentId;
-      document.getElementById('report-name').innerText = studentName;
-
-      const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
-      const secs = String(secondsElapsed % 60).padStart(2, '0');
-      document.getElementById('report-time').innerText = `${mins}분 ${secs}초`;
-      document.getElementById('report-score').innerText = `${session.sentences.length} / ${session.sentences.length} 문장 완료`;
-
-      const today = new Date();
-      document.getElementById('report-date').innerText = today.toLocaleString('ko-KR');
-    }
-
-    function downloadCapture() {
-      const captureArea = document.getElementById('capture-area');
-      html2canvas(captureArea).then(canvas => {
-        const link = document.createElement('a');
-        link.download = `${studentId}_${studentName}_차시${currentSessionIdx + 1}_학습결과.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      });
-    }
-
-    function restartSession() {
-      switchSession(currentSessionIdx);
-    }
+      app.appendChild(container);
+    });
   </script>
 </body>
 </html>
