@@ -1,340 +1,164 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Hello! New Zealand 배열 퀴즈</title>
-  <style>
-    /* 기본 스타일 (김구 앱 포맷) */
-    :root {
-      --bg-color: #fcf8ec;
-      --card-bg: #ffffff;
-      --main-title: #1e293b;
-      --accent-coral: #e06d53;
-      --box-yellow: #fffbeb;
-      --box-border: #fde68a;
-      --border-gray: #e2e8f0;
-    }
+/* --- Hello! New Zealand (L6 1~4차시) 앱 데이터 --- */
+const quizData = [
+  // --- 1차시 (Nature) ---
+  {
+    page: "L6 1차시",
+    ko: "뉴질랜드는 자연의 아름다움을 가진 곳이다.",
+    hint: "💡 힌트: 'is a place of' 구문을 활용해 주어-동사-보어 순서로 배열하세요.",
+    slots: [
+      { num: "1번", l: "뉴질랜드는", t: "주어" },
+      { num: "2번", l: "곳이다", t: "동사/보어" },
+      { num: "3번", l: "자연의", t: "전치사구" },
+      { num: "4번", l: "아름다움을 가진", t: "형용사구" }
+    ],
+    words: ["beauty.", "New Zealand", "a place", "of", "natural", "is"], // 섞여 있는 조각
+    correctOrder: ["New Zealand", "is", "a place", "of", "natural", "beauty."] // 정답 구문 순서
+  },
+  {
+    page: "L6 1차시",
+    ko: "그곳에는 많은 아름다운 호수와 폭포가 있다.",
+    hint: "💡 힌트: 'It has' (그것은 가지고 있다)로 시작하여 목적어를 나열하세요.",
+    slots: [
+      { num: "1번", l: "그곳에는", t: "주어" },
+      { num: "2번", l: "가지고 있다", t: "동사" },
+      { num: "3번", l: "많은 아름다운", t: "수식어" },
+      { num: "4번", l: "호수와", t: "목적어1" },
+      { num: "5번", l: "폭포들을", t: "목적어2" }
+    ],
+    words: ["waterfalls.", "beautiful", "many", "Lakes", "and", "It"],
+    correctOrder: ["It", "has", "many", "beautiful", "Lakes", "and", "waterfalls."]
+  },
+  {
+    page: "L6 1차시",
+    ko: "남섬에는 일 년 내내 눈으로 뒤덮인 산들이 있다.",
+    hint: "💡 힌트: 'There are mountains' (산들이 있다)가 주절이며, 'that' 이하가 수식합니다.",
+    slots: [
+      { num: "1번", l: "남섬에는", t: "전치사구" },
+      { num: "2번", l: "산들이 있다", t: "동사/주어" },
+      { num: "3번", l: "수식하는", t: "관계사" },
+      { num: "4번", l: "눈으로 뒤덮인", t: "수동태" },
+      { num: "5번", l: "일 년 내내", t: "부사구" }
+    ],
+    words: ["all year round.", "with snow", "are covered", "mountains", "In the South Island,", "there are", "that"],
+    correctOrder: ["In the South Island,", "there are", "mountains", "that", "are covered", "with snow", "all year round."]
+  },
+  {
+    page: "L6 1차시",
+    ko: "뉴질랜드 자연의 아름다움 때문에 많은 유명한 영화들이 만들어져 왔다.",
+    hint: "💡 힌트: 'Because of' (명사구)로 시작하며 'many famous movies'가 주어입니다.",
+    slots: [
+      { num: "1번", l: "때문에", t: "전치사구" },
+      { num: "2번", l: "그것의 아름다움", t: "목적어" },
+      { num: "3번", l: "유명한 영화들이", t: "주어" },
+      { num: "4번", l: "만들어져 왔다", t: "수동태/완료" },
+      { num: "5번", l: "뉴질랜드에서", t: "전치사구2" }
+    ],
+    words: ["many famous movies", "in New Zealand.", "Because of", "natural beauty,", "have been made", "its"],
+    correctOrder: ["Because of", "its", "natural beauty,", "many famous movies", "have been made", "in New Zealand."]
+  },
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
-    body { background-color: var(--bg-color); color: var(--main-title); padding: 15px; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
+  // --- 2차시 (Kiwi) ---
+  {
+    page: "L6 2차시",
+    ko: "뉴질랜드에서 키위라는 단어는 몇 가지 뜻을 가지고 있다.",
+    hint: "💡 힌트: 'In New Zealand'로 시작하고 'the word kiwi'가 주어입니다.",
+    slots: [
+      { num: "1번", l: "뉴질랜드에서", t: "전치사구" },
+      { num: "2번", l: "단어는", t: "주어" },
+      { num: "3번", l: "가지고 있다", t: "동사" },
+      { num: "4번", l: "몇 가지 뜻을", t: "목적어" }
+    ],
+    words: ["the word kiwi", "has", "a couple of", "In New Zealand", "meanings."],
+    correctOrder: ["In New Zealand", "the word kiwi", "has", "a couple of", "meanings."]
+  },
+  {
+    page: "L6 2차시",
+    ko: "뉴질랜드는 키위 과일의 땅으로 알려져 있다.",
+    hint: "💡 힌트: 'be known as' (~로 알려져 있다) 구문을 활용하세요.",
+    slots: [
+      { num: "1번", l: "뉴질랜드는", t: "주어" },
+      { num: "2번", l: "알려져 있다", t: "수동태" },
+      { num: "3번", l: "땅으로", t: "전치사구" },
+      { num: "4번", l: "키위 과일의", t: "수식어" }
+    ],
+    words: ["of kiwi fruit.", "known as", "the land", "New Zealand", "is"],
+    correctOrder: ["New Zealand", "is", "known as", "the land", "of kiwi fruit."]
+  },
+  {
+    page: "L6 2차시",
+    ko: "오늘날 뉴질랜드인들은 전 세계적으로 키위라고 불리기도 한다.",
+    hint: "💡 힌트: 'are called' (불린다) 수동태 구문을 활용하세요.",
+    slots: [
+      { num: "1번", l: "오늘날", t: "부사" },
+      { num: "2번", l: "뉴질랜드인들은", t: "주어" },
+      { num: "3번", l: "때때로 불린다", t: "수동태" },
+      { num: "4번", l: "키위라고", t: "보어" },
+      { num: "5번", l: "전 세계에", t: "부사구" }
+    ],
+    words: ["called", "are sometimes", "Kiwis", "the world.", "throughout", "New Zealanders", "Today,"],
+    correctOrder: ["Today,", "New Zealanders", "are sometimes", "called", "Kiwis", "throughout", "the world."]
+  },
 
-    .container { width: 100%; max-width: 600px; margin-top: 10px; }
-    .hidden { display: none !important; }
+  // --- 3차시 (Maori) ---
+  {
+    page: "L6 3차시",
+    ko: "그들은 유럽인들이 도착하기 오래전에 섬에 와서 살았다.",
+    hint: "💡 힌트: 'long before' (~보다 훨씬 전에) 접속사구를 활용하세요.",
+    slots: [
+      { num: "1번", l: "그들은 갔다", t: "주어/동사" },
+      { num: "2번", l: "살기 위해", t: "to부정사" },
+      { num: "3번", l: "섬들에", t: "전치사구" },
+      { num: "4번", l: "오래전에", t: "부사" },
+      { num: "5번", l: "도착하기", t: "접속사절" },
+      { num: "6번", l: "유럽인들이", t: "주어2" }
+    ],
+    words: ["Europeans", "long before", "to live", "on the islands", "arrived.", "They went"],
+    correctOrder: ["They went", "to live", "on the islands", "long before", "Europeans", "arrived."]
+  },
+  {
+    page: "L6 3차시",
+    ko: "당신이 마을 사람들에게 \"kia ora\"라고 말한다면 그들은 좋아할 것이다.",
+    hint: "💡 힌트: 'If 조건절' (현재시제)과 'will 주절' (미래시제)의 순서입니다.",
+    slots: [
+      { num: "1번", l: "만약 ~한다면", t: "접속사" },
+      { num: "2번", l: "당신이 말한다면", t: "주어/동사" },
+      { num: "3번", l: "kia ora라고", t: "목적어" },
+      { num: "4번", l: "사람들에게", t: "전치사구" },
+      { num: "5번", l: "그들은 좋아할 것이다", t: "주절" }
+    ],
+    words: ["say", "If", "to the villagers,", "will be glad to hear it.", "you", "\"kia ora\"", "they"],
+    correctOrder: ["If", "you", "say", "\"kia ora\"", "to the villagers,", "they", "will be glad to hear it."]
+  },
 
-    /* 학번/이름 입력 화면 */
-    .start-card { background: #fffbeb; border-radius: 20px; padding: 25px; border: 1px solid var(--box-border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-    .lesson-title { font-size: 1.8rem; color: #c2410c; font-family: serif; font-weight: bold; text-align: center; margin-bottom: 5px; }
-    .lesson-sub { font-size: 1.4rem; font-weight: 800; text-align: center; margin-bottom: 20px; color: #1e293b; }
-
-    .input-group { margin-bottom: 15px; }
-    .input-group label { display: block; font-size: 0.8rem; font-weight: bold; color: #64748b; margin-bottom: 5px; letter-spacing: 1px; }
-    .input-group input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 1rem; outline: none; background: #fff; -webkit-user-select: text; user-select: text; }
-    .btn-start { width: 100%; background: var(--accent-coral); color: #fff; border: none; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
-
-    /* 퀴즈 풀기 화면 */
-    .quiz-card { background: #fff; border-radius: 20px; padding: 20px; border: 1px solid var(--border-gray); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
-    .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #f1f5f9; }
-    .q-num { color: #f97316; font-weight: bold; font-size: 0.9rem; }
-    .q-progress { background: #f1f5f9; padding: 4px 12px; border-radius: 12px; font-weight: bold; font-size: 0.85rem; }
-
-    .korean-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 20px; text-align: center; font-size: 1.1rem; font-weight: 700; line-height: 1.5; margin-bottom: 15px; color: #1e293b; }
-
-    .section-title { font-size: 0.9rem; font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-    .btn-reset { background: none; border: none; color: #64748b; font-size: 0.8rem; cursor: pointer; padding: 5px; }
-
-    /* 정답 들어갈 구문 슬롯 (Top) */
-    .slot-container { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 10px; min-height: 140px; display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; align-content: flex-start; background: #fafafa; }
-    .slot-item { border: 1px dashed #cbd5e1; border-radius: 8px; padding: 6px; text-align: center; min-width: 60px; background: #ffffff; flex: 1; }
-    .slot-num { font-size: 0.7rem; color: #94a3b8; display: block; margin-bottom: 2px; }
-    .slot-label { font-size: 0.8rem; font-weight: bold; color: #334155; }
-    .selected-word { margin-top: 6px; font-weight: bold; color: #1e3a8a; font-size: 0.9rem; min-height: 18px; border-top: 1px solid #f1f5f9; padding-top: 3px; }
-
-    /* 아래 선택할 단어 조각 pool (Bottom) - 이게 빠졌었네요! */
-    .pool-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; padding: 10px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; }
-    .word-chip { background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; font-weight: 600; font-size: 0.9rem; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.03); -webkit-tap-highlight-color: transparent; transition: all 0.1s; }
-    .word-chip:active { transform: scale(0.96); background: #fafafa; }
-    .word-chip.used { opacity: 0.15; pointer-events: none; background: #e2e8f0; border-color: #d1d5db; }
-
-    .quiz-footer { border-top: 1px solid #f1f5f9; padding-top: 15px; text-align: center; }
-    .btn-submit { width: 100%; background: #fca5a5; color: #fff; border: none; padding: 14px; border-radius: 10px; font-size: 1rem; font-weight: bold; cursor: pointer; }
-    .btn-submit.active { background: var(--accent-coral); }
-
-    /* 결과 화면 */
-    .result-card { background: #ffffff; border-radius: 20px; padding: 30px; border: 2px solid #e2e8f0; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-    .result-header { border-bottom: 2px dashed #e2e8f0; padding-bottom: 15px; margin-bottom: 20px; }
-    .result-title { font-size: 1.6rem; font-weight: 800; color: #1e293b; }
-    .student-info { font-size: 1.1rem; font-weight: bold; color: #1e40af; margin-bottom: 15px; }
-    .score { font-size: 3rem; font-weight: 800; color: #c2410c; margin-bottom: 5px; }
-    .btn-retry { background: #64748b; color: #fff; border: none; padding: 12px; border-radius: 10px; font-size: 0.95rem; font-weight: bold; cursor: pointer; margin-top: 20px; }
-  </style>
-</head>
-<body>
-
-<div class="container">
-
-  <!-- 1단계: 학번/이름 입력 화면 -->
-  <div id="screen-login">
-    <div class="start-card">
-      <div class="lesson-title">Hello! New Zealand</div>
-      <div class="lesson-sub">본문 의미단위 배열 연습</div>
-
-      <div class="input-group">
-        <label>STUDENT ID (학번)</label>
-        <input type="number" id="studentId" placeholder="예: 30101" pattern="\getd*">
-      </div>
-      <div class="input-group">
-        <label>NAME (이름)</label>
-        <input type="text" id="studentName" placeholder="이름을 입력하세요">
-      </div>
-      <button class="btn-start" onclick="beginQuiz()">퀴즈 시작하기 &rsaquo;</button>
-    </div>
-  </div>
-
-  <!-- 2단계: 퀴즈 푸는 화면 -->
-  <div id="screen-quiz" class="hidden">
-    <div class="quiz-card">
-      <div class="q-header">
-        <span class="q-num" id="q-number">QUESTION 01</span>
-        <div class="q-progress" id="q-progress">1 / 5</div>
-      </div>
-
-      <div class="korean-box" id="korean-text">
-        뉴질랜드는 자연의 아름다움을 가진 곳이다.
-      </div>
-
-      <div class="section-title">
-        <span>❶ 단계 · 문장 배열하기 (위 슬롯 클릭 시 한 단어씩 삭제)</span>
-        <button class="btn-reset" onclick="resetSlots()">🔄 다시하기</button>
-      </div>
-
-      <!-- 정답 들어갈 구문 슬롯 (Top) -->
-      <div class="slot-container" id="slot-container"></div>
-
-      <!-- 아래 선택할 단어 조각 pool (Bottom) - 드디어 추가! -->
-      <div style="font-size: 0.8rem; font-weight: bold; color: #64748b; margin-bottom: 8px;">배열 조각 (클릭하여 위로 이동)</div>
-      <div class="pool-container" id="pool-container"></div>
-
-      <div class="quiz-footer">
-        <button class="btn-submit" id="btn-submit" onclick="submitAnswer()">정답 확인 &check;</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3단계: 결과 화면 -->
-  <div id="screen-result" class="hidden">
-    <div class="result-card">
-      <div class="result-header">
-        <div class="result-title">🎉 퀴즈 완료!</div>
-      </div>
-      <div class="student-info" id="result-student-info">30101 홍길동 학생</div>
-      <div class="score" id="result-score">100</div>
-      <div style="font-size: 1.1rem; color: #64748b;">점</div>
-      <button class="btn-retry" onclick="location.reload()">🔄 다시 도전하기</button>
-    </div>
-  </div>
-
-</div>
-
-<script>
-  /* --- 본문 데이터 (1~4차시 통합) --- */
-  const masterQuizData = [
-    // 1차시: 자연
-    {
-      ko: "뉴질랜드는 자연의 아름다움을 가진 곳이다.",
-      slots: [{n:"1번", l:"뉴질랜드는"}, {n:"2번", l:"곳이다"}, {n:"3번", l:"자연의"}, {n:"4번", l:"아름다움을 가진"}],
-      words: ["New Zealand", "is", "a place", "of", "natural", "beauty."],
-      correct: "New Zealand is a place of natural beauty."
-    },
-    {
-      ko: "남섬에는 일 년 내내 눈으로 뒤덮인 산들이 있다.",
-      slots: [{n:"1번", l:"남섬에는"}, {n:"2번", l:"산들이 있다"}, {n:"3번", l:"~하는"}, {n:"4번", l:"눈으로 뒤덮인"}, {n:"5번", l:"일 년 내내"}],
-      words: ["In the South Island,", "there are", "mountains", "that", "are covered", "with snow", "all year round."],
-      correct: "In the South Island, there are mountains that are covered with snow all year round."
-    },
-    // 2차시: 키위
-    {
-      ko: "뉴질랜드에서 키위라는 단어는 몇 가지 뜻을 가지고 있다.",
-      slots: [{n:"1번", l:"뉴질랜드에서"}, {n:"2번", l:"키위라는 단어는"}, {n:"3번", l:"가지고 있다"}, {n:"4번", l:"몇 가지 뜻을"}],
-      words: ["In New Zealand", "the word kiwi", "has", "a couple of", "meanings."],
-      correct: "In New Zealand the word kiwi has a couple of meanings."
-    },
-    // 3차시: 마오리
-    {
-      ko: "마오리인은 뉴질랜드의 원주민이다.",
-      slots: [{n:"1번", l:"마오리인은"}, {n:"2번", l:"원주민이다"}, {n:"3번", l:"뉴질랜드의"}],
-      words: ["The Maori", "are", "the native people", "of", "New Zealand."],
-      correct: "The Maori are the native people of New Zealand."
-    },
-    // 4차시: 하카
-    {
-      ko: "뉴질랜드의 럭비 국가 대표 팀 선수들은 모든 경기 전에 하카를 춘다.",
-      slots: [{n:"1번", l:"뉴질랜드의"}, {n:"2번", l:"럭비 국가 대표 팀 선수들은"}, {n:"3번", l:"하카를 춘다"}, {n:"4번", l:"전 전에"}, {n:"5번", l:"모든 경기"}],
-      words: ["New Zealand's", "national rugby team", "members", "do", "the haka", "before", "every match."],
-      correct: "New Zealand's national rugby team members do the haka before every match."
-    }
-  ];
-
-  /* --- 앱 로직 --- */
-  let quizList = []; // 랜덤 추출된 문제
-  const totalQuestions = 5; // 출제 문제 수
-  let currentQIndex = 0;
-  let userSelection = []; // 사용자가 클릭한 단어 저장 ({word, chipEl})
-  let correctCount = 0;
-
-  // 1. 로그인 및 시작
-  function beginQuiz() {
-    const id = document.getElementById('studentId').value.trim();
-    const name = document.getElementById('studentName').value.trim();
-
-    if (!id || !name) {
-      alert("학번과 이름을 입력해 주세요!");
-      return;
-    }
-
-    // 데이터 랜덤 추출 및 섞기
-    quizList = shuffleArray([...masterQuizData]).slice(0, totalQuestions);
-    
-    document.getElementById('screen-login').classList.add('hidden');
-    document.getElementById('screen-quiz').classList.remove('hidden');
-    loadQuestion(0);
+  // --- 4차시 (Haka) ---
+  {
+    page: "L6 4차시",
+    ko: "하카를 추는 사람들이 소리를 지르고 몸을 격렬하게 움직이기 때문에 무섭게 보일지도 모른다.",
+    hint: "💡 힌트: 'The haka' (하카는)가 주어이며 'because' 이하가 이유를 설명합니다.",
+    slots: [
+      { num: "1번", l: "하카는", t: "주어" },
+      { num: "2번", l: "보일지도 모른다", t: "조동사/보어" },
+      { num: "3번", l: "왜냐하면 ~때문에", t: "접속사" },
+      { num: "4번", l: "하카 무용수들이", t: "주어2" },
+      { num: "5번", l: "소리 지르고 움직이기 때문이다", t: "동사구2" },
+      { num: "6번", l: "격렬하게", t: "부사" }
+    ],
+    words: ["move their bodies", "wildly.", "because", "The haka", "shout and", "haka dancers", "may look scary"],
+    correctOrder: ["The haka", "may look scary", "because", "haka dancers", "shout and", "move their bodies", "wildly."]
+  },
+  {
+    page: "L6 4차시",
+    ko: "예를 들어, 뉴질랜드의 럭비 국가 대표 팀 선수들은 모든 경기 전에 하카를 춘다.",
+    hint: "💡 힌트: 'national rugby team members'가 주어이며 'do the haka'가 동사구입니다.",
+    slots: [
+      { num: "1번", l: "예를 들어", t: "부사구" },
+      { num: "2번", l: "뉴질랜드의", t: "전치사구" },
+      { num: "3번", l: "팀 선수들은", t: "주어" },
+      { num: "4번", l: "하카를 춘다", t: "동사/목적어" },
+      { num: "5번", l: "전에", t: "전치사" },
+      { num: "6번", l: "모든 경기", t: "목적어2" }
+    ],
+    words: ["members", "national rugby team", "For example,", "the haka", "do", "before", "New Zealand's", "every match."],
+    correctOrder: ["For example,", "New Zealand's", "national rugby team", "members", "do", "the haka", "before", "every match."]
   }
-
-  // 2. 문제 로드
-  function loadQuestion(index) {
-    currentQIndex = index;
-    const q = quizList[index];
-    userSelection = []; // 사용자 선택 초기화
-
-    // 헤더 업데이트
-    document.getElementById('q-number').innerText = `QUESTION ${String(index + 1).padStart(2, '0')}`;
-    document.getElementById('q-progress').innerText = `${index + 1} / ${totalQuestions}`;
-    document.getElementById('korean-text').innerText = q.ko;
-
-    // 슬롯 생성 (Top)
-    const slotContainer = document.getElementById('slot-container');
-    slotContainer.innerHTML = '';
-    q.slots.forEach((s, idx) => {
-      const slot = document.createElement('div');
-      slot.className = 'slot-item';
-      slot.id = `slot-${idx}`;
-      slot.innerHTML = `
-        <span class="slot-num">${s.n}</span>
-        <span class="slot-label">${s.l}</span>
-        <div class="selected-word"></div>
-      `;
-      // 슬롯 클릭 시 해당 단어 삭제 기능 추가 (김구 앱 포맷)
-      slot.onclick = () => removeWordFromSlot(idx);
-      slotContainer.appendChild(slot);
-    });
-
-    // 단어 조각 생성 (Bottom) - 드디어 구현!
-    const poolContainer = document.getElementById('pool-container');
-    poolContainer.innerHTML = '';
-    const shuffledWords = shuffleArray([...q.words]); // 단어 섞기
-    shuffledWords.forEach((w, idx) => {
-      const chip = document.createElement('button');
-      chip.className = 'word-chip';
-      chip.innerText = w;
-      chip.onclick = () => selectWord(w, chip);
-      poolContainer.appendChild(chip);
-    });
-
-    updateSubmitButton();
-  }
-
-  // 단어 선택 (Bottom -> Top)
-  function selectWord(word, chipEl) {
-    const q = quizList[currentQIndex];
-    if (userSelection.length < q.slots.length) {
-      const currentSlotIdx = userSelection.length;
-      userSelection.push({ word, chipEl });
-      chipEl.classList.add('used'); // 아래 조각 비활성화
-
-      // 위 슬롯에 단어 넣기
-      const slotWordEl = document.getElementById(`slot-${currentSlotIdx}`).querySelector('.selected-word');
-      slotWordEl.innerText = word;
-
-      updateSubmitButton();
-    }
-  }
-
-  // 슬롯 단어 삭제 (Top -> Bottom)
-  function removeWordFromSlot(slotIdx) {
-    if (slotIdx >= userSelection.length) return; // 빈 슬롯 클릭 시 무시
-
-    // 클릭한 슬롯 이후의 모든 단어 삭제 (김구 앱 포맷)
-    for (let i = userSelection.length - 1; i >= slotIdx; i--) {
-      const item = userSelection.pop();
-      item.chipEl.classList.remove('used'); // 아래 조각 다시 활성화
-      document.getElementById(`slot-${i}`).querySelector('.selected-word').innerText = '';
-    }
-    
-    updateSubmitButton();
-  }
-
-  // 다시하기 (전체 초기화)
-  function resetSlots() {
-    removeWordFromSlot(0); // 0번 슬롯부터 다 지우기
-  }
-
-  // 제출 버튼 상태 업데이트
-  function updateSubmitButton() {
-    const btn = document.getElementById('btn-submit');
-    const q = quizList[currentQIndex];
-    if (userSelection.length === q.slots.length) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
-  }
-
-  // 정답 제출 및 채점
-  function submitAnswer() {
-    const q = quizList[currentQIndex];
-    if (userSelection.length < q.slots.length) return; // 다 안 채웠으면 무시
-
-    // 사용자가 완성한 문장 (단축어 공백 처리)
-    const userSentence = userSelection.map(item => item.word.trim()).join(' ').replace(/\s+/g, ' ');
-    const correctSentence = q.correct.trim().replace(/\s+/g, ' ');
-
-    if (userSentence === correctSentence) {
-      correctCount++;
-      alert("정답입니다! 👏");
-    } else {
-      alert(`오답입니다.\n\n[정답]\n${q.correct}`);
-    }
-
-    // 다음 문제 또는 결과 화면
-    if (currentQIndex + 1 < totalQuestions) {
-      loadQuestion(currentQIndex + 1);
-    } else {
-      showResult();
-    }
-  }
-
-  // 3. 결과 화면
-  function showResult() {
-    const id = document.getElementById('studentId').value;
-    const name = document.getElementById('studentName').value;
-    const score = Math.round((correctCount / totalQuestions) * 100);
-
-    document.getElementById('screen-quiz').classList.add('hidden');
-    document.getElementById('screen-result').classList.remove('hidden');
-
-    document.getElementById('result-student-info').innerText = `${id} ${name} 학생`;
-    document.getElementById('result-score').innerText = score;
-  }
-
-  // 유틸리티: 배열 섞기
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-</script>
-
-</body>
-</html>
+];
