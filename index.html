@@ -1,29 +1,29 @@
 /* --- Hello! New Zealand (L6 1~4차시) 앱 데이터 --- */
 const quizData = [
-  // --- 1차시 (Nature) ---
+  // --- 1차시: 자연 (Nature) ---
   {
     page: "L6 1차시",
     ko: "뉴질랜드는 자연의 아름다움을 가진 곳이다.",
-    hint: "💡 힌트: 'is a place of' 구문을 활용해 주어-동사-보어 순서로 배열하세요.",
+    hint: "💡 힌트: 'is a place of' (~라는 장소이다) 구문을 활용해 주어-동사-보어 순서로 배열하세요.",
     slots: [
-      { num: "1번", l: "뉴질랜드는", t: "주어" },
-      { num: "2번", l: "곳이다", t: "동사/보어" },
-      { num: "3번", l: "자연의", t: "전치사구" },
-      { num: "4번", l: "아름다움을 가진", t: "형용사구" }
+      { num: "1번", label: "뉴질랜드는", tag: "주어" },
+      { num: "2번", label: "이다", tag: "동사" },
+      { num: "3번", label: "장소", tag: "보어" },
+      { num: "4번", label: "자연의 아름다움의", tag: "전치사구 수식" }
     ],
-    words: ["beauty.", "New Zealand", "a place", "of", "natural", "is"], // 섞여 있는 조각
+    words: ["beauty.", "New Zealand", "a place", "of", "natural", "is"], // 학생들이 클릭할 조각
     correctOrder: ["New Zealand", "is", "a place", "of", "natural", "beauty."] // 정답 구문 순서
   },
   {
     page: "L6 1차시",
     ko: "그곳에는 많은 아름다운 호수와 폭포가 있다.",
-    hint: "💡 힌트: 'It has' (그것은 가지고 있다)로 시작하여 목적어를 나열하세요.",
+    hint: "💡 힌트: 'It has' (그것은 가지고 있다)로 시작하여 목적어 덩어리를 나열하세요.",
     slots: [
-      { num: "1번", l: "그곳에는", t: "주어" },
-      { num: "2번", l: "가지고 있다", t: "동사" },
-      { num: "3번", l: "많은 아름다운", t: "수식어" },
-      { num: "4번", l: "호수와", t: "목적어1" },
-      { num: "5번", l: "폭포들을", t: "목적어2" }
+      { num: "1번", label: "그곳에는", tag: "주어" },
+      { num: "2번", label: "가지고 있다", tag: "동사" },
+      { num: "3번", label: "많은 아름다운", tag: "수식어" },
+      { num: "4번", label: "호수들을", tag: "목적어1" },
+      { num: "5번", label: "그리고 폭포들을", tag: "목적어2" }
     ],
     words: ["waterfalls.", "beautiful", "many", "Lakes", "and", "It"],
     correctOrder: ["It", "has", "many", "beautiful", "Lakes", "and", "waterfalls."]
@@ -31,86 +31,58 @@ const quizData = [
   {
     page: "L6 1차시",
     ko: "남섬에는 일 년 내내 눈으로 뒤덮인 산들이 있다.",
-    hint: "💡 힌트: 'There are mountains' (산들이 있다)가 주절이며, 'that' 이하가 수식합니다.",
+    hint: "💡 힌트: 'In the South Island,'로 시작하고, 'There are mountains' (산들이 있다) 뒤에 관계사절이 붙습니다.",
     slots: [
-      { num: "1번", l: "남섬에는", t: "전치사구" },
-      { num: "2번", l: "산들이 있다", t: "동사/주어" },
-      { num: "3번", l: "수식하는", t: "관계사" },
-      { num: "4번", l: "눈으로 뒤덮인", t: "수동태" },
-      { num: "5번", l: "일 년 내내", t: "부사구" }
+      { num: "1번", label: "남섬에는", tag: "전치사구" },
+      { num: "2번", label: "산들이 있다", tag: "동사/주어" },
+      { num: "3번", label: "수식하는", tag: "관계사" },
+      { num: "4번", label: "눈으로 뒤덮인", tag: "수동태" },
+      { num: "5번", label: "일 년 내내", tag: "부사구" }
     ],
     words: ["all year round.", "with snow", "are covered", "mountains", "In the South Island,", "there are", "that"],
     correctOrder: ["In the South Island,", "there are", "mountains", "that", "are covered", "with snow", "all year round."]
   },
-  {
-    page: "L6 1차시",
-    ko: "뉴질랜드 자연의 아름다움 때문에 많은 유명한 영화들이 만들어져 왔다.",
-    hint: "💡 힌트: 'Because of' (명사구)로 시작하며 'many famous movies'가 주어입니다.",
-    slots: [
-      { num: "1번", l: "때문에", t: "전치사구" },
-      { num: "2번", l: "그것의 아름다움", t: "목적어" },
-      { num: "3번", l: "유명한 영화들이", t: "주어" },
-      { num: "4번", l: "만들어져 왔다", t: "수동태/완료" },
-      { num: "5번", l: "뉴질랜드에서", t: "전치사구2" }
-    ],
-    words: ["many famous movies", "in New Zealand.", "Because of", "natural beauty,", "have been made", "its"],
-    correctOrder: ["Because of", "its", "natural beauty,", "many famous movies", "have been made", "in New Zealand."]
-  },
 
-  // --- 2차시 (Kiwi) ---
+  // --- 2차시: 키위 (Kiwi) ---
   {
     page: "L6 2차시",
     ko: "뉴질랜드에서 키위라는 단어는 몇 가지 뜻을 가지고 있다.",
     hint: "💡 힌트: 'In New Zealand'로 시작하고 'the word kiwi'가 주어입니다.",
     slots: [
-      { num: "1번", l: "뉴질랜드에서", t: "전치사구" },
-      { num: "2번", l: "단어는", t: "주어" },
-      { num: "3번", l: "가지고 있다", t: "동사" },
-      { num: "4번", l: "몇 가지 뜻을", t: "목적어" }
+      { num: "1번", label: "뉴질랜드에서", tag: "전치사구" },
+      { num: "2번", label: "키위라는 단어는", tag: "주어" },
+      { num: "3번", label: "가지고 있다", tag: "동사" },
+      { num: "4번", label: "몇 가지 뜻을", tag: "목적어" }
     ],
     words: ["the word kiwi", "has", "a couple of", "In New Zealand", "meanings."],
     correctOrder: ["In New Zealand", "the word kiwi", "has", "a couple of", "meanings."]
   },
   {
     page: "L6 2차시",
-    ko: "뉴질랜드는 키위 과일의 땅으로 알려져 있다.",
-    hint: "💡 힌트: 'be known as' (~로 알려져 있다) 구문을 활용하세요.",
+    ko: "많은 키위 과일이 그곳에서 재배되기 때문에 뉴질랜드는 키위의 나라로 알려져 있다.",
+    hint: "💡 힌트: 'is known as' (~로 알려져 있다) 구문과 'Because' 이유 절을 활용하세요.",
     slots: [
-      { num: "1번", l: "뉴질랜드는", t: "주어" },
-      { num: "2번", l: "알려져 있다", t: "수동태" },
-      { num: "3번", l: "땅으로", t: "전치사구" },
-      { num: "4번", l: "키위 과일의", t: "수식어" }
+      { num: "1번", label: "뉴질랜드는", tag: "주어" },
+      { num: "2번", label: "알려져 있다", tag: "수동태" },
+      { num: "3번", label: "나라로", tag: "전치사구" },
+      { num: "4번", label: "키위 과일의", tag: "수식어" }
     ],
-    words: ["of kiwi fruit.", "known as", "the land", "New Zealand", "is"],
+    words: ["known as", "is", "of kiwi fruit.", "New Zealand", "the land"],
     correctOrder: ["New Zealand", "is", "known as", "the land", "of kiwi fruit."]
   },
-  {
-    page: "L6 2차시",
-    ko: "오늘날 뉴질랜드인들은 전 세계적으로 키위라고 불리기도 한다.",
-    hint: "💡 힌트: 'are called' (불린다) 수동태 구문을 활용하세요.",
-    slots: [
-      { num: "1번", l: "오늘날", t: "부사" },
-      { num: "2번", l: "뉴질랜드인들은", t: "주어" },
-      { num: "3번", l: "때때로 불린다", t: "수동태" },
-      { num: "4번", l: "키위라고", t: "보어" },
-      { num: "5번", l: "전 세계에", t: "부사구" }
-    ],
-    words: ["called", "are sometimes", "Kiwis", "the world.", "throughout", "New Zealanders", "Today,"],
-    correctOrder: ["Today,", "New Zealanders", "are sometimes", "called", "Kiwis", "throughout", "the world."]
-  },
 
-  // --- 3차시 (Maori) ---
+  // --- 3차시: 마오리 (Maori) ---
   {
     page: "L6 3차시",
     ko: "그들은 유럽인들이 도착하기 오래전에 섬에 와서 살았다.",
-    hint: "💡 힌트: 'long before' (~보다 훨씬 전에) 접속사구를 활용하세요.",
+    hint: "💡 힌트: 'They went' (그들은 갔다) 뒤에 목적(~하기 위해)과 시간(~보다 오래전)을 배열하세요.",
     slots: [
-      { num: "1번", l: "그들은 갔다", t: "주어/동사" },
-      { num: "2번", l: "살기 위해", t: "to부정사" },
-      { num: "3번", l: "섬들에", t: "전치사구" },
-      { num: "4번", l: "오래전에", t: "부사" },
-      { num: "5번", l: "도착하기", t: "접속사절" },
-      { num: "6번", l: "유럽인들이", t: "주어2" }
+      { num: "1번", label: "그들은 갔다", tag: "주어/동사" },
+      { num: "2번", label: "살기 위해", t: "to부정사" },
+      { num: "3번", label: "섬들에", tag: "전치사구" },
+      { num: "4번", label: "오래전에", tag: "부사" },
+      { num: "5번", label: "도착하기", tag: "접속사절" },
+      { num: "6번", label: "유럽인들이", tag: "주어2" }
     ],
     words: ["Europeans", "long before", "to live", "on the islands", "arrived.", "They went"],
     correctOrder: ["They went", "to live", "on the islands", "long before", "Europeans", "arrived."]
@@ -120,43 +92,42 @@ const quizData = [
     ko: "당신이 마을 사람들에게 \"kia ora\"라고 말한다면 그들은 좋아할 것이다.",
     hint: "💡 힌트: 'If 조건절' (현재시제)과 'will 주절' (미래시제)의 순서입니다.",
     slots: [
-      { num: "1번", l: "만약 ~한다면", t: "접속사" },
-      { num: "2번", l: "당신이 말한다면", t: "주어/동사" },
-      { num: "3번", l: "kia ora라고", t: "목적어" },
-      { num: "4번", l: "사람들에게", t: "전치사구" },
-      { num: "5번", l: "그들은 좋아할 것이다", t: "주절" }
+      { num: "1번", label: "만약 ~한다면", tag: "접속사" },
+      { num: "2번", label: "당신이 말한다면", tag: "주어/동사" },
+      { num: "3번", label: "\"kia ora\"라고", tag: "목적어" },
+      { num: "4번", label: "사람들에게", tag: "전치사구" },
+      { num: "5번", label: "그들은 좋아할 것이다", tag: "주절" }
     ],
     words: ["say", "If", "to the villagers,", "will be glad to hear it.", "you", "\"kia ora\"", "they"],
     correctOrder: ["If", "you", "say", "\"kia ora\"", "to the villagers,", "they", "will be glad to hear it."]
   },
 
-  // --- 4차시 (Haka) ---
+  // --- 4차시: 하카 (Haka) ---
   {
     page: "L6 4차시",
-    ko: "하카를 추는 사람들이 소리를 지르고 몸을 격렬하게 움직이기 때문에 무섭게 보일지도 모른다.",
+    ko: "하카 무용수들이 소리를 지르고 몸을 격렬하게 움직이기 때문에 무섭게 보일지도 모른다.",
     hint: "💡 힌트: 'The haka' (하카는)가 주어이며 'because' 이하가 이유를 설명합니다.",
     slots: [
-      { num: "1번", l: "하카는", t: "주어" },
-      { num: "2번", l: "보일지도 모른다", t: "조동사/보어" },
-      { num: "3번", l: "왜냐하면 ~때문에", t: "접속사" },
-      { num: "4번", l: "하카 무용수들이", t: "주어2" },
-      { num: "5번", l: "소리 지르고 움직이기 때문이다", t: "동사구2" },
-      { num: "6번", l: "격렬하게", t: "부사" }
+      { num: "1번", label: "하카는", tag: "주어" },
+      { num: "2번", label: "보일지도 모른다", tag: "조동사/보어" },
+      { num: "3번", label: "왜냐하면 ~때문에", tag: "접속사" },
+      { num: "4번", label: "무용수들이", tag: "주어2" },
+      { num: "5번", label: "소리 지르고 움직이기 때문이다", tag: "동사구2" },
+      { num: "6번", label: "격렬하게", tag: "부사" }
     ],
     words: ["move their bodies", "wildly.", "because", "The haka", "shout and", "haka dancers", "may look scary"],
     correctOrder: ["The haka", "may look scary", "because", "haka dancers", "shout and", "move their bodies", "wildly."]
   },
   {
     page: "L6 4차시",
-    ko: "예를 들어, 뉴질랜드의 럭비 국가 대표 팀 선수들은 모든 경기 전에 하카를 춘다.",
+    ko: "뉴질랜드의 럭비 국가 대표 팀 선수들은 모든 경기 전에 하카를 춘다.",
     hint: "💡 힌트: 'national rugby team members'가 주어이며 'do the haka'가 동사구입니다.",
     slots: [
-      { num: "1번", l: "예를 들어", t: "부사구" },
-      { num: "2번", l: "뉴질랜드의", t: "전치사구" },
-      { num: "3번", l: "팀 선수들은", t: "주어" },
-      { num: "4번", l: "하카를 춘다", t: "동사/목적어" },
-      { num: "5번", l: "전에", t: "전치사" },
-      { num: "6번", l: "모든 경기", t: "목적어2" }
+      { num: "1번", label: "뉴질랜드의", tag: "전치사구" },
+      { num: "2번", label: "팀 선수들은", tag: "주어" },
+      { num: "3번", label: "하카를 춘다", tag: "동사/목적어" },
+      { num: "4번", label: "전에", tag: "전치사" },
+      { num: "5번", label: "모든 경기", tag: "목적어2" }
     ],
     words: ["members", "national rugby team", "For example,", "the haka", "do", "before", "New Zealand's", "every match."],
     correctOrder: ["For example,", "New Zealand's", "national rugby team", "members", "do", "the haka", "before", "every match."]
