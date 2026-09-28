@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>[웅상여중 중3] "Hello! New Zealand" 의미단위 배열 앱</title>
+  <title>[웅상여중 중3] Lesson 6. Hello! New Zealand 의미단위 배열 앱</title>
   <style>
     :root {
       --bg-color: #f7f5ed;
@@ -20,6 +20,9 @@
 
     .app-card { width: 100%; max-width: 600px; background-color: var(--card-bg); border-radius: 24px; padding: 24px; border: 1px solid var(--border-gray); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); position: relative; }
     .hidden { display: none !important; }
+
+    /* 타이틀 헤더 */
+    .app-main-title { font-size: 1.1rem; font-weight: 800; color: var(--accent-coral); text-align: center; margin-bottom: 15px; letter-spacing: -0.5px; }
 
     /* 1. 학번/이름 입력 모달 */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; }
@@ -56,7 +59,7 @@
     .slot-item { border: 2px dashed #cbd5e1; border-radius: 14px; padding: 12px 10px; text-align: center; background-color: var(--drop-bg); cursor: pointer; min-height: 85px; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.2s; }
     .slot-item.filled { border-style: solid; border-color: #cbd5e1; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
     .slot-num { font-size: 0.75rem; font-weight: bold; color: #94a3b8; margin-bottom: 2px; }
-    .slot-word { font-size: 0.95rem; font-weight: bold; color: #1e293b; margin-bottom: 4px; min-height: 20px; display: flex; align-items: center; }
+    .slot-word { font-size: 0.95rem; font-weight: bold; color: #1e293b; margin-bottom: 4px; min-height: 20px; display: flex; align-items: center; text-align: center; }
     
     /* 품사 뱃지 스타일 */
     .role-badge { font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; display: inline-block; }
@@ -87,6 +90,7 @@
 <body>
 
   <div class="app-card">
+    <div class="app-main-title">📚 Lesson 6. Hello! New Zealand 의미단위 배열 학습</div>
 
     <!-- [단계 1] 학번/이름 입력 모달 -->
     <div class="modal-overlay" id="name-modal">
@@ -126,7 +130,7 @@
 
       <div class="meaning-container">
         <div class="meaning-subtitle">KOREAN MEANING</div>
-        <p class="meaning-text" id="meaning-text">뉴질랜드는 자연의 아름다움을 가진 곳이다.</p>
+        <p class="meaning-text" id="meaning-text">-</p>
       </div>
 
       <div class="step-header">
@@ -158,7 +162,6 @@
   </div>
 
   <script>
-    // 1~4차시 데이터 정비 완료
     const lessonsData = {
       1: [
         {
@@ -429,7 +432,6 @@
       document.getElementById('q-progress').innerText = `${index + 1} / ${currentQuizList.length}`;
       document.getElementById('meaning-text').innerText = q.ko;
 
-      // 상단 슬롯 생성
       const slotContainer = document.getElementById('slot-container');
       slotContainer.innerHTML = '';
       q.slots.forEach((s, idx) => {
@@ -445,7 +447,6 @@
         slotContainer.appendChild(slot);
       });
 
-      // 하단 단어 조각 생성 (영단어 + 한국어 뜻)
       const poolContainer = document.getElementById('pool-container');
       poolContainer.innerHTML = '';
       
