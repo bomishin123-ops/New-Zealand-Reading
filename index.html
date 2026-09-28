@@ -7,71 +7,85 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
-      --bg-color: #f4f6f8;
+      --bg-color: #f7f5ed;
       --card-bg: #ffffff;
-      --accent-coral: #e06d53;
-      --meaning-bg: #fffbeb;
-      --meaning-border: #fde68a;
-      --border-gray: #e2e8f0;
-      --drop-bg: #fafafa;
+      --accent-coral: #d97757;
+      --meaning-bg: #fffdf0;
+      --meaning-border: #fce7a5;
+      --border-gray: #e5e7eb;
+      --drop-bg: #fafaf9;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
     body { background-color: var(--bg-color); padding: 15px; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
 
-    .app-card { width: 100%; max-width: 600px; background-color: var(--card-bg); border-radius: 20px; padding: 25px; border: 1px solid var(--border-gray); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); position: relative; }
+    .app-card { width: 100%; max-width: 600px; background-color: var(--card-bg); border-radius: 24px; padding: 24px; border: 1px solid var(--border-gray); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); position: relative; }
     .hidden { display: none !important; }
 
     /* 1. 학번/이름 입력 모달 */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; }
     .modal-box { background: #fff; border-radius: 20px; padding: 30px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
-    .modal-title { font-size: 1.4rem; font-weight: bold; color: #1e293b; margin-bottom: 20px; }
-    .input-field { width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 1rem; margin-bottom: 12px; outline: none; -webkit-user-select: text; user-select: text; }
-    .btn-primary { width: 100%; background-color: var(--accent-coral); color: #fff; border: none; padding: 14px; border-radius: 10px; font-size: 1.05rem; font-weight: bold; cursor: pointer; margin-top: 8px; }
+    .modal-title { font-size: 1.3rem; font-weight: bold; color: #1e293b; margin-bottom: 20px; }
+    .input-field { width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 1rem; margin-bottom: 12px; outline: none; -webkit-user-select: text; user-select: text; }
+    .btn-primary { width: 100%; background-color: var(--accent-coral); color: #fff; border: none; padding: 14px; border-radius: 12px; font-size: 1.05rem; font-weight: bold; cursor: pointer; margin-top: 8px; }
 
     /* 2. 차시 선택 화면 */
     .lesson-select-title { font-size: 1.3rem; font-weight: bold; color: #1e293b; text-align: center; margin-bottom: 20px; }
     .lesson-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-    .btn-lesson { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 14px; padding: 18px; font-size: 1.05rem; font-weight: bold; color: #334155; text-align: left; cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; }
+    .btn-lesson { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 16px; padding: 18px; font-size: 1.05rem; font-weight: bold; color: #334155; text-align: left; cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; }
     .btn-lesson:hover { border-color: var(--accent-coral); background: #fff; }
     .btn-lesson span { font-size: 0.85rem; color: #64748b; font-weight: normal; }
 
     /* 3. 퀴즈 화면 */
-    .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #f1f5f9; }
-    .q-number { font-size: 0.95rem; font-weight: bold; color: #ea580c; }
-    .q-progress { background-color: #f1f5f9; padding: 4px 12px; border-radius: 12px; font-weight: bold; font-size: 0.85rem; color: #475569; }
+    .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .q-number { font-size: 0.9rem; font-weight: bold; color: #d97757; letter-spacing: 0.5px; }
+    .q-progress { background-color: #f1f5f9; padding: 4px 12px; border-radius: 12px; font-weight: bold; font-size: 0.8rem; color: #475569; }
 
-    .meaning-container { background-color: var(--meaning-bg); border-radius: 12px; padding: 18px; border: 1px solid var(--meaning-border); margin-bottom: 15px; text-align: center; }
-    .meaning-text { font-size: 1.1rem; font-weight: 700; color: #1e293b; line-height: 1.5; }
+    .meaning-container { background-color: var(--meaning-bg); border-radius: 16px; padding: 20px; border: 1px solid var(--meaning-border); margin-bottom: 20px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .meaning-subtitle { font-size: 0.75rem; font-weight: 800; color: #b45309; letter-spacing: 1px; margin-bottom: 6px; }
+    .meaning-text { font-size: 1.15rem; font-weight: 700; color: #1e293b; line-height: 1.4; }
 
     .step-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .step-header span { font-size: 0.85rem; font-weight: bold; color: #334155; }
-    .btn-reset { background: none; border: none; color: #64748b; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
+    .step-title-group { display: flex; align-items: center; gap: 6px; }
+    .step-badge { background-color: #d97757; color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 0.75rem; font-weight: bold; }
+    .step-title { font-size: 0.9rem; font-weight: bold; color: #1e293b; }
+    .btn-reset { background: none; border: none; color: #94a3b8; font-size: 0.85rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .btn-reset:hover { color: #64748b; }
 
-    .slot-container { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 10px; min-height: 140px; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; align-content: flex-start; background-color: var(--drop-bg); }
-    .slot-item { border: 1px dashed #cbd5e1; border-radius: 10px; padding: 8px; text-align: center; min-width: 80px; background-color: #fff; flex: 1; position: relative; cursor: pointer; }
-    .slot-num { font-size: 0.7rem; color: #94a3b8; display: block; }
-    .slot-label { font-size: 0.75rem; font-weight: bold; color: #475569; }
-    .selected-word { margin-top: 6px; font-weight: bold; color: #1e3a8a; font-size: 0.9rem; min-height: 18px; border-top: 1px solid #f1f5f9; padding-top: 3px; }
+    /* 슬롯 그리드 (2열 카드 형태) */
+    .slot-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .slot-item { border: 2px dashed #cbd5e1; border-radius: 14px; padding: 12px 10px; text-align: center; background-color: var(--drop-bg); cursor: pointer; min-height: 85px; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.2s; }
+    .slot-item.filled { border-style: solid; border-color: #cbd5e1; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .slot-num { font-size: 0.75rem; font-weight: bold; color: #94a3b8; margin-bottom: 2px; }
+    .slot-word { font-size: 0.95rem; font-weight: bold; color: #1e293b; margin-bottom: 6px; min-height: 22px; display: flex; align-items: center; }
+    
+    /* 품사 뱃지 스타일 */
+    .role-badge { font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; display: inline-block; }
+    .role-subject { background-color: #e0f2fe; color: #0369a1; }
+    .role-verb { background-color: #ffe4e6; color: #be123c; }
+    .role-object { background-color: #dcfce7; color: #15803d; }
+    .role-adverb { background-color: #fef9c3; color: #a16207; }
+    .role-prep { background-color: #f3e8ff; color: #7e22ce; }
 
-    .pool-title { font-size: 0.8rem; font-weight: bold; color: #64748b; margin-bottom: 8px; }
-    .pool-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; padding: 10px; background-color: #f8fafc; border-radius: 12px; border: 1px solid var(--border-gray); }
-    .word-chip { background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; font-weight: 600; font-size: 0.9rem; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
-    .word-chip.used { opacity: 0.2; pointer-events: none; background: #e2e8f0; }
+    .pool-title { font-size: 0.85rem; font-weight: bold; color: #64748b; margin-bottom: 10px; }
+    .pool-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .word-chip { background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 16px; font-weight: 600; font-size: 0.95rem; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.03); transition: all 0.1s; flex: 1 1 calc(50% - 8px); text-align: center; }
+    .word-chip:hover { border-color: var(--accent-coral); background-color: #fffaf9; }
+    .word-chip.used { opacity: 0.25; pointer-events: none; background: #f1f5f9; border-color: #e2e8f0; }
 
-    .btn-submit { width: 100%; background-color: #cbd5e1; color: #fff; border: none; padding: 14px; border-radius: 10px; font-size: 1rem; font-weight: bold; cursor: not-allowed; }
+    .btn-submit { width: 100%; background-color: #cbd5e1; color: #fff; border: none; padding: 15px; border-radius: 14px; font-size: 1.05rem; font-weight: bold; cursor: not-allowed; transition: background 0.2s; }
     .btn-submit.active { background-color: var(--accent-coral); cursor: pointer; }
 
     /* 4. 결과 화면 */
-    .result-card { text-align: center; padding: 20px 10px; }
-    .result-score { font-size: 3.5rem; font-weight: bold; color: var(--accent-coral); margin: 15px 0; }
+    .result-card { text-align: center; padding: 30px 10px; }
+    .result-score { font-size: 4rem; font-weight: bold; color: var(--accent-coral); margin: 15px 0; }
   </style>
 </head>
 <body>
 
   <div class="app-card">
 
-    <!-- [단계 1] 학번/이름 입력 팝업창 -->
+    <!-- [단계 1] 학번/이름 입력 모달 -->
     <div class="modal-overlay" id="name-modal">
       <div class="modal-box">
         <h2 class="modal-title">학습자 정보 입력</h2>
@@ -108,17 +122,21 @@
       </div>
 
       <div class="meaning-container">
+        <div class="meaning-subtitle">KOREAN MEANING</div>
         <p class="meaning-text" id="meaning-text">뉴질랜드는 자연의 아름다움을 가진 곳이다.</p>
       </div>
 
       <div class="step-header">
-        <span>❶ 클릭하여 문장 배열하기</span>
-        <button class="btn-reset" onclick="resetSlots()">🔄 다시하기</button>
+        <div class="step-title-group">
+          <div class="step-badge">1</div>
+          <span class="step-title">단계 · 문장 배열하기</span>
+        </div>
+        <button class="btn-reset" onclick="resetSlots()">🔄 다시 해보기</button>
       </div>
 
       <div class="slot-container" id="slot-container"></div>
 
-      <div class="pool-title">단어 조각 (클릭하면 위로 이동합니다)</div>
+      <div class="pool-title">배열 조각</div>
       <div class="pool-container" id="pool-container"></div>
 
       <button class="btn-submit" id="btn-submit" onclick="submitAnswer()">정답 확인 &check;</button>
@@ -126,9 +144,9 @@
 
     <!-- [단계 4] 결과 화면 -->
     <div class="hidden" id="result-screen">
-      <div class="result-card" id="capture-area">
+      <div class="result-card">
         <h2>🎉 차시 학습 완료!</h2>
-        <p id="student-info-display" style="margin-top:8px; color:#64748b; font-weight:bold;"></p>
+        <p id="student-info-display" style="margin-top:10px; color:#64748b; font-weight:bold; font-size: 1.1rem;"></p>
         <div class="result-score">100점</div>
         <button class="btn-primary" onclick="showLessonScreen()">다른 차시 공부하기</button>
       </div>
@@ -137,163 +155,252 @@
   </div>
 
   <script>
-    // 차시별 학습지 데이터 (1~4차시 완벽 반영)
+    // 의미단위 청크 데이터 (1~4차시 완벽 구축)
     const lessonsData = {
       1: [
         {
           ko: "뉴질랜드는 자연의 아름다움을 가진 곳이다.",
-          slots: [{l:"주어"}, {l:"동사"}, {l:"보어"}, {l:"전치사구"}, {l:"명사구1"}, {l:"명사구2"}],
-          words: ["New Zealand", "is", "a place", "of", "natural", "beauty."],
-          correct: ["New Zealand", "is", "a place", "of", "natural", "beauty."]
+          slots: [
+            { text: "New Zealand", label: "주어", type: "role-subject" },
+            { text: "is", label: "동사", type: "role-verb" },
+            { text: "a place", label: "보어", type: "role-object" },
+            { text: "of natural beauty.", label: "전치사구", type: "role-prep" }
+          ],
+          correct: ["New Zealand", "is", "a place", "of natural beauty."]
         },
         {
           ko: "그곳에는 많은 아름다운 호수와 폭포가 있다.",
-          slots: [{l:"주어"}, {l:"동사"}, {l:"수식어"}, {l:"목적어1"}, {l:"접속사"}, {l:"목적어2"}],
-          words: ["It", "has", "many", "beautiful", "lakes", "and", "waterfalls."],
-          correct: ["It", "has", "many", "beautiful", "lakes", "and", "waterfalls."]
+          slots: [
+            { text: "It", label: "주어", type: "role-subject" },
+            { text: "has", label: "동사", type: "role-verb" },
+            { text: "many beautiful lakes", label: "목적어", type: "role-object" },
+            { text: "and waterfalls.", label: "목적어", type: "role-object" }
+          ],
+          correct: ["It", "has", "many beautiful lakes", "and waterfalls."]
         },
         {
           ko: "뉴질랜드에는 남섬과 북섬, 두 개의 본섬이 있다.",
-          slots: [{l:"주어"}, {l:"동사"}, {l:"수식어"}, {l:"목적어"}, {l:"동격 명사구1"}, {l:"동격 명사구2"}],
-          words: ["New Zealand", "has", "two main", "islands,", "the South Island", "and the North Island."],
-          correct: ["New Zealand", "has", "two main", "islands,", "the South Island", "and the North Island."]
+          slots: [
+            { text: "New Zealand", label: "주어", type: "role-subject" },
+            { text: "has", label: "동사", type: "role-verb" },
+            { text: "two main islands,", label: "목적어", type: "role-object" },
+            { text: "the South Island and the North Island.", label: "동격구", type: "role-prep" }
+          ],
+          correct: ["New Zealand", "has", "two main islands,", "the South Island and the North Island."]
         },
         {
           ko: "남섬에는 일 년 내내 눈으로 덮인 산들이 있다.",
-          slots: [{l:"전치사구"}, {l:"유도부사구"}, {l:"주어"}, {l:"관계사절"}, {l:"전치사구"}],
-          words: ["In the South Island,", "there are", "mountains", "that are covered with snow", "all year round."],
-          correct: ["In the South Island,", "there are", "mountains", "that are covered with snow", "all year round."]
+          slots: [
+            { text: "In the South Island,", label: "장소부사구", type: "role-prep" },
+            { text: "there are", label: "유도부사", type: "role-verb" },
+            { text: "mountains", label: "주어", type: "role-subject" },
+            { text: "that are covered with snow all year round.", label: "관계사절", type: "role-adverb" }
+          ],
+          correct: ["In the South Island,", "there are", "mountains", "that are covered with snow all year round."]
         }
       ],
       2: [
         {
           ko: "당신은 키위라는 단어를 들었을 때 무엇이 떠오르는가?",
-          slots: [{l:"부사절 접속사"}, {l:"주어/동사"}, {l:"목적어"}, {l:"의문사/동사"}, {l:"전치사구"}],
-          words: ["When you", "hear the word kiwi,", "what comes", "to your mind?"],
-          correct: ["When you", "hear the word kiwi,", "what comes", "to your mind?"]
+          slots: [
+            { text: "When you hear the word kiwi,", label: "시간부사절", type: "role-adverb" },
+            { text: "what comes", label: "의문사/동사", type: "role-verb" },
+            { text: "to your mind?", label: "전치사구", type: "role-prep" }
+          ],
+          correct: ["When you hear the word kiwi,", "what comes", "to your mind?"]
         },
         {
           ko: "뉴질랜드에서 키위라는 단어는 몇 가지 뜻을 가지고 있다.",
-          slots: [{l:"전치사구"}, {l:"주어"}, {l:"동사"}, {l:"수식어"}, {l:"목적어"}],
-          words: ["In New Zealand", "the word kiwi", "has", "a couple of", "meanings."],
-          correct: ["In New Zealand", "the word kiwi", "has", "a couple of", "meanings."]
+          slots: [
+            { text: "In New Zealand", label: "장소부사구", type: "role-prep" },
+            { text: "the word kiwi", label: "주어", type: "role-subject" },
+            { text: "has", label: "동사", type: "role-verb" },
+            { text: "a couple of meanings.", label: "목적어", type: "role-object" }
+          ],
+          correct: ["In New Zealand", "the word kiwi", "has", "a couple of meanings."]
         },
         {
           ko: "먼저, 키위는 맛있는 녹색 과일의 이름이다.",
-          slots: [{l:"부사"}, {l:"주어/동사"}, {l:"명사구"}, {l:"전치사구"}],
-          words: ["First,", "kiwi is the name", "of a delicious,", "green fruit."],
+          slots: [
+            { text: "First,", label: "접속부사", type: "role-adverb" },
+            { text: "kiwi is the name", label: "주어/동사/보어", type: "role-subject" },
+            { text: "of a delicious,", label: "전치사구", type: "role-prep" },
+            { text: "green fruit.", label: "명사수식", type: "role-object" }
+          ],
           correct: ["First,", "kiwi is the name", "of a delicious,", "green fruit."]
         },
         {
           ko: "많은 키위가 그곳에서 재배되기 때문에 뉴질랜드는 키위의 나라로 알려져 있다.",
-          slots: [{l:"주어"}, {l:"수동태 동사"}, {l:"보어"}, {l:"전치사구"}],
-          words: ["New Zealand", "is known as", "the land", "of kiwi fruit."],
+          slots: [
+            { text: "New Zealand", label: "주어", type: "role-subject" },
+            { text: "is known as", label: "수동태구동사", type: "role-verb" },
+            { text: "the land", label: "보어", type: "role-object" },
+            { text: "of kiwi fruit.", label: "전치사구", type: "role-prep" }
+          ],
           correct: ["New Zealand", "is known as", "the land", "of kiwi fruit."]
         }
       ],
       3: [
         {
           ko: "이제 마오리인에 대해 이야기해 보자.",
-          slots: [{l:"부사"}, {l:"청유구문"}, {l:"전치사구"}],
-          words: ["Now,", "let’s talk", "about the Maori."],
+          slots: [
+            { text: "Now,", label: "시간부사", type: "role-adverb" },
+            { text: "let’s talk", label: "청유동사구", type: "role-verb" },
+            { text: "about the Maori.", label: "전치사구", type: "role-prep" }
+          ],
           correct: ["Now,", "let’s talk", "about the Maori."]
         },
         {
           ko: "마오리인은 뉴질랜드의 원주민이다.",
-          slots: [{l:"주어"}, {l:"동사/보어"}, {l:"전치사구"}],
-          words: ["They are", "the native people", "of New Zealand."],
+          slots: [
+            { text: "They are", label: "주어/동사", type: "role-subject" },
+            { text: "the native people", label: "보어", type: "role-object" },
+            { text: "of New Zealand.", label: "전치사구", type: "role-prep" }
+          ],
           correct: ["They are", "the native people", "of New Zealand."]
         },
         {
           ko: "그들은 유럽인들이 도착하기 오래전에 섬에 와서 살았다.",
-          slots: [{l:"주어/동사"}, {l:"부사구"}, {l:"부사절 접속사"}, {l:"주어/동사"}],
-          words: ["They went to live", "on the islands", "long before", "Europeans arrived."],
+          slots: [
+            { text: "They went to live", label: "주어/동사구", type: "role-subject" },
+            { text: "on the islands", label: "장소부사구", type: "role-prep" },
+            { text: "long before", label: "시간접속사", type: "role-adverb" },
+            { text: "Europeans arrived.", label: "주어/동사절", type: "role-verb" }
+          ],
           correct: ["They went to live", "on the islands", "long before", "Europeans arrived."]
         },
         {
           ko: "마오리 문화는 오늘날 뉴질랜드 사회의 중요한 부분이다.",
-          slots: [{l:"주어"}, {l:"동사/보어"}, {l:"전치사구"}],
-          words: ["The Maori culture", "is an important part", "of today’s New Zealand society."],
+          slots: [
+            { text: "The Maori culture", label: "주어", type: "role-subject" },
+            { text: "is an important part", label: "동사/보어", type: "role-verb" },
+            { text: "of today’s New Zealand society.", label: "전치사구", type: "role-prep" }
+          ],
           correct: ["The Maori culture", "is an important part", "of today’s New Zealand society."]
         },
         {
-          ko: "몇몇 학교에서 마오리어i를 가르치고 있으며, 마오리어 라디오와 TV 방송국이 있다.",
-          slots: [{l:"주어"}, {l:"수동태 동사"}, {l:"전치사구"}, {l:"접속사/유도부사"}, {l:"주어구"}],
-          words: ["The Maori language", "is taught", "at some schools", "and there are", "Maori language radio and TV stations."],
-          correct: ["The Maori language", "is taught", "at some schools", "and there are", "Maori language radio and TV stations."]
+          ko: "몇몇 학교에서 마오리어를 가르치고 있으며, 마오리어 라디오와 TV 방송국이 있다.",
+          slots: [
+            { text: "The Maori language is taught", label: "주어/수동태", type: "role-subject" },
+            { text: "at some schools", label: "장소부사구", type: "role-prep" },
+            { text: "and there are", label: "접속사/유도부사", type: "role-verb" },
+            { text: "Maori language radio and TV stations.", label: "주어구", type: "role-object" }
+          ],
+          correct: ["The Maori language is taught", "at some schools", "and there are", "Maori language radio and TV stations."]
         },
         {
           ko: "나라의 여러 곳에 마오리 마을이 있다.",
-          slots: [{l:"유도부사/동사"}, {l:"주어"}, {l:"전치사구"}],
-          words: ["There are", "Maori villages", "in many parts of the country."],
+          slots: [
+            { text: "There are", label: "유도부사/동사", type: "role-verb" },
+            { text: "Maori villages", label: "주어", type: "role-subject" },
+            { text: "in many parts of the country.", label: "장소부사구", type: "role-prep" }
+          ],
           correct: ["There are", "Maori villages", "in many parts of the country."]
         },
         {
           ko: "당신은 마오리 마을에 방문해 마오리 문화를 경험할 수 있다.",
-          slots: [{l:"주어/조동사"}, {l:"동사구1"}, {l:"접속사/동사구2"}],
-          words: ["You can", "visit Maori villages", "and experience Maori culture."],
+          slots: [
+            { text: "You can", label: "주어/조동사", type: "role-subject" },
+            { text: "visit Maori villages", label: "동사구1", type: "role-verb" },
+            { text: "and experience Maori culture.", label: "접속사/동사구2", type: "role-object" }
+          ],
           correct: ["You can", "visit Maori villages", "and experience Maori culture."]
         },
         {
           ko: "당신이 마을 사람들에게 \"kia ora\"라고 말한다면 그들은 그것을 듣고 좋아할 것이다.",
-          slots: [{l:"조건절 접속사/주어"}, {l:"동사구"}, {l:"전치사구"}, {l:"주어/조동사"}, {l:"보어구"}, {l:"To부정사구"}],
-          words: ["If you", "say \"kia ora\"", "to the villagers,", "they will", "be glad", "to hear it."],
-          correct: ["If you", "say \"kia ora\"", "to the villagers,", "they will", "be glad", "to hear it."]
+          slots: [
+            { text: "If you say \"kia ora\" to the villagers,", label: "조건절", type: "role-adverb" },
+            { text: "they will", label: "주어/조동사", type: "role-subject" },
+            { text: "be glad", label: "보어", type: "role-object" },
+            { text: "to hear it.", label: "부사적용법", type: "role-prep" }
+          ],
+          correct: ["If you say \"kia ora\" to the villagers,", "they will", "be glad", "to hear it."]
         },
         {
           ko: "그것은 영어로 \"안녕하세요\"를 의미한다.",
-          slots: [{l:"주어/동사"}, {l:"목적어"}, {l:"전치사구"}],
-          words: ["It means", "\"hi\"", "in English."],
+          slots: [
+            { text: "It means", label: "주어/동사", type: "role-subject" },
+            { text: "\"hi\"", label: "목적어", type: "role-object" },
+            { text: "in English.", label: "전치사구", type: "role-prep" }
+          ],
           correct: ["It means", "\"hi\"", "in English."]
         }
       ],
       4: [
         {
           ko: "당신은 하카를 본 적이 있는가?",
-          slots: [{l:"조동사/주어"}, {l:"부사/동사"}, {l:"목적어"}],
-          words: ["Have you", "ever watched", "the haka?"],
+          slots: [
+            { text: "Have you", label: "조동사/주어", type: "role-subject" },
+            { text: "ever watched", label: "현재완료동사", type: "role-verb" },
+            { text: "the haka?", label: "목적어", type: "role-object" }
+          ],
           correct: ["Have you", "ever watched", "the haka?"]
         },
         {
           ko: "하카를 추는 사람들이 소리를 지르고 몸을 격렬하게 움직이기 때문에 하카가 무섭게 보일지도 모른다.",
-          slots: [{l:"주어/조동사"}, {l:"감각동사/보어"}, {l:"이유 접속사/주어"}, {l:"동사구1"}, {l:"접속사/동사구2"}],
-          words: ["The haka may", "look scary", "because haka dancers", "shout and", "move their bodies wildly."],
-          correct: ["The haka may", "look scary", "because haka dancers", "shout and", "move their bodies wildly."]
+          slots: [
+            { text: "The haka may look scary", label: "주/동/보", type: "role-subject" },
+            { text: "because haka dancers", label: "이유접속사/주어", type: "role-adverb" },
+            { text: "shout and", label: "동사구1", type: "role-verb" },
+            { text: "move their bodies wildly.", label: "동사구2/부사", type: "role-object" }
+          ],
+          correct: ["The haka may look scary", "because haka dancers", "shout and", "move their bodies wildly."]
         },
         {
           ko: "당신이 이미 들은 적 있겠지만, 마오리인들은 전쟁 춤으로 하카를 추기 시작했다.",
-          slots: [{l:"주어"}, {l:"관계대명사절"}, {l:"동사구"}, {l:"전치사구"}],
-          words: ["The Maori people,", "who you've already heard about,", "started doing the haka", "as a war dance."],
+          slots: [
+            { text: "The Maori people,", label: "주어", type: "role-subject" },
+            { text: "who you've already heard about,", label: "관계대명사절", type: "role-adverb" },
+            { text: "started doing the haka", label: "동사/목적어", type: "role-verb" },
+            { text: "as a war dance.", label: "전치사구", type: "role-prep" }
+          ],
           correct: ["The Maori people,", "who you've already heard about,", "started doing the haka", "as a war dance."]
         },
         {
           ko: "그러나 오늘날 사람들은 운동 경기나 결혼식, 다른 중요한 행사에서 하카를 춘다.",
-          slots: [{l:"부사구"}, {l:"주어/동사"}, {l:"목적어"}, {l:"전치사구"}],
-          words: ["Today, however,", "New Zealanders do", "the haka", "at sport matches, weddings, or other important events."],
-          correct: ["Today, however,", "New Zealanders do", "the haka", "at sport matches, weddings, or other important events."]
+          slots: [
+            { text: "Today, however,", "부사구", type: "role-adverb" },
+            { text: "New Zealanders do the haka", "주어/동사/목적어", type: "role-subject" },
+            { text: "at sport matches, weddings,", label: "전치사구1", type: "role-prep" },
+            { text: "or other important events.", label: "전치사구2", type: "role-prep" }
+          ],
+          correct: ["Today, however,", "New Zealanders do the haka", "at sport matches, weddings,", "or other important events."]
         },
         {
           ko: "예를 들어, 뉴질랜드의 럭비 국가 대표 팀 선수들은 모든 경기 전에 하카를 춘다.",
-          slots: [{l:"연결어"}, {l:"주어구"}, {l:"동사/목적어"}, {l:"전치사구"}],
-          words: ["For example,", "New Zealand's national rugby team members", "do the haka", "before every match."],
+          slots: [
+            { text: "For example,", "연결어", type: "role-adverb" },
+            { text: "New Zealand's national rugby team members", "주어구", type: "role-subject" },
+            { text: "do the haka", "동사/목적어", type: "role-verb" },
+            { text: "before every match.", label: "전치사구", type: "role-prep" }
+          ],
           correct: ["For example,", "New Zealand's national rugby team members", "do the haka", "before every match."]
         },
         {
           ko: "그것은 전 세계적으로 유명하다.",
-          slots: [{l:"주어/동사/보어"}, {l:"전치사구"}],
-          words: ["It is famous", "all over the world."],
+          slots: [
+            { text: "It is famous", label: "주어/동사/보어", type: "role-subject" },
+            { text: "all over the world.", label: "전치사구", type: "role-prep" }
+          ],
           correct: ["It is famous", "all over the world."]
         },
         {
           ko: "당신이 하카를 본다면, 상대 팀이 겁을 먹을 것이라는 것에 아마 동의할 것이다.",
-          slots: [{l:"조건절구문"}, {l:"주어/조동사/동사"}, {l:"접속사절 (주어)"}, {l:"동사구(수동태)"}],
-          words: ["If you see the haka,", "you will probably agree", "that the rival team", "must be scared."],
+          slots: [
+            { text: "If you see the haka,", "조건절", type: "role-adverb" },
+            { text: "you will probably agree", "주어/동사/부사", type: "role-subject" },
+            { text: "that the rival team", "접속사절주어", type: "role-object" },
+            { text: "must be scared.", label: "수동태동사구", type: "role-verb" }
+          ],
           correct: ["If you see the haka,", "you will probably agree", "that the rival team", "must be scared."]
         },
         {
           ko: "키위와 마찬가지로 하카는 나라의 상징이다.",
-          slots: [{l:"전치사구"}, {l:"주어/동사"}, {l:"보어구"}],
-          words: ["Like the kiwi bird,", "the haka is", "a national symbol."],
+          slots: [
+            { text: "Like the kiwi bird,", "전치사구", type: "role-prep" },
+            { text: "the haka is", "주어/동사", type: "role-subject" },
+            { text: "a national symbol.", label: "보어구", type: "role-object" }
+          ],
           correct: ["Like the kiwi bird,", "the haka is", "a national symbol."]
         }
       ]
@@ -305,7 +412,6 @@
     let currentQuizList = [];
     let userSelection = [];
 
-    // [1] 학번/이름 제출
     function submitUserInfo() {
       const id = document.getElementById('studentId').value.trim();
       const name = document.getElementById('studentName').value.trim();
@@ -318,29 +424,24 @@
       showLessonScreen();
     }
 
-    // [2] 차시 선택 화면 출력
     function showLessonScreen() {
       document.getElementById('quiz-screen').classList.add('hidden');
       document.getElementById('result-screen').classList.add('hidden');
       document.getElementById('lesson-screen').classList.remove('hidden');
     }
 
-    // [3] 차시 시작
     function startLesson(lessonNum) {
       currentLesson = lessonNum;
       currentQuizList = lessonsData[lessonNum] || [];
-      
       if (currentQuizList.length === 0) {
         alert(`${lessonNum}차시 문제는 준비 중입니다.`);
         return;
       }
-
       document.getElementById('lesson-screen').classList.add('hidden');
       document.getElementById('quiz-screen').classList.remove('hidden');
       loadQuestion(0);
     }
 
-    // [4] 문제 출력
     function loadQuestion(index) {
       currentQIndex = index;
       const q = currentQuizList[index];
@@ -350,7 +451,7 @@
       document.getElementById('q-progress').innerText = `${index + 1} / ${currentQuizList.length}`;
       document.getElementById('meaning-text').innerText = q.ko;
 
-      // 상단 슬롯 생성
+      // 상단 슬롯 생성 (2열 카드)
       const slotContainer = document.getElementById('slot-container');
       slotContainer.innerHTML = '';
       q.slots.forEach((s, idx) => {
@@ -359,8 +460,8 @@
         slot.id = `slot-${idx}`;
         slot.innerHTML = `
           <span class="slot-num">${idx + 1}번</span>
-          <span class="slot-label">${s.l}</span>
-          <div class="selected-word"></div>
+          <div class="slot-word"></div>
+          <span class="role-badge ${s.type}">${s.label}</span>
         `;
         slot.onclick = () => removeWordFromSlot(idx);
         slotContainer.appendChild(slot);
@@ -369,7 +470,7 @@
       // 하단 단어 조각 생성 (섞기)
       const poolContainer = document.getElementById('pool-container');
       poolContainer.innerHTML = '';
-      const shuffled = [...q.words].sort(() => Math.random() - 0.5);
+      const shuffled = [...q.correct].sort(() => Math.random() - 0.5);
       shuffled.forEach(w => {
         const chip = document.createElement('button');
         chip.className = 'word-chip';
@@ -381,7 +482,6 @@
       updateSubmitBtn();
     }
 
-    // 클릭하여 위로 이동
     function selectWord(word, chipEl) {
       const q = currentQuizList[currentQIndex];
       if (userSelection.length < q.slots.length) {
@@ -389,19 +489,21 @@
         userSelection.push({ word, chipEl });
         chipEl.classList.add('used');
 
-        const slotWord = document.getElementById(`slot-${targetSlotIdx}`).querySelector('.selected-word');
-        slotWord.innerText = word;
+        const slotEl = document.getElementById(`slot-${targetSlotIdx}`);
+        slotEl.classList.add('filled');
+        slotEl.querySelector('.slot-word').innerText = word;
         updateSubmitBtn();
       }
     }
 
-    // 상단 클릭하여 단어 취소
     function removeWordFromSlot(slotIdx) {
       if (slotIdx >= userSelection.length) return;
       for (let i = userSelection.length - 1; i >= slotIdx; i--) {
         const item = userSelection.pop();
         item.chipEl.classList.remove('used');
-        document.getElementById(`slot-${i}`).querySelector('.selected-word').innerText = '';
+        const slotEl = document.getElementById(`slot-${i}`);
+        slotEl.classList.remove('filled');
+        slotEl.querySelector('.slot-word').innerText = '';
       }
       updateSubmitBtn();
     }
@@ -420,15 +522,14 @@
       }
     }
 
-    // 정답 확인
     function submitAnswer() {
       const q = currentQuizList[currentQIndex];
       if (userSelection.length < q.slots.length) return;
 
-      const userSentence = userSelection.map(s => s.word).join(' ');
-      const correctSentence = q.correct.join(' ');
+      const userSentence = userSelection.map(s => s.word);
+      const isCorrect = userSentence.every((val, idx) => val === q.correct[idx]);
 
-      if (userSentence === correctSentence) {
+      if (isCorrect) {
         alert("정답입니다! 👏");
         if (currentQIndex < currentQuizList.length - 1) {
           loadQuestion(currentQIndex + 1);
@@ -436,7 +537,7 @@
           showResult();
         }
       } else {
-        alert(`오답입니다.\n\n[올바른 순서]\n${correctSentence}`);
+        alert(`오답입니다.\n\n[올바른 순서]\n${q.correct.join(' ')}`);
         resetSlots();
       }
     }
