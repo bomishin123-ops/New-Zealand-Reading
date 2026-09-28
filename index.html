@@ -1,447 +1,489 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>[웅상여중 중3] "Hello! New Zealand" 의미단위 배열 앱</title>
-  <!-- html2canvas: 결과 화면 캡처용 라이브러리 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <style>
-    /* ----------------------------------
-       [웅상여중 중3] 앱 스타일 테마
-       (warm, clean, educational context)
-    ---------------------------------- */
-    :root {
-      --bg-color: #fcf8ec; /* 캔버스 외곽 따뜻한 색 */
-      --card-bg: #ffffff; /* 메인 카드 흰색 */
-      --accent-coral: #e06d53; /* 포인트 산호색 */
-      --meaning-bg: #fffbeb; /* 한글 뜻 노란 배경 */
-      --meaning-border: #fde68a; /* 한글 뜻 테두리 */
-      --tag-color: #555; /* 태그 기본 텍스트 색 */
-      --tag-bg-blue: #e0e7ff; /* 주어/전치사구 파랑 배경 */
-      --tag-text-blue: #3730a3; /* 주어/전치사구 파랑 텍스트 */
-      --tag-bg-red: #fee2e2; /* 동사/수동태 빨강 배경 */
-      --tag-text-red: #991b1b; /* 동사/수동태 빨강 텍스트 */
-      --tag-bg-green: #dcfce7; /* 보어/관계사절 초록 배경 */
-      --tag-text-green: #166534; /* 보어/관계사절 초록 텍스트 */
-      --border-gray: #e2e8f0; /* 일반적인 회색 테두리 */
-      --drop-bg: #fafafa; /* 단어 떨어지는 영역 배경 */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>[웅상여중 중3] "Hello! New Zealand" 의미단위 배열 앱</title>
+    <style>
+        /* ----------------------------------
+           [웅상여중 중3] 앱 스타일 테마
+           (warm, clean, educational context)
+        ---------------------------------- */
+        :root {
+            --bg-color: #fcf8ec; /* 캔버스 외곽 따뜻한 색 */
+            --card-bg: #ffffff; /* 메인 카드 흰색 */
+            --accent-coral: #e06d53; /* 포인트 산호색 */
+            --meaning-bg: #fffbeb; /* 한글 뜻 노란 배경 */
+            --meaning-border: #fde68a; /* 한글 뜻 테두리 */
+            --tag-color: #555; /* 태그 기본 텍스트 색 */
+            --tag-bg-purple: #f3e8ff; /* 주어 보라 배경 */
+            --tag-text-purple: #6b21a8; /* 주어 보라 텍스트 */
+            --tag-bg-blue: #e0e7ff; /* 동사 파랑 배경 */
+            --tag-text-blue: #3730a3; /* 동사 파랑 텍스트 */
+            --tag-bg-beige: #fef3c7; /* 목적어 베이지 배경 */
+            --tag-text-beige: #92400e; /* 목적어 베이지 텍스트 */
+            --border-gray: #e2e8f0; /* 일반적인 회색 테두리 */
+            --drop-bg: #fafafa; /* 단어 떨어지는 영역 배경 */
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
-    body { background-color: var(--bg-color); padding: 15px; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
 
-    /* 메인 앱 컨테이너 (앱 형태) */
-    .app-card { width: 100%; max-width: 600px; background-color: var(--card-bg); border-radius: 20px; padding: 25px; border: 1px solid var(--border-gray); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); position: relative; }
-    .hidden { display: none !important; }
+        body {
+            background-color: var(--bg-color);
+            padding: 15px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
 
-    /* 학번/이름 입력 화면 (Start Screen) */
-    .start-screen { background-color: #fefbeb; border-radius: 20px; padding: 30px; border: 1px solid #fde68a; text-align: center; }
-    .lesson-title-main { font-size: 1.8rem; color: #c2410c; font-weight: bold; font-family: serif; margin-bottom: 5px; }
-    .lesson-title-sub { font-size: 1.4rem; color: #1e293b; font-weight: 800; margin-bottom: 25px; }
-    
-    .input-group { margin-bottom: 15px; text-align: left; }
-    .input-group label { display: block; font-size: 0.8rem; font-weight: bold; color: #64748b; margin-bottom: 5px; letter-spacing: 1px; }
-    .input-group input { width: 100%; padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 1rem; outline: none; -webkit-user-select: text; user-select: text; }
-    
-    .btn-start { width: 100%; background-color: var(--accent-coral); color: #fff; border: none; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: transform 0.1s; }
-    .btn-start:active { transform: scale(0.98); }
+        /* 메인 앱 컨테이너 (앱 형태) */
+        .app-card {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--border-gray);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            position: relative;
+        }
 
-    /* 문제 푸는 화면 (Quiz Screen) */
-    /* 헤더 */
-    .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #f1f5f9; }
-    .q-number { font-size: 0.95rem; font-weight: bold; color: #f97316; }
-    .q-page { background-color: #fef08a; padding: 2px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; color: #854d0e; }
-    .q-progress { background-color: #f1f5f9; padding: 4px 12px; border-radius: 12px; font-weight: bold; font-size: 0.85rem; color: #475569; }
+        /* 헤더 */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f1f5f9;
+        }
 
-    /* 한글 뜻 영역 (최소 구문 단위 끊어읽기) */
-    .meaning-container { background-color: var(--meaning-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--meaning-border); margin-bottom: 15px; text-align: center; }
-    .meaning-text { font-size: 1.15rem; font-weight: 700; color: #1e293b; line-height: 1.5; }
+        .app-title-main {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #1e293b;
+        }
 
-    /* 단계 타이틀 */
-    .step-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .step-header span { font-size: 0.9rem; font-weight: bold; color: #1e293b; }
-    .btn-reset { background: none; border: none; color: #64748b; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 4px; padding: 5px; }
+        .app-title-sub {
+            display: block;
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
 
-    /* 상단: 사용자가 단어를 떨어뜨리는 슬롯 영역 (Top) */
-    .slot-container { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 10px; min-height: 160px; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; align-content: flex-start; background-color: var(--drop-bg); }
-    .slot-item { border: 1px dashed #cbd5e1; border-radius: 10px; padding: 8px; text-align: center; min-width: 80px; background-color: #fff; flex: 1; position: relative; cursor: pointer; }
-    .slot-num { font-size: 0.7rem; color: #94a3b8; display: block; margin-bottom: 2px; }
-    .slot-label { font-size: 0.8rem; font-weight: bold; color: #334155; }
-    .tag-label { font-size: 0.65rem; padding: 1px 5px; border-radius: 4px; display: inline-block; margin-top: 3px; font-weight: 600; }
-    
-    /* 태그 색상 정의 */
-    .tag-blue { background-color: var(--tag-bg-blue); color: var(--tag-text-blue); }
-    .tag-red { background-color: var(--tag-bg-red); color: var(--tag-text-red); }
-    .tag-green { background-color: var(--tag-bg-green); color: var(--tag-text-green); }
+        .progress-container {
+            text-align: right;
+        }
 
-    /* 떨어진 단어 텍스트 */
-    .selected-word { margin-top: 6px; font-weight: bold; color: #1e3a8a; font-size: 0.9rem; min-height: 18px; border-top: 1px solid #f1f5f9; padding-top: 3px; }
+        .progress-text {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 3px;
+        }
 
-    /* 하단: 선택할 단어 조각 풀 (Bottom) */
-    .pool-title { font-size: 0.8rem; font-weight: bold; color: #64748b; margin-bottom: 8px; }
-    .pool-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; padding: 10px; background-color: #f8fafc; border-radius: 12px; border: 1px solid var(--border-gray); }
-    .word-chip { background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 10px 16px; font-weight: 600; font-size: 0.9rem; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.03); -webkit-tap-highlight-color: transparent; }
-    .word-chip:active { transform: scale(0.96); background: #fafafa; }
-    /* 사용된 조각 비활성화 */
-    .word-chip.used { opacity: 0.15; pointer-events: none; background: #e2e8f0; border-color: #d1d5db; }
+        .progress-val {
+            font-weight: bold;
+            color: #1e3a8a;
+            font-size: 0.9rem;
+        }
 
-    /* 하단 정답 확인 버튼 */
-    .quiz-footer { text-align: center; }
-    .btn-submit { width: 100%; background-color: #fca5a5; color: #fff; border: none; padding: 15px; border-radius: 10px; font-size: 1rem; font-weight: bold; cursor: pointer; }
-    /* 모든 슬롯 다 차면 산호색으로 활성화 */
-    .btn-submit.active { background-color: var(--accent-coral); }
+        /* 한글 뜻 영역 (최소 구문 단위 끊어읽기) */
+        .meaning-header {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
 
-    /* 결과 및 캡처 화면 (Result Screen) */
-    .result-card { background: #ffffff; border-radius: 20px; padding: 30px; border: 2px solid #e2e8f0; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-    .result-header { border-bottom: 2px dashed #e2e8f0; padding-bottom: 15px; margin-bottom: 20px; }
-    .result-title { font-size: 1.6rem; font-weight: 800; color: #1e293b; }
-    .result-student-info { font-size: 1.1rem; font-weight: bold; color: #1e40af; margin-bottom: 15px; }
-    
-    .score-container { display: flex; justify-content: center; align-items: flex-end; gap: 5px; margin-bottom: 25px; }
-    .score-value { font-size: 4rem; font-weight: 800; color: #c2410c; line-height: 1; }
-    .score-unit { font-size: 1.3rem; color: #64748b; font-weight: bold; padding-bottom: 5px; }
-    
-    .final-sentence { background-color: #fafafa; padding: 15px; border-radius: 10px; font-weight: 600; font-size: 0.95rem; color: #334155; margin-bottom: 10px; }
-    .final-meaning { font-size: 0.85rem; color: #64748b; }
+        .meaning-container {
+            background-color: var(--meaning-bg);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--meaning-border);
+            margin-bottom: 15px;
+            text-align: center;
+        }
 
-    .btn-retry { background-color: #64748b; color: #fff; border: none; padding: 12px 20px; border-radius: 8px; font-size: 0.95rem; font-weight: bold; cursor: pointer; margin-top: 20px; }
-    
-    /* 캡처 저장 버튼 */
-    .btn-capture { width: 100%; background-color: #15803d; color: #fff; border: none; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px; display: flex; align-items: center; gap: 8px; justify-content: center; }
-  </style>
+        .meaning-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e293b;
+            line-height: 1.4;
+        }
+
+        /* 단계 타이틀 */
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .step-header span {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .btn-reset {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* 상단: 사용자가 단어를 떨어뜨리는 슬롯 영역 (Top) */
+        .slot-container {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 10px;
+            min-height: 160px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+            align-content: flex-start;
+            background-color: var(--drop-bg);
+        }
+
+        .slot-item {
+            border: 1px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
+            min-width: 80px;
+            background-color: #fff;
+            flex: 1;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .slot-num {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .slot-label {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        .tag-label {
+            font-size: 0.65rem;
+            padding: 1px 5px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 3px;
+        }
+
+        /* 태그 색상 정의 */
+        .tag-purple { background-color: var(--tag-bg-purple); color: var(--tag-text-purple); }
+        .tag-blue { background-color: var(--tag-bg-blue); color: var(--tag-text-blue); }
+        .tag-beige { background-color: var(--tag-bg-beige); color: var(--tag-text-beige); }
+
+        /* 떨어진 단어 텍스트 */
+        .selected-word {
+            margin-top: 6px;
+            font-weight: bold;
+            color: #1e3a8a;
+            font-size: 0.9rem;
+            min-height: 18px;
+        }
+
+        /* 하단: 선택할 단어 조각 pool (Bottom) */
+        .pool-title {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .pool-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid var(--border-gray);
+        }
+
+        .word-chip {
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 10px 16px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .word-chip:active {
+            transform: scale(0.96);
+            background: #fafafa;
+        }
+
+        /* 사용된 조각 비활성화 */
+        .word-chip.used {
+            opacity: 0.15;
+            pointer-events: none;
+            background: #e2e8f0;
+            border-color: #d1d5db;
+        }
+
+        /* 하단 컨트롤 */
+        .quiz-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-submit {
+            background-color: var(--accent-coral);
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(224,109,83,0.3);
+            transition: transform 0.1s;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* 하단 명언 박스 */
+        .quote-container {
+            background-color: #f0fdf4;
+            border-radius: 10px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            border: 1px solid #dcfce7;
+        }
+
+        .quote-icon {
+            color: #166534;
+            font-size: 1.2rem;
+        }
+
+        .quote-text {
+            color: #15803d;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .quote-meta {
+            text-align: right;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            position: absolute;
+            bottom: -20px;
+            right: 0;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- 메인 앱 컨테이너 -->
-  <div class="app-card" id="main-app">
+    <!-- 메인 앱 컨테이너 -->
+    <div class="app-card" id="main-app">
 
-    <!-- 1. 학번/이름 입력 화면 -->
-    <div class="start-screen" id="start-screen">
-      <div class="lesson-title-main">Hello! New Zealand</div>
-      <div class="lesson-title-sub">의미단위 배열 연습</div>
-      <div class="input-group">
-        <label>STUDENT ID (학번)</label>
-        <input type="number" id="studentId" placeholder="예: 30101" pattern="\getd*">
-      </div>
-      <div class="input-group">
-        <label>NAME (이름)</label>
-        <input type="text" id="studentName" placeholder="이름을 입력하세요">
-      </div>
-      <button class="btn-start" onclick="beginQuiz()">퀴즈 시작하기 &rsaquo;</button>
+        <!-- 헤더 -->
+        <div class="app-header">
+            <div>
+                <span class="app-title-main">[웅상여중 중3] "Hello! New Zealand"</span>
+                <span class="app-title-sub">의미단위 배열 연습 (1~4차시)</span>
+            </div>
+            <div class="progress-container">
+                <p class="progress-text">Progress</p>
+                <span class="progress-val">2 / 15 (L6 1차시)</span>
+            </div>
+        </div>
+
+        <!-- 한글 뜻 (최소 구문 단위 끊어읽기) -->
+        <p class="meaning-header">📖 Korean Meaning</p>
+        <div class="meaning-container">
+            <p class="meaning-text">뉴질랜드는 자연의 아름다움을 가진 곳이다.</p>
+        </div>
+
+        <!-- 상단: 단어가 들어갈 빈 슬롯 영역 (Top) -->
+        <div class="step-header">
+            <span>❶ 단계 · 문장 배열하기 (위 슬롯 클릭 시 한 단어씩 삭제)</span>
+            <button class="btn-reset" onclick="resetSlots()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6M21.5 22v-6h-6"/><path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.3"/></svg>
+                다시하기
+            </button>
+        </div>
+        <div class="slot-container" id="slot-container">
+            <!-- 슬롯 아이템 (JS에서 생성됨) -->
+        </div>
+
+        <!-- 하단: 선택할 단어 조각 pool (Bottom) -->
+        <div class="pool-title">배열 조각 (클릭하여 위로 이동)</div>
+        <div class="pool-container" id="pool-container">
+            <!-- 단어 조각 (JS에서 생성됨) -->
+        </div>
+
+        <!-- 하단 정답 확인 버튼 -->
+        <div class="quiz-footer">
+            <button class="btn-submit" onclick="showAnswer()">정답 확인 &check;</button>
+        </div>
+
+        <!-- 하단 명언 박스 -->
+        <div class="quote-container">
+            <span class="quote-icon">🧩</span>
+            <p class="quote-text">전치사 'of'와 명사구 'natural beauty'는 각각 별개의 구문 단위입니다.</p>
+        </div>
+
+        <span class="quote-meta">p.3 / L6</span>
+
     </div>
 
-    <!-- 2. 문제 푸는 화면 -->
-    <div class="quiz-screen hidden" id="quiz-screen">
-      <!-- 헤더 -->
-      <div class="quiz-header">
-        <div style="display:flex; align-items:center; gap:5px;">
-          <span class="q-number" id="q-number">QUESTION 01</span>
-          <span class="q-page" id="q-page">p.89</span>
-        </div>
-        <span class="q-progress" id="q-progress">1 / 5</span>
-      </div>
+    <script>
+        // ----------------------------------
+        // [웅상여중 중3] "Hello! New Zealand" 데이터
+        // ----------------------------------
+        const quizData = {
+            id: 2,
+            slots: [
+                { num: "1번", label: "그곳에는", tag: "주어", correct: "New Zealand", tagColor: "purple" },
+                { num: "2번", label: "가지고 있다", tag: "동사", correct: "is", tagColor: "blue" },
+                { num: "3번", label: "많은 아름다운", tag: "목적어", correct: "a place", tagColor: "beige" },
+                { num: "4번", label: "호수들과", tag: "목적어", correct: "of", tagColor: "beige" },
+                { num: "5번", label: "그리고 폭포들을", tag: "목적어", correct: "natural", tagColor: "beige" },
+                { num: "6번", label: "가지고 있다", tag: "반복 동사", correct: "beauty.", tagColor: "blue" }
+            ],
+            // pool 셔플링을 위한 원본 단어 목록 (사용자 클릭 유도용)
+            poolOriginal: ["beauty.", "New Zealand", "is", "a place", "of", "natural"]
+        };
 
-      <!-- 한글 뜻 (최소 구문 단위 끊어읽기) -->
-      <div class="meaning-container">
-        <p class="meaning-text" id="meaning-text">뉴질랜드는 자연의 아름다움을 가진 곳이다.</p>
-      </div>
+        // 앱 상태 변수
+        let userSelection = []; // 사용자 선택 저장 ({word, chipEl})
 
-      <!-- 상단: 단어가 들어갈 빈 슬롯 영역 (Top) -->
-      <div class="step-header">
-        <span>❷ 단계 · 문장 배열하기 (위 슬롯 클릭 시 한 단어씩 삭제)</span>
-        <button class="btn-reset" onclick="resetSlots()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 2v6h6M21.5 22v-6h-6"/><path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.3"/></svg>
-          다시하기
-        </button>
-      </div>
-      <div class="slot-container" id="slot-container">
-        <!-- 슬롯 아이템 (JS에서 생성됨) -->
-      </div>
+        // 초기화 함수
+        function initApp() {
+            // 상단 빈 슬롯 영역 생성
+            const slotContainer = document.getElementById('slot-container');
+            slotContainer.innerHTML = '';
+            quizData.slots.forEach((s, idx) => {
+                const slot = document.createElement('div');
+                slot.className = 'slot-item';
+                slot.id = `slot-${idx}`;
+                slot.innerHTML = `
+                    <span class="slot-num">${s.num}</span>
+                    <span class="slot-label">${s.label}</span><br>
+                    <span class="tag-label tag-${s.tagColor}">${s.tag}</span>
+                    <div class="selected-word" id="slot-word-${idx}"></div>
+                `;
+                // 슬롯 클릭 시 삭제 기능 추가
+                slot.onclick = () => removeWordFromSlot(idx);
+                slotContainer.appendChild(slot);
+            });
 
-      <!-- 하단: 선택할 단어 조각 pool (Bottom) -->
-      <div class="pool-title">배열 조각 (클릭하여 위로 이동)</div>
-      <div class="pool-container" id="pool-container">
-        <!-- 단어 조각 (JS에서 생성됨) -->
-      </div>
+            // 하단 단어 조각 풀 생성
+            const poolContainer = document.getElementById('pool-container');
+            poolContainer.innerHTML = '';
+            // 단어 섞기
+            const shuffledWords = shuffleArray([...quizData.poolOriginal]);
+            shuffledWords.forEach((w, idx) => {
+                const chip = document.createElement('button');
+                chip.className = 'word-chip';
+                chip.innerText = w;
+                // 단어 클릭 시 상단으로 이동
+                chip.onclick = () => selectWord(w, chip);
+                poolContainer.appendChild(chip);
+            });
+        }
 
-      <!-- 하단 정답 확인 버튼 -->
-      <div class="quiz-footer">
-        <button class="btn-submit" id="btn-submit" onclick="submitAnswer()">정답 확인 &check;</button>
-      </div>
-    </div>
+        // 단어 선택 (Bottom -> Top)
+        function selectWord(word, chipEl) {
+            // 아직 모든 슬롯이 다 차지 않았을 때만
+            if (userSelection.length < quizData.slots.length) {
+                const currentSlotIdx = userSelection.length;
+                userSelection.push({ word, chipEl });
+                chipEl.classList.add('used'); // 아래 조각 비활성화
 
-    <!-- 3. 결과 및 캡처 화면 -->
-    <div class="result-screen hidden" id="result-screen">
-      <!-- 캡처될 영역 -->
-      <div class="result-card" id="capture-area">
-        <div class="result-header">
-          <div class="result-title">🎉 퀴즈 완료!</div>
-          <p style="color:#64748b; font-size:0.8rem; margin-top:4px;">제출 일시: <span id="submit-time"></span></p>
-        </div>
-        <div class="result-student-info" id="result-student-info">30101 홍길동 학생</div>
-        
-        <div class="score-container">
-          <span class="score-value" id="result-score">100</span>
-          <span class="score-unit">점</span>
-        </div>
+                // 위 슬롯에 단어 넣기
+                const slotWordEl = document.getElementById(`slot-word-${currentSlotIdx}`);
+                slotWordEl.innerText = word;
+            }
+        }
 
-        <div class="final-sentence" id="final-sentence">
-          박물관 관람을 끝낸 후에, 우리는 세 영웅 이봉창, 윤봉길, 그리고 백정기의 묘로 이동하였다.
-        </div>
-        <div class="final-meaning" id="final-meaning">
-          (최종 완성 문장)
-        </div>
-        <button class="btn-retry" onclick="location.reload()">🔄 다시 도전하기</button>
-      </div>
+        // 슬롯 단어 삭제 (Top -> Bottom)
+        function removeWordFromSlot(slotIdx) {
+            // 해당 슬롯 이후의 모든 단어 삭제 (김구 앱 포맷)
+            if (slotIdx >= userSelection.length) return; // 빈 슬롯 클릭 시 무시
 
-      <!-- 캡처 저장 버튼 (카드 외부에 위치) -->
-      <button class="btn-capture" onclick="downloadCapture()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        결과 화면 캡처(저장)하기
-      </button>
-    </div>
+            // 뒤에서부터 차례로 삭제
+            for (let i = userSelection.length - 1; i >= slotIdx; i--) {
+                const item = userSelection.pop();
+                item.chipEl.classList.remove('used'); // 아래 조각 다시 활성화
+                document.getElementById(`slot-word-${i}`).innerText = '';
+            }
+        }
 
-  </div>
+        // 다시하기 (전체 초기화)
+        function resetSlots() {
+            // 0번 슬롯부터 다 지우기
+            removeWordFromSlot(0);
+        }
 
-  <script>
-    // ----------------------------------
-    // [웅상여중 중3] "Hello! New Zealand" (1~4차시 통합) 데이터
-    // ----------------------------------
-    const quizData = [
-      // --- 1차시: 자연 (Nature) ---
-      {
-        page: "L6 1차시",
-        ko: "뉴질랜드는 자연의 아름다움을 가진 곳이다.",
-        slots: [{n:"1번", l:"뉴질랜드는", t:"주어"}, {n:"2번", l:"이다", t:"동사"}, {n:"3번", l:"장소", t:"보어"}, {n:"4번", l:"자연의 아름다움의", t:"전치사구"}],
-        words: ["New Zealand", "is", "a place", "of", "natural", "beauty."],
-        correctOrder: ["New Zealand", "is", "a place", "of", "natural", "beauty."]
-      },
-      {
-        page: "L6 1차시",
-        ko: "그곳에는 많은 아름다운 호수와 폭포가 있다.",
-        slots: [{n:"1번", l:"그곳에는", t:"주어"}, {n:"2번", l:"가지고 있다", t:"동사"}, {n:"3번", l:"많은 아름다운", t:"수식어"}, {n:"4번", l:"호수들을", t:"목적어1"}, {n:"5번", l:"그리고 폭포들을", t:"목적어2"}],
-        words: ["It", "has", "many", "beautiful", "Lakes", "and", "waterfalls."],
-        correctOrder: ["It", "has", "many", "beautiful", "Lakes", "and", "waterfalls."]
-      },
-      // --- 2차시: 키위 (Kiwi) ---
-      {
-        page: "L6 2차시",
-        ko: "뉴질랜드에서 키위라는 단어는 몇 가지 뜻을 가지고 있다.",
-        slots: [{n:"1번", l:"뉴질랜드에서", t:"전치사구"}, {n:"2번", l:"단어는", t:"주어"}, {n:"3번", l:"가지고 있다", t:"동사"}, {n:"4번", l:"몇 가지 뜻을", t:"목적어"}],
-        words: ["In New Zealand", "the word kiwi", "has", "a couple of", "meanings."],
-        correctOrder: ["In New Zealand", "the word kiwi", "has", "a couple of", "meanings."]
-      },
-      {
-        page: "L6 2차시",
-        ko: "많은 키위 과일이 그곳에서 재배되기 때문에 뉴질랜드는 키위의 나라로 알려져 있다.",
-        slots: [{n:"1번", l:"뉴질랜드는", t:"주어"}, {n:"2번", l:"알려져 있다", t:"수동태"}, {n:"3번", l:"나라로", t:"보어"}, {n:"4번", l:"키위 과일의", t:"전치사구"}],
-        words: ["New Zealand", "is", "known as", "the land", "of kiwi fruit."],
-        correctOrder: ["New Zealand", "is", "known as", "the land", "of kiwi fruit."]
-      },
-      // --- 4차시: 하카 (Haka) ---
-      {
-        page: "L6 4차시",
-        ko: "뉴질랜드의 럭비 국가 대표 팀 선수들은 모든 경기 전에 하카를 춘다.",
-        slots: [{n:"1번", l:"뉴질랜드의", t:"전치사구"}, {n:"2번", l:"선수들은", t:"주어"}, {n:"3번", l:"하카를 춘다", t:"동사/목적어"}, {n:"4번", l:"전에", t:"전치사구"}, {n:"5번", l:"모든 경기", t:"목적어2"}],
-        words: ["New Zealand's", "national rugby team members", "do", "the haka", "before", "every match."],
-        correctOrder: ["New Zealand's", "national rugby team members", "do", "the haka", "before", "every match."]
-      }
-    ];
+        // 정답 확인 버튼 클릭
+        function showAnswer() {
+            // 다 안 채웠으면 무시
+            if (userSelection.length < quizData.slots.length) {
+                alert("문장을 모두 완성해 주세요!");
+                return;
+            }
 
-    // 앱 상태 변수
-    let currentQIndex = 0;
-    let userSelection = []; // 사용자 선택 저장 ({word, chipEl})
-    let finalSentence = ""; // 최종 완성 문장 (결과 화면용)
-    const totalQuestions = quizData.length;
+            // 사용자가 완성한 문장과 정답 문장 비교 (단축어 공백 처리)
+            const userSentence = userSelection.map(item => item.word.trim()).join(' ').replace(/\s+/g, ' ');
+            const correctSentence = "New Zealand is a place of natural beauty."; // 직접 입력된 정답
 
-    // 1단계: 로그인 및 시작
-    function beginQuiz() {
-      const id = document.getElementById('studentId').value.trim();
-      const name = document.getElementById('studentName').value.trim();
+            if (userSentence === correctSentence) {
+                alert("정답입니다! 👏");
+            } else {
+                alert(`오답입니다.\n\n[정답]\n${correctSentence}`);
+            }
+        }
 
-      if (!id || !name) {
-        alert("학번과 이름을 입력해 주세요!");
-        return;
-      }
+        // 유틸리티 함수: 배열 섞기 (단어 조각 풀용)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
-      // 화면 전환
-      document.getElementById('start-screen').classList.add('hidden');
-      document.getElementById('quiz-screen').classList.remove('hidden');
-
-      // 첫 번째 문제 로드
-      loadQuestion(0);
-    }
-
-    // 2단계: 문제 로드 함수
-    function loadQuestion(index) {
-      currentQIndex = index;
-      const q = quizData[index];
-      userSelection = []; // 사용자 선택 초기화
-
-      // 헤더 업데이트
-      document.getElementById('q-number').innerText = `QUESTION ${String(index + 1).padStart(2, '0')}`;
-      document.getElementById('q-page').innerText = q.page;
-      document.getElementById('q-progress').innerText = `${index + 1} / ${totalQuestions}`;
-      document.getElementById('meaning-text').innerText = q.ko;
-
-      // 상단 빈 슬롯 영역 생성
-      const slotContainer = document.getElementById('slot-container');
-      slotContainer.innerHTML = '';
-      q.slots.forEach((s, idx) => {
-        const slot = document.createElement('div');
-        slot.className = 'slot-item';
-        slot.id = `slot-${idx}`;
-        slot.innerHTML = `
-          <span class="slot-num">${s.n}</span>
-          <span class="slot-label">${s.l}</span><br>
-          <span class="tag-label ${getTagColorClass(s.t)}">${s.t}</span>
-          <div class="selected-word"></div>
-        `;
-        // 슬롯 클릭 시 삭제 기능 추가
-        slot.onclick = () => removeWordFromSlot(idx);
-        slotContainer.appendChild(slot);
-      });
-
-      // 하단 단어 조각 풀 생성
-      const poolContainer = document.getElementById('pool-container');
-      poolContainer.innerHTML = '';
-      // 단어 섞기
-      const shuffledWords = shuffleArray([...q.words]);
-      shuffledWords.forEach((w, idx) => {
-        const chip = document.createElement('button');
-        chip.className = 'word-chip';
-        chip.innerText = w;
-        // 단어 클릭 시 상단으로 이동
-        chip.onclick = () => selectWord(w, chip);
-        poolContainer.appendChild(chip);
-      });
-
-      // 제출 버튼 초기화
-      updateSubmitButton();
-    }
-
-    // 단어 선택 (Bottom -> Top)
-    function selectWord(word, chipEl) {
-      const q = quizData[currentQIndex];
-      // 아직 모든 슬롯이 다 차지 않았을 때만
-      if (userSelection.length < q.slots.length) {
-        const currentSlotIdx = userSelection.length;
-        userSelection.push({ word, chipEl });
-        chipEl.classList.add('used'); // 아래 조각 비활성화
-
-        // 위 슬롯에 단어 넣기
-        const slotWordEl = document.getElementById(`slot-${currentSlotIdx}`).querySelector('.selected-word');
-        slotWordEl.innerText = word;
-
-        updateSubmitButton();
-      }
-    }
-
-    // 슬롯 단어 삭제 (Top -> Bottom)
-    function removeWordFromSlot(slotIdx) {
-      // 해당 슬롯 이후의 모든 단어 삭제 (김구 앱 포맷)
-      if (slotIdx >= userSelection.length) return; // 빈 슬롯 클릭 시 무시
-
-      // 뒤에서부터 차례로 삭제
-      for (let i = userSelection.length - 1; i >= slotIdx; i--) {
-        const item = userSelection.pop();
-        item.chipEl.classList.remove('used'); // 아래 조각 다시 활성화
-        document.getElementById(`slot-${i}`).querySelector('.selected-word').innerText = '';
-      }
-      
-      updateSubmitButton();
-    }
-
-    // 다시하기 (전체 초기화)
-    function resetSlots() {
-      // 0번 슬롯부터 다 지우기
-      removeWordFromSlot(0);
-    }
-
-    // 제출 버튼 상태 업데이트
-    function updateSubmitButton() {
-      const btn = document.getElementById('btn-submit');
-      const q = quizData[currentQIndex];
-      // 모든 슬롯이 다 차면 활성화
-      if (userSelection.length === q.slots.length) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    }
-
-    // 정답 제출 및 채점
-    function submitAnswer() {
-      const q = quizData[currentQIndex];
-      // 다 안 채웠으면 무시
-      if (userSelection.length < q.slots.length) return;
-
-      // 사용자가 완성한 문장과 정답 문장 비교 (단축어 공백 처리)
-      const userSentence = userSelection.map(item => item.word.trim()).join(' ').replace(/\s+/g, ' ');
-      const correctSentence = q.correctOrder.join(' ').replace(/\s+/g, ' ');
-
-      if (userSentence === correctSentence) {
-        finalSentence = correctSentence; // 최종 완성 문장 저장
-        alert("정답입니다! 👏");
-        showResult();
-      } else {
-        alert(`오답입니다.\n\n[정답]\n${q.correctOrder.join(' ')}`);
-        // 다시 시도하도록 리셋
-        resetSlots();
-      }
-    }
-
-    // 3단계: 결과 화면 함수
-    function showResult() {
-      const id = document.getElementById('studentId').value;
-      const name = document.getElementById('studentName').value;
-      const now = new Date();
-
-      // 화면 전환
-      document.getElementById('quiz-screen').classList.add('hidden');
-      document.getElementById('result-screen').classList.remove('hidden');
-
-      // 결과 주입
-      document.getElementById('result-student-info').innerText = `${id} ${name} 학생`;
-      document.getElementById('result-score').innerText = '100'; // 의미단위 배열은 정답 시 무조건 100점
-      document.getElementById('final-sentence').innerText = finalSentence;
-      document.getElementById('submit-time').innerText = now.toLocaleString();
-    }
-
-    // 캡처 및 다운로드 함수
-    function downloadCapture() {
-      const id = document.getElementById('studentId').value;
-      const name = document.getElementById('studentName').value;
-      const target = document.getElementById('capture-area');
-      const fileName = `HelloNZ_의미단위배열_${id}_${name}.png`;
-
-      // html2canvas 활용 캡처
-      html2canvas(target).then(canvas => {
-        const link = document.createElement('a');
-        link.download = fileName;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      });
-    }
-
-    // 유틸리티 함수: 배열 섞기 (단어 조각 풀용)
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    // 유틸리티 함수: 태그 종류에 따른 색상 클래스 반환
-    function getTagColorClass(tag) {
-      if (tag === '주어' || tag === '전치사구') return 'tag-blue';
-      if (tag === '동사' || tag === '수동태') return 'tag-red';
-      if (tag === '보어' || tag === '관계사절') return 'tag-green';
-      return ''; // 목적어 등 다른 태그는 기본
-    }
-  </script>
-
+        // 앱 시작
+        initApp();
+    </script>
 </body>
 </html>
