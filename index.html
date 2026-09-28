@@ -66,7 +66,7 @@
     .role-adverb { background-color: #fef9c3; color: #a16207; }
     .role-prep { background-color: #f3e8ff; color: #7e22ce; }
 
-    /* 하단 단어 조각 풀 (스크린샷처럼 영단어 + 한국어 뜻 동시 표시) */
+    /* 하단 단어 조각 풀 */
     .pool-title { font-size: 0.85rem; font-weight: bold; color: #64748b; margin-bottom: 10px; }
     .pool-container { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
     .word-chip { background: #fff; border: 2px solid #cbd5e1; border-radius: 14px; padding: 12px 16px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.03); transition: all 0.15s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 100%; text-align: center; }
@@ -158,7 +158,7 @@
   </div>
 
   <script>
-    // 1~4차시 데이터 (영단어 + 한국어 뜻 + 문법역할 포함)
+    // 1~4차시 데이터 정비 완료
     const lessonsData = {
       1: [
         {
@@ -192,7 +192,7 @@
           ko: "남섬에는 일 년 내내 눈으로 덮인 산들이 있다.",
           slots: [
             { eng: "In the South Island,", kor: "남섬에는", label: "장소부사구", type: "role-prep" },
-            { arg: "there are", eng: "there are", kor: "~가 있다", label: "유도부사", type: "role-verb" },
+            { eng: "there are", kor: "~가 있다", label: "유도부사", type: "role-verb" },
             { eng: "mountains", kor: "산들이", label: "주어", type: "role-subject" },
             { eng: "that are covered with snow all year round.", kor: "일 년 내내 눈으로 덮인", label: "관계사절", type: "role-adverb" }
           ]
@@ -370,7 +370,7 @@
             { eng: "If you see the haka,", kor: "만약 당신이 하카를 본다면", label: "조건절", type: "role-adverb" },
             { eng: "you will probably agree", kor: "당신은 아마 동의할 것이다", label: "주어/동사/부사", type: "role-subject" },
             { eng: "that the rival team", kor: "상대 팀이", label: "접속사절주어", type: "role-object" },
-            { eng: "must be scared.", kor:음에 틀림없다는 것에구", label: "수동태동사구", type: "role-verb" }
+            { eng: "must be scared.", kor: "겁을 먹음에 틀림없다는 것에", label: "수동태동사구", type: "role-verb" }
           ]
         },
         {
@@ -449,7 +449,6 @@
       const poolContainer = document.getElementById('pool-container');
       poolContainer.innerHTML = '';
       
-      // 정답 배열 객체 복사 후 섞기
       const shuffled = [...q.slots].sort(() => Math.random() - 0.5);
       
       shuffled.forEach(slotData => {
@@ -459,7 +458,6 @@
           <span class="chip-eng">${slotData.eng}</span>
           <span class="chip-kor">${slotData.kor}</span>
         `;
-        // 클릭 및 터치 이벤트 확실하게 바인딩
         chip.onclick = (e) => {
           e.preventDefault();
           selectWord(slotData.eng, chip);
