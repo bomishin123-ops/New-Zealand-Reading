@@ -107,7 +107,7 @@
           2차시 학습 <span>교과서 p.105 ~ p.106</span>
         </button>
         <button class="btn-lesson" onclick="startLesson(3)">
-          3차시 학습 <span>준비 중</span>
+          3차시 학습 <span>교과서 p.106 ~ p.107 (마오리)</span>
         </button>
         <button class="btn-lesson" onclick="startLesson(4)">
           4차시 학습 <span>교과서 p.107 (하카)</span>
@@ -348,7 +348,91 @@
           ]
         }
       ],
-      3: [],
+      3: [
+        {
+          ko: "이제, 마오리족에 대해 이야기해 보자.",
+          slots: [
+            { eng: "Now,", kor: "이제", label: "시간부사", type: "role-chunk" },
+            { eng: "let's talk", kor: "이야기해 보자", label: "동사구", type: "role-chunk" },
+            { eng: "about the Maori.", kor: "마오리족에 대해", label: "전치사구", type: "role-chunk" }
+          ]
+        },
+        {
+          ko: "그들은 뉴질랜드의 원주민이다.",
+          slots: [
+            { eng: "They", kor: "그들은", label: "주어", type: "role-chunk" },
+            { eng: "are the native people", kor: "원주민이다", label: "동사/보어", type: "role-chunk" },
+            { eng: "of New Zealand.", kor: "뉴질랜드의", label: "전치사구", type: "role-chunk" }
+          ]
+        },
+        {
+          ko: "그들은 유럽인들이 도착하기 훨씬 전에 섬에 와서 살았다.",
+          slots: [
+            { eng: "They went", kor: "그들은 갔다", label: "주어/동사", type: "role-chunk" },
+            { eng: "to live", kor: "살기 위해", label: "부사적용법", type: "role-chunk" },
+            { eng: "on the islands", kor: "섬에", label: "장소부사구", type: "role-chunk" },
+            { eng: "long before", kor: "훨씬 전에", label: "접속사", type: "role-chunk" },
+            { eng: "Europeans arrived.", kor: "유럽인들이 도착하기", label: "주어/동사", type: "role-chunk" }
+          ]
+        },
+        {
+          ko: "마오리 문화는 오늘날 뉴질랜드 사회의 중요한 부분이다.",
+          slots: [
+            { eng: "The Maori culture", kor: "마오리 문화는", label: "주어", type: "role-chunk" },
+            { eng: "is an important part", kor: "중요한 부분이다", label: "동사/보어", type: "role-chunk" },
+            { eng: "of today's", kor: "오늘날의", label: "소유격", type: "role-chunk" },
+            { eng: "New Zealand society.", kor: "뉴질랜드 사회", label: "명사", type: "role-chunk" }
+          ]
+        },
+        {
+          ko: "마오리 언어는 몇몇 학교에서 가르쳐지고 있으며 마오리어 라디오와 TV 방송국이 있다.",
+          slots: [
+            { eng: "The Maori language", kor: "마오리 언어는", label: "주어", type: "role-chunk" },
+            { eng: "is taught", kor: "가르쳐진다", label: "수동태", type: "role-chunk" },
+            { eng: "at some schools", kor: "몇몇 학교에서", label: "전치사구", type: "role-chunk" },
+            { eng: "and there are", kor: "그리고 ~가 있다", label: "유도부사", type: "role-chunk" },
+            { eng: "Maori language radio", kor: "마오리어 라디오", label: "주어1", type: "role-chunk" },
+            { eng: "and TV stations.", kor: "그리고 TV 방송국", label: "주어2", type: "role-chunk" }
+          ]
+        },
+        {
+          ko: "나라의 여러 곳에 마오리 마을이 있다.",
+          slots: [
+            { eng: "There are", kor: "~가 있다", label: "유도부사", type: "role-chunk" },
+            { eng: "Maori villages", kor: "마오리 마을들이", label: "주어", type: "role-chunk" },
+            { eng: "in many parts", kor: "여러 곳에", label: "전치사구", type: "role-chunk" },
+            { eng: "of the country.", kor: "나라의", label: "소유격", type: "role-chunk" }
+          ]
+        },
+        {
+          ko: "당신은 마오리 마을에 방문해 마오리 문화를 경험할 수 있다.",
+          slots: [
+            { eng: "You can visit", kor: "당신은 방문할 수 있다", label: "조동사/동사", type: "role-chunk" },
+            { eng: "Maori villages", kor: "마오리 마을을", label: "목적어1", type: "role-chunk" },
+            { eng: "and experience", kor: "그리고 경험하다", label: "동사2", type: "role-chunk" },
+            { eng: "Maori culture.", kor: "마오리 문화를", label: "목적어2", type: "role-chunk" }
+          ]
+        },
+        {
+          ko: "만약 당신이 마을 사람들 에게 \"kia ora\"라고 말한다면, 그들은 그것을 듣고 좋아할 것이다.",
+          slots: [
+            { eng: "If you say", kor: "만약 당신이 말한다면", label: "조건절", type: "role-chunk" },
+            { eng: "\"kia ora\"", kor: "\"kia ora\"라고", label: "목적어", type: "role-chunk" },
+            { eng: "to the villagers,", kor: "마을 사람들에게", label: "전치사구", type: "role-chunk" },
+            { eng: "they will be glad", kor: "그들은 기쁠 것이다", label: "주어/동사/보어", type: "role-chunk" },
+            { eng: "to hear it.", kor: "그것을 듣게 되어", label: "부사적용법", type: "role-chunk" }
+          ]
+        },
+        {
+          ko: "그것은 영어로 \"안녕하세요\"를 의미한다.",
+          slots: [
+            { eng: "It", kor: "그것은", label: "주어", type: "role-chunk" },
+            { eng: "means", kor: "의미한다", label: "동사", type: "role-chunk" },
+            { eng: "\"hi\"", kor: "\"hi\"를", label: "목적어", type: "role-chunk" },
+            { eng: "in English.", kor: "영어로", label: "전치사구", type: "role-chunk" }
+          ]
+        }
+      ],
       4: [
         {
           ko: "당신은 하카를 본 적이 있는가?",
@@ -446,7 +530,6 @@
       }
       studentInfo = { id, name };
       
-      // 모달창 강제 숨기기 처리
       const modal = document.getElementById('name-modal');
       modal.style.display = 'none';
       modal.classList.add('hidden');
